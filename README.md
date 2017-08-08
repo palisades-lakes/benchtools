@@ -7,11 +7,19 @@ Currently very unstable, not appropriate for use as a library.
 The code itself may have examples that are useful starting 
 points.
 
+## Building
+
 Builds with [Apache Maven](https://maven.apache.org/), 
 specifically the 
-[clojure-maven-plugin](https://github.com/talios/clojure-maven-plugin).
+[clojure-maven-plugin](https://github.com/talios/clojure-maven-plugin),
+eg:
 
-### Acknowledgements
+```Maven
+mvn clean install
+```
+
+
+## Acknowledgments
 
 ### ![Yourkit](https://www.yourkit.com/images/yklogo.png)
 
