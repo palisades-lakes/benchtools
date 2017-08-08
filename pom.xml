@@ -24,7 +24,7 @@
   <connection>${github-url}</connection>
   <developerConnection>${github-url}</developerConnection>
   <url>${github-url}</url>
-  <tag>HEAD</tag>
+  <tag>benchtools-0.0.1</tag>
  </scm>
  <distributionManagement>
   <repository>
@@ -445,6 +445,6 @@
  </dependencies>
  <groupId>palisades-lakes</groupId>
  <artifactId>benchtools</artifactId>
- <version>0.0.1-SNAPSHOT</version>
+ <version>0.0.1</version>
  <description>Unstable utilities for Clojure and Java benchmarks.</description>
 </project>
