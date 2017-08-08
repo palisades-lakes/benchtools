@@ -11,7 +11,7 @@
   </formats>
   <fileSets>
     <fileSet>
-      <directory>${project.build.sourceDirectory}/doc</directory>
+      <directory>${project.basedir}/docs</directory>
       <useDefaultExcludes>true</useDefaultExcludes>
     </fileSet>
   </fileSets>
