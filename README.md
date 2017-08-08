@@ -11,7 +11,9 @@ Builds with [Apache Maven](https://maven.apache.org/),
 specifically the 
 [clojure-maven-plugin](https://github.com/talios/clojure-maven-plugin).
 
-## ![Yourkit](https://www.yourkit.com/images/yklogo.png)
+### Acknowledgements
+
+### ![Yourkit](https://www.yourkit.com/images/yklogo.png)
 
 YourKit is kindly supporting open source projects with its full-featured Java
 Profiler.
