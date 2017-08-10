@@ -6,7 +6,7 @@
   {:doc "Independent seed generation and seed resource IO."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-04-05"
-   :version "2017-07-25"}
+   :version "2017-08-10"}
   
   (:refer-clojure :exclude [read write])
   (:require [clojure.edn :as edn]
@@ -42,6 +42,12 @@
 ;; TODO: move somewhere more appropriate
 (let [c (class (int-array 0))]
   (defn- int-array? [x] (instance? c x)))
+;;----------------------------------------------------------------
+;; make it accessibale form Java
+(gen-class 
+  :name "benchtools.random.Seed"
+  :prefix ""
+  :methods [^:static [seed [Object] int]])
 ;;----------------------------------------------------------------
 ;; if the seed is a string, assume it's the name of a resource.
 ;; if it's a resource, read it.

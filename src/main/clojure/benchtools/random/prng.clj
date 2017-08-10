@@ -101,3 +101,55 @@
   (let [^CollectionSampler cs (CollectionSampler. urp generators)]
       (fn nested-uniform-generator [] ((.sample cs)))))
 ;;----------------------------------------------------------------
+;; Java callable static methods
+(gen-class 
+  :name "benchtools.random.PRNG"
+  :methods [^:static [uniformRandomProvider 
+                      [Object] 
+                      org.apache.commons.rng.UniformRandomProvider]
+            ^:static [uniformDoubleGenerator 
+                      [double
+                       double
+                       org.apache.commons.rng.UniformRandomProvider] 
+                      clojure.lang.IFn$D]
+            ^:static [uniformIntGenerator 
+                      [long
+                       long
+                       org.apache.commons.rng.UniformRandomProvider] 
+                      clojure.lang.IFn$L]
+            ^:static [uniformLongGenerator 
+                      [long
+                       long
+                       org.apache.commons.rng.UniformRandomProvider] 
+                      clojure.lang.IFn$L]
+            ^:static [uniformElementGenerator 
+                      [java.util.Collection
+                       org.apache.commons.rng.UniformRandomProvider] 
+                      clojure.lang.IFn]
+            ])
+;;----------------------------------------------------------------
+(defn -uniformRandomProvider
+  ^org.apache.commons.rng.UniformRandomProvider [seed]
+  (uniform-random-provider seed))
+(defn -uniformDoubleGenerator 
+  ^clojure.lang.IFn$D [^double umin
+                       ^double umax
+                       ^UniformRandomProvider urp]
+  (uniform-double-generator umin umax urp))
+(defn -uniformIntGenerator 
+  ^clojure.lang.IFn$L [^long umin
+                       ^long umax
+                       ^UniformRandomProvider urp]
+  (uniform-int-generator umin umax urp))
+(defn -uniformLongGenerator 
+  ^clojure.lang.IFn$L [^long umin
+                       ^long umax
+                       ^UniformRandomProvider urp]
+  (uniform-long-generator umin umax urp))
+(defn -uniformElementGenerator 
+  ^clojure.lang.IFn [^Collection c ^UniformRandomProvider urp]
+  (uniform-element-generator c urp))
+;;----------------------------------------------------------------
+
+
+

@@ -1,11 +1,10 @@
 package benchtools.java.sets;
 
-
-/** Minimal interface for multimethod benchmarks,
+/** Minimal interface for benchmarks,
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-22
- * @version 2017-07-24
+ * @version 2017-08-10
  */
 public interface Set {
 
