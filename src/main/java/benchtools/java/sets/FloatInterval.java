@@ -6,7 +6,12 @@ import clojure.lang.IFn;
 /** Half-open [min,max) interval in expressed in
  * <code>float</code>, but applicable to any primitive or Object
  * number.
- *
+ * <p>
+ * Minor note: specifying integer intervals as half-open is a near
+ * universal convention, at least in the Java libraries.
+ * It's less common and a bit tricky for floating point intervals.
+ * I make them both half-open for consistency.
+ * <p>
  * TODO: how to implement [x,infinity]?
  * TODO: empty interval different from general empty set? has a
  * location so it can be transformed by functions R-&gt;R?
@@ -14,7 +19,7 @@ import clojure.lang.IFn;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-22
- * @version 2017-07-24
+ * @version 2017-08-16
  */
 
 public final class FloatInterval implements Set {

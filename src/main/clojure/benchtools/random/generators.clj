@@ -8,13 +8,23 @@
          dependence on any prng library."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-07-25"}
+   :version "2017-08-16"}
   
   (:import [java.util Collections]
            [benchtools.java.sets ByteInterval DoubleInterval 
             FloatInterval IntegerInterval LongInterval
             ShortInterval]))
 ;;----------------------------------------------------------------
+;; The arguments <code>g</code> are expected to be 'functions'
+;; of zero arguments that return a different number (either double 
+;; or long, as appropriate) every time they are called.
+;; The usual case would be a pseudo-random number generator of
+;; some kind.
+;; If the generator produces numbers outside the range of the
+;; number type used for the endpoints of the interval, 
+;; (eg something outside [-128, 128) for ByteInterval)
+;; an exception should be thrown, so care has to be taken.
+
 (defn byte-intervals ^clojure.lang.IFn [^clojure.lang.IFn$L g]
   (fn byte-interval ^benchtools.java.sets.ByteInterval []
     (ByteInterval/generate g)))

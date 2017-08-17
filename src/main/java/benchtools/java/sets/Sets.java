@@ -3,7 +3,7 @@ package benchtools.java.sets;
 /** 
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-22
- * @version 2017-08-03
+ * @version 2017-08-16
  */
 public final class Sets {
 
@@ -30,7 +30,6 @@ public final class Sets {
     for (int i=0;i<n;i++) { 
       if (s0[i].intersects(s1[i])) { k++; } }
     return k; }
-
 
   //--------------------------------------------------------------
 }
