@@ -1,4 +1,5 @@
-# benchtools
+# benchtools [![Clojars Project](https://img.shields.io/clojars/v/palisades-lakes/benchtools.svg)](https://clojars.org/palisades-lakes/benchtools)
+
 
 Shared utilities used by other projects that benchmark
 [Clojure](https://clojure.org/) and Java code.
@@ -6,6 +7,7 @@ Shared utilities used by other projects that benchmark
 Currently very unstable, not appropriate for use as a library.
 The code itself may have examples that are useful starting 
 points.
+
 
 ## Building
 
