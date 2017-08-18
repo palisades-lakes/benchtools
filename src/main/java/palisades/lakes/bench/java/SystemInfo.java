@@ -1,4 +1,4 @@
-package benchtools.java;
+package palisades.lakes.bench.java;
 
 import java.io.PrintWriter;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-# benchtools [![Clojars Project](https://img.shields.io/clojars/v/palisades-lakes/benchtools.svg)](https://clojars.org/palisades-lakes/benchtools)
+# benchtools [![Clojars Project](https://img.shields.io/clojars/v/palisades-lakes/palisades.lakes.bench.svg)](https://clojars.org/palisades-lakes/benchtools)
 
 
 Shared utilities used by other projects that benchmark

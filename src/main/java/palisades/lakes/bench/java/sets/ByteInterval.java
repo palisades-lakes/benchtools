@@ -1,10 +1,10 @@
-package benchtools.java.sets;
+package palisades.lakes.bench.java.sets;
 
 import clojure.lang.IFn;
 
 //----------------------------------------------------------------
 /** Half-open [min,max) interval in expressed in
- * <code>int</code>, but applicable to any primitive or Object
+ * <code>byte</code>, but applicable to any primitive or Object
  * number.
  *
  * TODO: how to implement [x,infinity]?
@@ -14,13 +14,13 @@ import clojure.lang.IFn;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-29
- * @version 2017-07-25
+ * @version 2017-07-24
  */
 
-public final class IntegerInterval implements Set {
+public final class ByteInterval implements Set {
 
-  public final int min;
-  public final int max;
+  public final byte min;
+  public final byte max;
 
   //--------------------------------------------------------------
   // Set interface
@@ -28,7 +28,7 @@ public final class IntegerInterval implements Set {
 
   @Override
   public final double diameter () { return max - min; }
-  
+
   //--------------------------------------------------------------
 
   @Override
@@ -63,7 +63,7 @@ public final class IntegerInterval implements Set {
   public final boolean contains (final short x) {
     return (min <= x) && (x < max); }
 
-  
+
   @Override
   public final boolean contains (final Boolean x) { 
     return false; }
@@ -107,17 +107,12 @@ public final class IntegerInterval implements Set {
     return false; }
   //--------------------------------------------------------------
 
-  public final boolean intersects (final IntegerInterval that) {
+  public final boolean intersects (final ByteInterval that) {
     if (max <= that.min) { return false; }
     if (that.max <= min) { return false; }
     return true; }
 
   public final boolean intersects (final DoubleInterval that) {
-    if (max <= that.min) { return false; }
-    if (that.max <= min) { return false; }
-    return true; }
-
-  public final boolean intersects (final LongInterval that) {
     if (max <= that.min) { return false; }
     if (that.max <= min) { return false; }
     return true; }
@@ -129,8 +124,8 @@ public final class IntegerInterval implements Set {
 
   @Override
   public final boolean intersects (final Object set) {
-    if (set instanceof IntegerInterval) {
-      return intersects((IntegerInterval) set); }
+    if (set instanceof ByteInterval) {
+      return intersects((ByteInterval) set); }
     if (set instanceof java.util.Set) {
       return intersects((java.util.Set) set); }
     throw new UnsupportedOperationException(
@@ -138,16 +133,16 @@ public final class IntegerInterval implements Set {
 
   //--------------------------------------------------------------
 
-  private IntegerInterval (final int i0,
-                           final int i1) {
+  private ByteInterval (final byte i0,
+                        final byte i1) {
     assert (i0 <= i1);
     min = i0; max = i1; }
 
-  public static final IntegerInterval make (final int i0,
-                                            final int i1) {
+  public static final ByteInterval make (final byte i0,
+                                         final byte i1) {
 
-    if (i0 <= i1) { return new IntegerInterval(i0,i1); }
-    return new IntegerInterval(i1,i0); }
+    if (i0 <= i1) { return new ByteInterval(i0,i1); }
+    return new ByteInterval(i1,i0); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -158,14 +153,14 @@ public final class IntegerInterval implements Set {
    * @throws an exception if the generated value is not within
    * the valid range.
    */
-  public static final IntegerInterval generate (final IFn.L g) {
+  public static final ByteInterval generate (final IFn.L g) {
 
     final long x0 = g.invokePrim();
-    assert Integer.MIN_VALUE <= x0 && x0 <= Integer.MAX_VALUE;
+    assert Byte.MIN_VALUE <= x0 && x0 <= Byte.MAX_VALUE;
     final long x1 = g.invokePrim();
-    assert Integer.MIN_VALUE <= x1 && x1 <= Integer.MAX_VALUE;
+    assert Byte.MIN_VALUE <= x1 && x1 <= Byte.MAX_VALUE;
     
-    return make((int) x0, (int) x1); }
+    return make((byte) x0, (byte) x1); }
 
   //--------------------------------------------------------------
 } // end of class

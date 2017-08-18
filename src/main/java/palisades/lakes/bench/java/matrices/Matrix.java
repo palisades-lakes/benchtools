@@ -1,4 +1,4 @@
-package benchtools.java.matrices;
+package palisades.lakes.bench.java.matrices;
 
 /** @author palisades dot lakes at gmail dot com
  * @since 2017-08-19

@@ -1,26 +1,31 @@
-package benchtools.java.sets;
+package palisades.lakes.bench.java.sets;
 
 import clojure.lang.IFn;
 
 //----------------------------------------------------------------
 /** Half-open [min,max) interval in expressed in
- * <code>byte</code>, but applicable to any primitive or Object
+ * <code>float</code>, but applicable to any primitive or Object
  * number.
- *
+ * <p>
+ * Minor note: specifying integer intervals as half-open is a near
+ * universal convention, at least in the Java libraries.
+ * It's less common and a bit tricky for floating point intervals.
+ * I make them both half-open for consistency.
+ * <p>
  * TODO: how to implement [x,infinity]?
  * TODO: empty interval different from general empty set? has a
  * location so it can be transformed by functions R-&gt;R?
- * TODO: any sense in [i1,i0) where i1 > i0 ? Complement?
+ * TODO: any sense in [z1,z0) where z1 > z0 ?
  *
  * @author palisades dot lakes at gmail dot com
- * @since 2017-05-29
- * @version 2017-07-24
+ * @since 2017-05-22
+ * @version 2017-08-16
  */
 
-public final class ByteInterval implements Set {
+public final class FloatInterval implements Set {
 
-  public final byte min;
-  public final byte max;
+  public final float min;
+  public final float max;
 
   //--------------------------------------------------------------
   // Set interface
@@ -63,7 +68,6 @@ public final class ByteInterval implements Set {
   public final boolean contains (final short x) {
     return (min <= x) && (x < max); }
 
-
   @Override
   public final boolean contains (final Boolean x) { 
     return false; }
@@ -105,14 +109,10 @@ public final class ByteInterval implements Set {
     if (x instanceof Long) { return contains((Long) x); }
     if (x instanceof Short) { return contains((Short) x); }
     return false; }
+
   //--------------------------------------------------------------
 
-  public final boolean intersects (final ByteInterval that) {
-    if (max <= that.min) { return false; }
-    if (that.max <= min) { return false; }
-    return true; }
-
-  public final boolean intersects (final DoubleInterval that) {
+  public final boolean intersects (final FloatInterval that) {
     if (max <= that.min) { return false; }
     if (that.max <= min) { return false; }
     return true; }
@@ -124,8 +124,8 @@ public final class ByteInterval implements Set {
 
   @Override
   public final boolean intersects (final Object set) {
-    if (set instanceof ByteInterval) {
-      return intersects((ByteInterval) set); }
+    if (set instanceof FloatInterval) {
+      return intersects((FloatInterval) set); }
     if (set instanceof java.util.Set) {
       return intersects((java.util.Set) set); }
     throw new UnsupportedOperationException(
@@ -133,16 +133,19 @@ public final class ByteInterval implements Set {
 
   //--------------------------------------------------------------
 
-  private ByteInterval (final byte i0,
-                        final byte i1) {
-    assert (i0 <= i1);
-    min = i0; max = i1; }
+  private FloatInterval (final float z0,
+                         final float z1) {
+    assert (z0 <= z1);
+    min = z0; max = z1; }
 
-  public static final ByteInterval make (final byte i0,
-                                         final byte i1) {
+  public static final FloatInterval make (final float z0,
+                                          final float z1) {
 
-    if (i0 <= i1) { return new ByteInterval(i0,i1); }
-    return new ByteInterval(i1,i0); }
+    assert ! Float.isNaN(z0);
+    assert ! Float.isNaN(z1);
+
+    if (z0 <= z1) { return new FloatInterval(z0,z1); }
+    return new FloatInterval(z1,z0); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -153,14 +156,14 @@ public final class ByteInterval implements Set {
    * @throws an exception if the generated value is not within
    * the valid range.
    */
-  public static final ByteInterval generate (final IFn.L g) {
+  public static final FloatInterval generate (final IFn.D g) {
 
-    final long x0 = g.invokePrim();
-    assert Byte.MIN_VALUE <= x0 && x0 <= Byte.MAX_VALUE;
-    final long x1 = g.invokePrim();
-    assert Byte.MIN_VALUE <= x1 && x1 <= Byte.MAX_VALUE;
+    final double x0 = g.invokePrim();
+    assert Float.MIN_VALUE <= x0 && x0 <= Float.MAX_VALUE;
+    final double x1 = g.invokePrim();
+    assert Float.MIN_VALUE <= x1 && x1 <= Float.MAX_VALUE;
     
-    return make((byte) x0, (byte) x1); }
+    return make((float) x0, (float) x1); }
 
   //--------------------------------------------------------------
 } // end of class

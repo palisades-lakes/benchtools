@@ -1,22 +1,22 @@
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* :warn-on-boxed)
 ;;----------------------------------------------------------------
-(ns benchtools.core
+(ns palisades.lakes.bench.core
   
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-08-07"}
+   :version "2017-08-16"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.edn :as edn]
             [clojure.pprint :as pp]
-            [benchtools.random.generators :as g])
+            [palisades.lakes.bench.random.generators :as g])
   
   (:import [java.nio.file FileSystems PathMatcher]
            [java.time.format DateTimeFormatter]
-           [benchtools.java SystemInfo]))
+           [palisades.lakes.bench.java SystemInfo]))
 ;;----------------------------------------------------------------
 (set! *warn-on-reflection* false)
 (set! *unchecked-math* false)
@@ -123,7 +123,7 @@
 (defn ^java.io.File ns-folder [prefix for-ns]
   (let [^java.io.File f (apply 
                           io/file prefix 
-                          (rest (s/split (str for-ns) #"\.")))]
+                          (take-last 2 (s/split (str for-ns) #"\.")))]
     (.mkdirs f)
     f))
 ;;----------------------------------------------------------------

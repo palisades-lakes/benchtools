@@ -1,4 +1,4 @@
-package benchtools.java.sets;
+package palisades.lakes.bench.java.sets;
 
 /** Minimal interface for benchmarks,
  *

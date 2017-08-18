@@ -1,6 +1,6 @@
-(ns benchtools.codox
+(ns palisades.lakes.bench.codox
   
-  {:doc "Generate codox for benchtools."
+  {:doc "Generate codox for palisades.lakes.bench."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-08-05"
    :version "2017-08-05"}
@@ -17,7 +17,7 @@
                 :root-path (io/file "./")
                 :output-path "docs/codox"
                 :source-paths ["src/main/clojure"]
-                ;;:source-uri "https://github.com/palisades-lakes/benchtools/blob/{version}/{filepath}#L{line}"
+                ;;:source-uri "https://github.com/palisades-lakes/bench/blob/{version}/{filepath}#L{line}"
                 :namespaces :all
                 ;;:doc-paths ["docs"]
                 :doc-files ["README.md"]

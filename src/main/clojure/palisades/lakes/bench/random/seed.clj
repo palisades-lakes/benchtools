@@ -1,7 +1,7 @@
 (set! *warn-on-reflection* true) 
 (set! *unchecked-math* :warn-on-boxed)
 ;;----------------------------------------------------------------
-(ns benchtools.random.seed
+(ns palisades.lakes.bench.random.seed
   
   {:doc "Independent seed generation and seed resource IO."
    :author "palisades dot lakes at gmail dot com"
@@ -45,7 +45,7 @@
 ;;----------------------------------------------------------------
 ;; make it accessibale form Java
 (gen-class 
-  :name "benchtools.random.Seed"
+  :name "palisades.lakes.bench.random.Seed"
   :prefix ""
   :methods [^:static [seed [Object] int]])
 ;;----------------------------------------------------------------

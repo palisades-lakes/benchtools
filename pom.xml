@@ -18,7 +18,7 @@
   <maven-release-plugin-version>2.5.3</maven-release-plugin-version>
   <maven-scm-plugin-version>1.9.5</maven-scm-plugin-version>
   <maven-site-version>3.6</maven-site-version>
-  <github-url>scm:git:https://github.com/palisades-lakes/benchtools.git</github-url>
+  <github-url>scm:git:https://github.com/palisades-lakes/palisades.lakes.bench.git</github-url>
   <!-- github-url>scm:git:file://.</github-url -->
  </properties>
  <scm>
@@ -155,13 +155,13 @@
     <configuration>
      <clojureOptions>-Dclojure.compiler.direct-linking=true</clojureOptions>
      <namespaces>
-      <namespace>!benchtools.doc.*</namespace>
+      <namespace>!palisades.lakes.bench.doc.*</namespace>
      </namespaces>
      <copiedNamespaces>
       <namespace>!.*</namespace>
      </copiedNamespaces>
      <testNamespaces>
-      <namespace>!benchtools.test.*</namespace>
+      <namespace>!palisades.lakes.bench.test.*</namespace>
      </testNamespaces>
     </configuration>
    </plugin>

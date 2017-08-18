@@ -1,7 +1,7 @@
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* :warn-on-boxed)
 ;;----------------------------------------------------------------
-(ns benchtools.random.generators
+(ns palisades.lakes.bench.random.generators
   
   {:doc "Random object generators assuming prngs are represented
          as clojure.lang.Function --- in other words, no direct 
@@ -11,7 +11,7 @@
    :version "2017-08-16"}
   
   (:import [java.util Collections]
-           [benchtools.java.sets ByteInterval DoubleInterval 
+           [palisades.lakes.bench.java.sets ByteInterval DoubleInterval 
             FloatInterval IntegerInterval LongInterval
             ShortInterval]))
 ;;----------------------------------------------------------------
@@ -26,22 +26,22 @@
 ;; an exception should be thrown, so care has to be taken.
 
 (defn byte-intervals ^clojure.lang.IFn [^clojure.lang.IFn$L g]
-  (fn byte-interval ^benchtools.java.sets.ByteInterval []
+  (fn byte-interval ^palisades.lakes.bench.java.sets.ByteInterval []
     (ByteInterval/generate g)))
 (defn double-intervals ^clojure.lang.IFn [^clojure.lang.IFn$D g]
-  (fn double-interval ^benchtools.java.sets.DoubleInterval []
+  (fn double-interval ^palisades.lakes.bench.java.sets.DoubleInterval []
     (DoubleInterval/generate g)))
 (defn float-intervals ^clojure.lang.IFn [^clojure.lang.IFn$D g]
-  (fn float-interval ^benchtools.java.sets.FloatInterval []
+  (fn float-interval ^palisades.lakes.bench.java.sets.FloatInterval []
     (FloatInterval/generate g)))
 (defn integer-intervals ^clojure.lang.IFn [^clojure.lang.IFn$L g]
-  (fn integer-interval ^benchtools.java.sets.IntegerInterval []
+  (fn integer-interval ^palisades.lakes.bench.java.sets.IntegerInterval []
     (IntegerInterval/generate g)))
 (defn long-intervals ^clojure.lang.IFn [^clojure.lang.IFn$L g]
-  (fn long-interval ^benchtools.java.sets.LongInterval []
+  (fn long-interval ^palisades.lakes.bench.java.sets.LongInterval []
     (LongInterval/generate g)))
 (defn short-intervals ^clojure.lang.IFn [^clojure.lang.IFn$L g]
-  (fn short-interval ^benchtools.java.sets.ShortInterval []
+  (fn short-interval ^palisades.lakes.bench.java.sets.ShortInterval []
     (ShortInterval/generate g)))
 ;;----------------------------------------------------------------
 (defn random-singleton-set

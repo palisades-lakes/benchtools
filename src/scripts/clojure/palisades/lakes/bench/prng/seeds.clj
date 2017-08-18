@@ -1,15 +1,15 @@
 (set! *warn-on-reflection* true)
 (set! *unchecked-math* :warn-on-boxed)
 ;;----------------------------------------------------------------
-(ns benchtools.prng.seeds
+(ns palisades.lakes.bench.prng.seeds
   
-  {:doc "Generate independent seeds for benchtools.prng."
+  {:doc "Generate independent seeds for palisades.lakes.bench.prng."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-04-05"
    :version "2017-07-25s"}
   
   (:require [clojure.java.io :as io]
-            [benchtools.random.seed :as seed])
+            [palisades.lakes.bench.random.seed :as seed])
   (:import java.time.LocalDate))
 ;;----------------------------------------------------------------
 ;; for Well44497b

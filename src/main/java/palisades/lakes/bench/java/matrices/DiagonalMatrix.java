@@ -1,4 +1,4 @@
-package benchtools.java.matrices;
+package palisades.lakes.bench.java.matrices;
 
 import java.util.Arrays;
 

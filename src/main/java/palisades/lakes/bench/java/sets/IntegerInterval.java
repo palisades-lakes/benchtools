@@ -1,31 +1,26 @@
-package benchtools.java.sets;
+package palisades.lakes.bench.java.sets;
 
 import clojure.lang.IFn;
 
 //----------------------------------------------------------------
 /** Half-open [min,max) interval in expressed in
- * <code>double</code>, but applicable to any primitive or Object
+ * <code>int</code>, but applicable to any primitive or Object
  * number.
- * <p>
- * Minor note: specifying integer intervals as half-open is a near
- * universal convention, at least in the Java libraries.
- * It's less common and a bit tricky for floating point intervals.
- * I make them both half-open for consistency.
- * <p>
+ *
  * TODO: how to implement [x,infinity]?
  * TODO: empty interval different from general empty set? has a
  * location so it can be transformed by functions R-&gt;R?
- * TODO: any sense in [z1,z0) where z1 > z0 ?
+ * TODO: any sense in [i1,i0) where i1 > i0 ? Complement?
  *
  * @author palisades dot lakes at gmail dot com
- * @since 2017-05-22
- * @version 2017-08-16
+ * @since 2017-05-29
+ * @version 2017-07-25
  */
 
-public final class DoubleInterval implements Set {
+public final class IntegerInterval implements Set {
 
-  public final double min;
-  public final double max;
+  public final int min;
+  public final int max;
 
   //--------------------------------------------------------------
   // Set interface
@@ -68,6 +63,7 @@ public final class DoubleInterval implements Set {
   public final boolean contains (final short x) {
     return (min <= x) && (x < max); }
 
+  
   @Override
   public final boolean contains (final Boolean x) { 
     return false; }
@@ -109,10 +105,19 @@ public final class DoubleInterval implements Set {
     if (x instanceof Long) { return contains((Long) x); }
     if (x instanceof Short) { return contains((Short) x); }
     return false; }
-
   //--------------------------------------------------------------
 
+  public final boolean intersects (final IntegerInterval that) {
+    if (max <= that.min) { return false; }
+    if (that.max <= min) { return false; }
+    return true; }
+
   public final boolean intersects (final DoubleInterval that) {
+    if (max <= that.min) { return false; }
+    if (that.max <= min) { return false; }
+    return true; }
+
+  public final boolean intersects (final LongInterval that) {
     if (max <= that.min) { return false; }
     if (that.max <= min) { return false; }
     return true; }
@@ -124,8 +129,8 @@ public final class DoubleInterval implements Set {
 
   @Override
   public final boolean intersects (final Object set) {
-    if (set instanceof DoubleInterval) {
-      return intersects((DoubleInterval) set); }
+    if (set instanceof IntegerInterval) {
+      return intersects((IntegerInterval) set); }
     if (set instanceof java.util.Set) {
       return intersects((java.util.Set) set); }
     throw new UnsupportedOperationException(
@@ -133,19 +138,16 @@ public final class DoubleInterval implements Set {
 
   //--------------------------------------------------------------
 
-  private DoubleInterval (final double z0,
-                          final double z1) {
-    assert (z0 <= z1);
-    min = z0; max = z1; }
+  private IntegerInterval (final int i0,
+                           final int i1) {
+    assert (i0 <= i1);
+    min = i0; max = i1; }
 
-  public static final DoubleInterval make (final double z0,
-                                           final double z1) {
+  public static final IntegerInterval make (final int i0,
+                                            final int i1) {
 
-    assert ! Double.isNaN(z0);
-    assert ! Double.isNaN(z1);
-
-    if (z0 <= z1) { return new DoubleInterval(z0,z1); }
-    return new DoubleInterval(z1,z0); }
+    if (i0 <= i1) { return new IntegerInterval(i0,i1); }
+    return new IntegerInterval(i1,i0); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -156,11 +158,14 @@ public final class DoubleInterval implements Set {
    * @throws an exception if the generated value is not within
    * the valid range.
    */
-  public static final DoubleInterval generate (final IFn.D g) {
+  public static final IntegerInterval generate (final IFn.L g) {
 
-    final double x0 = g.invokePrim();
-    final double x1 = g.invokePrim();
-    return make(x0,x1); }
+    final long x0 = g.invokePrim();
+    assert Integer.MIN_VALUE <= x0 && x0 <= Integer.MAX_VALUE;
+    final long x1 = g.invokePrim();
+    assert Integer.MIN_VALUE <= x1 && x1 <= Integer.MAX_VALUE;
+    
+    return make((int) x0, (int) x1); }
 
   //--------------------------------------------------------------
 } // end of class

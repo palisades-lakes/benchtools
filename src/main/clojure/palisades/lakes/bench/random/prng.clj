@@ -1,14 +1,14 @@
 (set! *warn-on-reflection* true) 
 (set! *unchecked-math* :warn-on-boxed)
 ;;----------------------------------------------------------------
-(ns benchtools.random.prng
+(ns palisades.lakes.bench.random.prng
   
   {:doc "pseudo-random number generators."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-04-05"
    :version "2017-07-25"}
   
-  (:require [benchtools.random.seed :as seed])
+  (:require [palisades.lakes.bench.random.seed :as seed])
   (:import [java.util Collection]
            [org.apache.commons.rng UniformRandomProvider]
            [org.apache.commons.rng.sampling CollectionSampler]
@@ -103,7 +103,7 @@
 ;;----------------------------------------------------------------
 ;; Java callable static methods
 (gen-class 
-  :name "benchtools.random.PRNG"
+  :name "palisades.lakes.bench.random.PRNG"
   :methods [^:static [uniformRandomProvider 
                       [Object] 
                       org.apache.commons.rng.UniformRandomProvider]
