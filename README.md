@@ -1,4 +1,4 @@
-# benchtools [![Clojars Project](https://img.shields.io/clojars/v/palisades-lakes/palisades.lakes.bench.svg)](https://clojars.org/palisades-lakes/benchtools)
+# benchtools [![Clojars Project](https://img.shields.io/clojars/v/palisades-lakes/bench-tools.svg)](https://clojars.org/palisades-lakes/benchtools)
 
 
 Shared utilities used by other projects that benchmark
@@ -19,7 +19,6 @@ eg:
 ```Maven
 mvn clean install
 ```
-
 
 ## Acknowledgments
 
