@@ -31,34 +31,34 @@ public final class L22 extends AFn implements LinearFunction {
   //--------------------------------------------------------------
 
   public final L2 invoke (final B2 v) {
-    final byte v0 = v.getX();
-    final byte v1 = v.getY();
+    final byte v0 = v.get0();
+    final byte v1 = v.get1();
     return L2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
   public final L2 invoke (final S2 v) {
-    final short v0 = v.getX();
-    final short v1 = v.getY();
+    final short v0 = v.get0();
+    final short v1 = v.get1();
     return L2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
   public final L2 invoke (final I2 v) {
-    final int v0 = v.getX();
-    final int v1 = v.getY();
+    final int v0 = v.get0();
+    final int v1 = v.get1();
     return L2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
   public final L2 invoke (final L2 v) {
     // TODO: overflow?
-    final long v0 = v.getX();
-    final long v1 = v.getY();
+    final long v0 = v.get0();
+    final long v1 = v.get1();
     return L2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
   public final D2 invoke (final F2 v) {
-    final float v0 = v.getX();
-    final float v1 = v.getY();
+    final float v0 = v.get0();
+    final float v1 = v.get1();
     return D2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
   public final D2 invoke (final D2 v) {
-    final double v0 = v.getX();
-    final double v1 = v.getY();
+    final double v0 = v.get0();
+    final double v1 = v.get1();
     return D2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
   //--------------------------------------------------------------

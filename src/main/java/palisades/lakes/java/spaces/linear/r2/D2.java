@@ -15,10 +15,10 @@ import palisades.lakes.java.spaces.linear.Vector;
 
 public final class D2 implements Vector {
 
-  private final double _x;
-  public final double getX () { return _x; }
-  private final double _y;
-  public final double getY () { return _y; }
+  private final double _v0;
+  public final double get0 () { return _v0; }
+  private final double _v1;
+  public final double get1 () { return _v1; }
 
   //--------------------------------------------------------------
   // Vector
@@ -27,8 +27,8 @@ public final class D2 implements Vector {
   @Override
   public final double coordinate (final int i) {
     switch (i) {
-    case 0 : return _x;
-    case 1 : return _y;
+    case 0 : return _v0;
+    case 1 : return _v1;
     default : 
       throw new IllegalArgumentException(
         "No " + i + "th coordinate in " + this); } }
@@ -37,12 +37,12 @@ public final class D2 implements Vector {
   // construction
   //--------------------------------------------------------------
 
-  private D2 (final double x, final double y) {
-    _x = x; _y = y; }
+  private D2 (final double v0, final double v1) {
+    _v0 = v0; _v1 = v1; }
 
-  public static final D2 make (final double x, final double y) {
+  public static final D2 make (final double v0, final double v1) {
 
-    return new D2(x,y); }
+    return new D2(v0,v1); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -53,9 +53,9 @@ public final class D2 implements Vector {
    */
   
   public static final D2 generate (final IFn.D g) {
-    final double x = g.invokePrim();
-    final double y = g.invokePrim();
-    return make(x,y); }
+    final double v0 = g.invokePrim();
+    final double v1 = g.invokePrim();
+    return make(v0,v1); }
 
   //--------------------------------------------------------------
 } // end of class

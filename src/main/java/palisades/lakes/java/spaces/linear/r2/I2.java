@@ -15,10 +15,10 @@ import palisades.lakes.java.spaces.linear.Vector;
 
 public final class I2 implements Vector {
 
-  private final int _x;
-  public final int getX () { return _x; }
-  private final int _y;
-  public final int getY () { return _y; }
+  private final int _v0;
+  public final int get0 () { return _v0; }
+  private final int _v1;
+  public final int get1 () { return _v1; }
 
   //--------------------------------------------------------------
   // Vector
@@ -27,8 +27,8 @@ public final class I2 implements Vector {
   @Override
   public final double coordinate (final int i) {
     switch (i) {
-    case 0 : return _x;
-    case 1 : return _y;
+    case 0 : return _v0;
+    case 1 : return _v1;
     default : 
       throw new IllegalArgumentException(
         "No " + i + "th coordinate in " + this); } }
@@ -37,12 +37,12 @@ public final class I2 implements Vector {
   // construction
   //--------------------------------------------------------------
 
-  private I2 (final int x, final int y) {
-    _x = x; _y = y; }
+  private I2 (final int v0, final int v1) {
+    _v0 = v0; _v1 = v1; }
 
-  public static final I2 make (final int x, final int y) {
+  public static final I2 make (final int v0, final int v1) {
 
-    return new I2(x,y); }
+    return new I2(v0,v1); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -55,13 +55,13 @@ public final class I2 implements Vector {
    */
   
   public static final I2 generate (final IFn.L g) {
-    final long x = g.invokePrim();
-    assert (Integer.MIN_VALUE <= x) && (x <= Integer.MAX_VALUE);
+    final long v0 = g.invokePrim();
+    assert (Integer.MIN_VALUE <= v0) && (v0 <= Integer.MAX_VALUE);
 
-    final long y = g.invokePrim();
-    assert (Integer.MIN_VALUE <= y) && (y <= Integer.MAX_VALUE);
+    final long v1 = g.invokePrim();
+    assert (Integer.MIN_VALUE <= v1) && (v1 <= Integer.MAX_VALUE);
 
-    return make((int) x, (int) y); }
+    return make((int) v0, (int) v1); }
 
   //--------------------------------------------------------------
 } // end of class

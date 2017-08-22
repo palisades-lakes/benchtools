@@ -15,10 +15,10 @@ import palisades.lakes.java.spaces.linear.Vector;
 
 public final class S2 implements Vector {
 
-  private final short _x;
-  public final short getX () { return _x; }
-  private final short _y;
-  public final short getY () { return _y; }
+  private final short _v0;
+  public final short get0 () { return _v0; }
+  private final short _v1;
+  public final short get1 () { return _v1; }
 
   //--------------------------------------------------------------
   // Vector
@@ -27,8 +27,8 @@ public final class S2 implements Vector {
   @Override
   public final double coordinate (final int i) {
     switch (i) {
-    case 0 : return _x;
-    case 1 : return _y;
+    case 0 : return _v0;
+    case 1 : return _v1;
     default : 
       throw new IllegalArgumentException(
         "No " + i + "th coordinate in " + this); } }
@@ -37,12 +37,12 @@ public final class S2 implements Vector {
   // construction
   //--------------------------------------------------------------
 
-  private S2 (final short x, final short y) {
-    _x = x; _y = y; }
+  private S2 (final short v0, final short v1) {
+    _v0 = v0; _v1 = v1; }
 
-  public static final S2 make (final short x, final short y) {
+  public static final S2 make (final short v0, final short v1) {
 
-    return new S2(x,y); }
+    return new S2(v0,v1); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -55,13 +55,13 @@ public final class S2 implements Vector {
    */
   
   public static final S2 generate (final IFn.L g) {
-    final long x = g.invokePrim();
-    assert (Short.MIN_VALUE <= x) && (x <= Short.MAX_VALUE);
+    final long v0 = g.invokePrim();
+    assert (Short.MIN_VALUE <= v0) && (v0 <= Short.MAX_VALUE);
 
-    final long y = g.invokePrim();
-    assert (Short.MIN_VALUE <= y) && (y <= Short.MAX_VALUE);
+    final long v1 = g.invokePrim();
+    assert (Short.MIN_VALUE <= v1) && (v1 <= Short.MAX_VALUE);
 
-    return make((short) x, (short) y); }
+    return make((short) v0, (short) v1); }
 
   //--------------------------------------------------------------
 } // end of class

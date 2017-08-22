@@ -7,7 +7,7 @@ import clojure.lang.ISeq;
 /** Interface for linear functions on linear (aka vector) spaces.
  * A function is linear if it distributes over linear 
  * combinations: 
- * <i>f(a*x + b*y) = a*f(x) + b*f(y)</i> 
+ * <i>f(a*x + b*v1) = a*f(v0) + b*f(v1)</i> 
  * where <i>a</i> and <i>b</i> are numbers and <i>x</i> and 
  * <i>y</i> are <code>Vector</code>.
  * <p>

@@ -15,10 +15,10 @@ import palisades.lakes.java.spaces.linear.Vector;
 
 public final class F2 implements Vector {
 
-  private final float _x;
-  public final float getX () { return _x; }
-  private final float _y;
-  public final float getY () { return _y; }
+  private final float _v0;
+  public final float get0 () { return _v0; }
+  private final float _v1;
+  public final float get1 () { return _v1; }
 
   //--------------------------------------------------------------
   // Vector
@@ -27,8 +27,8 @@ public final class F2 implements Vector {
   @Override
   public final double coordinate (final int i) {
     switch (i) {
-    case 0 : return _x;
-    case 1 : return _y;
+    case 0 : return _v0;
+    case 1 : return _v1;
     default : 
       throw new IllegalArgumentException(
         "No " + i + "th coordinate in " + this); } }
@@ -37,12 +37,12 @@ public final class F2 implements Vector {
   // construction
   //--------------------------------------------------------------
 
-  private F2 (final float x, final float y) {
-    _x = x; _y = y; }
+  private F2 (final float v0, final float v1) {
+    _v0 = v0; _v1 = v1; }
 
-  public static final F2 make (final float x, final float y) {
+  public static final F2 make (final float v0, final float v1) {
 
-    return new F2(x,y); }
+    return new F2(v0,v1); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -55,15 +55,15 @@ public final class F2 implements Vector {
    */
   
   public static final F2 generate (final IFn.D g) {
-    final double x = g.invokePrim();
-    assert Double.isNaN(x) || 
-    ((Float.MIN_VALUE <= x) && (x <= Float.MAX_VALUE));
+    final double v0 = g.invokePrim();
+    assert Double.isNaN(v0) || 
+    ((Float.MIN_VALUE <= v0) && (v0 <= Float.MAX_VALUE));
 
-    final double y = g.invokePrim();
-    assert Double.isNaN(y) || 
-    ((Float.MIN_VALUE <= y) && (y <= Float.MAX_VALUE));
+    final double v1 = g.invokePrim();
+    assert Double.isNaN(v1) || 
+    ((Float.MIN_VALUE <= v1) && (v1 <= Float.MAX_VALUE));
 
-    return make((float) x, (float) y); }
+    return make((float) v0, (float) v1); }
 
   //--------------------------------------------------------------
 } // end of class
