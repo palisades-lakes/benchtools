@@ -49,7 +49,7 @@
   (fn random-singleton-set ^java.util.Set []
     (Collections/singleton (generator))))
 ;;----------------------------------------------------------------
-(defn generate-array 
+(defn generate-objects 
   (^objects [^clojure.lang.IFn generator 
              ^long n
              ^Class element-type]
@@ -58,5 +58,5 @@
       sets))
   (^objects [^clojure.lang.IFn generator 
              ^long n]
-    (generate-array generator n java.lang.Object)))
+    (generate-objects generator n java.lang.Object)))
 ;;----------------------------------------------------------------
