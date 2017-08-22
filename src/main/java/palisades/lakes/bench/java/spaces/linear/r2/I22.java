@@ -1,13 +1,13 @@
-package palisades.lakes.java.spaces.linear.r2;
+package palisades.lakes.bench.java.spaces.linear.r2;
 
 import clojure.lang.AFn;
 import clojure.lang.IFn;
-import palisades.lakes.java.spaces.linear.LinearFunction;
-import palisades.lakes.java.spaces.linear.Vector;
+import palisades.lakes.bench.java.spaces.linear.LinearFunction;
+import palisades.lakes.bench.java.spaces.linear.Vector;
 
 //----------------------------------------------------------------
 /** (Immutable) linear transformation  on <b>R</b><sup>2</sup> 
- * represented as a 2x2 matrix with <code>short</code> 
+ * represented as a 2x2 matrix with <code>int</code> 
  * coordinates.
  * 
  * @author palisades dot lakes at gmail dot com
@@ -15,16 +15,16 @@ import palisades.lakes.java.spaces.linear.Vector;
  * @version 2017-08-22
  */
 
-public final class S22 extends AFn implements LinearFunction {
+public final class I22 extends AFn implements LinearFunction {
 
-  private final short _m00;
-  public final short get00 () { return _m00; }
-  private final short _m01;
-  public final short get01 () { return _m01; }
-  private final short _m10;
-  public final short get10 () { return _m10; }
-  private final short _m11;
-  public final short get11 () { return _m11; }
+  private final int _m00;
+  public final int get00 () { return _m00; }
+  private final int _m01;
+  public final int get01 () { return _m01; }
+  private final int _m10;
+  public final int get10 () { return _m10; }
+  private final int _m11;
+  public final int get11 () { return _m11; }
 
   //--------------------------------------------------------------
   // Methods
@@ -80,21 +80,21 @@ public final class S22 extends AFn implements LinearFunction {
   // construction
   //--------------------------------------------------------------
 
-  private S22 (final short m00,
-               final short m01,
-               final short m10,
-               final short m11) {
+  private I22 (final int m00,
+               final int m01,
+               final int m10,
+               final int m11) {
     _m00 = m00; 
     _m01 = m01;
     _m10 = m10; 
     _m11 = m11;  }
 
-  public static final S22 make (final short m00,
-                                final short m01,
-                                final short m10,
-                                final short m11) {
+  public static final I22 make (final int m00,
+                                final int m01,
+                                final int m10,
+                                final int m11) {
 
-    return new S22(m00,m01,m10,m11); }
+    return new I22(m00,m01,m10,m11); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -106,16 +106,16 @@ public final class S22 extends AFn implements LinearFunction {
    * the valid range.
    */
   
-  public static final S22 generate (final IFn.L g) {
+  public static final I22 generate (final IFn.L g) {
     final long m00 = g.invokePrim();
-    assert (Short.MIN_VALUE <= m00) && (m00<= Short.MAX_VALUE);
+    assert (Integer.MIN_VALUE <= m00) && (m00<= Integer.MAX_VALUE);
     final long m01 = g.invokePrim();
-    assert (Short.MIN_VALUE <= m01) && (m01 <= Short.MAX_VALUE);
+    assert (Integer.MIN_VALUE <= m01) && (m01 <= Integer.MAX_VALUE);
     final long m10 = g.invokePrim();
-    assert (Short.MIN_VALUE <= m10) && (m10<= Short.MAX_VALUE);
+    assert (Integer.MIN_VALUE <= m10) && (m10<= Integer.MAX_VALUE);
     final long m11 = g.invokePrim();
-    assert (Short.MIN_VALUE <= m11) && (m11 <= Short.MAX_VALUE);
-    return make((short) m00, (short) m01, (short) m10, (short) m11); }
+    assert (Integer.MIN_VALUE <= m11) && (m11 <= Integer.MAX_VALUE);
+    return make((int) m00, (int) m01, (int) m10, (int) m11); }
 
   //--------------------------------------------------------------
 } // end of class

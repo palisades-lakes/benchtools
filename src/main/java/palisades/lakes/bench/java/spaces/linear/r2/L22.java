@@ -1,9 +1,9 @@
-package palisades.lakes.java.spaces.linear.r2;
+package palisades.lakes.bench.java.spaces.linear.r2;
 
 import clojure.lang.AFn;
 import clojure.lang.IFn;
-import palisades.lakes.java.spaces.linear.LinearFunction;
-import palisades.lakes.java.spaces.linear.Vector;
+import palisades.lakes.bench.java.spaces.linear.LinearFunction;
+import palisades.lakes.bench.java.spaces.linear.Vector;
 
 //----------------------------------------------------------------
 /** (Immutable) linear transformation  on <b>R</b><sup>2</sup> 
@@ -15,30 +15,30 @@ import palisades.lakes.java.spaces.linear.Vector;
  * @version 2017-08-22
  */
 
-public final class I22 extends AFn implements LinearFunction {
+public final class L22 extends AFn implements LinearFunction {
 
-  private final int _m00;
-  public final int get00 () { return _m00; }
-  private final int _m01;
-  public final int get01 () { return _m01; }
-  private final int _m10;
-  public final int get10 () { return _m10; }
-  private final int _m11;
-  public final int get11 () { return _m11; }
+  private final long _m00;
+  public final long get00 () { return _m00; }
+  private final long _m01;
+  public final long get01 () { return _m01; }
+  private final long _m10;
+  public final long get10 () { return _m10; }
+  private final long _m11;
+  public final long get11 () { return _m11; }
 
   //--------------------------------------------------------------
   // Methods
   //--------------------------------------------------------------
 
-  public final I2 invoke (final B2 v) {
+  public final L2 invoke (final B2 v) {
     final byte v0 = v.get0();
     final byte v1 = v.get1();
-    return I2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
+    return L2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
-  public final I2 invoke (final S2 v) {
+  public final L2 invoke (final S2 v) {
     final short v0 = v.get0();
     final short v1 = v.get1();
-    return I2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
+    return L2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
   public final L2 invoke (final I2 v) {
     final int v0 = v.get0();
@@ -80,21 +80,21 @@ public final class I22 extends AFn implements LinearFunction {
   // construction
   //--------------------------------------------------------------
 
-  private I22 (final int m00,
-               final int m01,
-               final int m10,
-               final int m11) {
+  private L22 (final long m00,
+               final long m01,
+               final long m10,
+               final long m11) {
     _m00 = m00; 
     _m01 = m01;
     _m10 = m10; 
     _m11 = m11;  }
 
-  public static final I22 make (final int m00,
-                                final int m01,
-                                final int m10,
-                                final int m11) {
+  public static final L22 make (final long m00,
+                                final long m01,
+                                final long m10,
+                                final long m11) {
 
-    return new I22(m00,m01,m10,m11); }
+    return new L22(m00,m01,m10,m11); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -106,7 +106,7 @@ public final class I22 extends AFn implements LinearFunction {
    * the valid range.
    */
   
-  public static final I22 generate (final IFn.L g) {
+  public static final L22 generate (final IFn.L g) {
     final long m00 = g.invokePrim();
     assert (Integer.MIN_VALUE <= m00) && (m00<= Integer.MAX_VALUE);
     final long m01 = g.invokePrim();
@@ -115,7 +115,7 @@ public final class I22 extends AFn implements LinearFunction {
     assert (Integer.MIN_VALUE <= m10) && (m10<= Integer.MAX_VALUE);
     final long m11 = g.invokePrim();
     assert (Integer.MIN_VALUE <= m11) && (m11 <= Integer.MAX_VALUE);
-    return make((int) m00, (int) m01, (int) m10, (int) m11); }
+    return make(m00, m01, m10, m11); }
 
   //--------------------------------------------------------------
 } // end of class

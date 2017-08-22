@@ -1,4 +1,4 @@
-package palisades.lakes.java.spaces.linear;
+package palisades.lakes.bench.java.spaces.linear;
 
 //----------------------------------------------------------------
 /** Interface for elements of real linear (aka vector) spaces.

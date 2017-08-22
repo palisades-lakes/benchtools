@@ -1,13 +1,13 @@
-package palisades.lakes.java.spaces.linear.r2;
+package palisades.lakes.bench.java.spaces.linear.r2;
 
 import clojure.lang.AFn;
 import clojure.lang.IFn;
-import palisades.lakes.java.spaces.linear.LinearFunction;
-import palisades.lakes.java.spaces.linear.Vector;
+import palisades.lakes.bench.java.spaces.linear.LinearFunction;
+import palisades.lakes.bench.java.spaces.linear.Vector;
 
 //----------------------------------------------------------------
 /** (Immutable) linear transformation  on <b>R</b><sup>2</sup> 
- * represented as a 2x2 matrix with <code>int</code> 
+ * represented as a 2x2 matrix with <code>short</code> 
  * coordinates.
  * 
  * @author palisades dot lakes at gmail dot com
@@ -15,30 +15,30 @@ import palisades.lakes.java.spaces.linear.Vector;
  * @version 2017-08-22
  */
 
-public final class L22 extends AFn implements LinearFunction {
+public final class S22 extends AFn implements LinearFunction {
 
-  private final long _m00;
-  public final long get00 () { return _m00; }
-  private final long _m01;
-  public final long get01 () { return _m01; }
-  private final long _m10;
-  public final long get10 () { return _m10; }
-  private final long _m11;
-  public final long get11 () { return _m11; }
+  private final short _m00;
+  public final short get00 () { return _m00; }
+  private final short _m01;
+  public final short get01 () { return _m01; }
+  private final short _m10;
+  public final short get10 () { return _m10; }
+  private final short _m11;
+  public final short get11 () { return _m11; }
 
   //--------------------------------------------------------------
   // Methods
   //--------------------------------------------------------------
 
-  public final L2 invoke (final B2 v) {
+  public final I2 invoke (final B2 v) {
     final byte v0 = v.get0();
     final byte v1 = v.get1();
-    return L2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
+    return I2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
-  public final L2 invoke (final S2 v) {
+  public final I2 invoke (final S2 v) {
     final short v0 = v.get0();
     final short v1 = v.get1();
-    return L2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
+    return I2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
   public final L2 invoke (final I2 v) {
     final int v0 = v.get0();
@@ -80,21 +80,21 @@ public final class L22 extends AFn implements LinearFunction {
   // construction
   //--------------------------------------------------------------
 
-  private L22 (final long m00,
-               final long m01,
-               final long m10,
-               final long m11) {
+  private S22 (final short m00,
+               final short m01,
+               final short m10,
+               final short m11) {
     _m00 = m00; 
     _m01 = m01;
     _m10 = m10; 
     _m11 = m11;  }
 
-  public static final L22 make (final long m00,
-                                final long m01,
-                                final long m10,
-                                final long m11) {
+  public static final S22 make (final short m00,
+                                final short m01,
+                                final short m10,
+                                final short m11) {
 
-    return new L22(m00,m01,m10,m11); }
+    return new S22(m00,m01,m10,m11); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -106,16 +106,16 @@ public final class L22 extends AFn implements LinearFunction {
    * the valid range.
    */
   
-  public static final L22 generate (final IFn.L g) {
+  public static final S22 generate (final IFn.L g) {
     final long m00 = g.invokePrim();
-    assert (Integer.MIN_VALUE <= m00) && (m00<= Integer.MAX_VALUE);
+    assert (Short.MIN_VALUE <= m00) && (m00<= Short.MAX_VALUE);
     final long m01 = g.invokePrim();
-    assert (Integer.MIN_VALUE <= m01) && (m01 <= Integer.MAX_VALUE);
+    assert (Short.MIN_VALUE <= m01) && (m01 <= Short.MAX_VALUE);
     final long m10 = g.invokePrim();
-    assert (Integer.MIN_VALUE <= m10) && (m10<= Integer.MAX_VALUE);
+    assert (Short.MIN_VALUE <= m10) && (m10<= Short.MAX_VALUE);
     final long m11 = g.invokePrim();
-    assert (Integer.MIN_VALUE <= m11) && (m11 <= Integer.MAX_VALUE);
-    return make(m00, m01, m10, m11); }
+    assert (Short.MIN_VALUE <= m11) && (m11 <= Short.MAX_VALUE);
+    return make((short) m00, (short) m01, (short) m10, (short) m11); }
 
   //--------------------------------------------------------------
 } // end of class

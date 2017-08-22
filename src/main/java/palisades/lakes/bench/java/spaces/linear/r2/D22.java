@@ -1,9 +1,9 @@
-package palisades.lakes.java.spaces.linear.r2;
+package palisades.lakes.bench.java.spaces.linear.r2;
 
 import clojure.lang.AFn;
 import clojure.lang.IFn;
-import palisades.lakes.java.spaces.linear.LinearFunction;
-import palisades.lakes.java.spaces.linear.Vector;
+import palisades.lakes.bench.java.spaces.linear.LinearFunction;
+import palisades.lakes.bench.java.spaces.linear.Vector;
 
 //----------------------------------------------------------------
 /** (Immutable) linear transformation  on <b>R</b><sup>2</sup> 

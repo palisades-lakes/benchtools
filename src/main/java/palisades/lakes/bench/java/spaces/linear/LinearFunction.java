@@ -1,4 +1,4 @@
-package palisades.lakes.java.spaces.linear;
+package palisades.lakes.bench.java.spaces.linear;
 
 import clojure.lang.IFn;
 import clojure.lang.ISeq;

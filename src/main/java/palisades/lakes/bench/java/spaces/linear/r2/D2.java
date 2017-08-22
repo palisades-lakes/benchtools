@@ -1,11 +1,11 @@
-package palisades.lakes.java.spaces.linear.r2;
+package palisades.lakes.bench.java.spaces.linear.r2;
 
 import clojure.lang.IFn;
-import palisades.lakes.java.spaces.linear.Vector;
+import palisades.lakes.bench.java.spaces.linear.Vector;
 
 //----------------------------------------------------------------
 /** (Immutable) vector in <b>R</b><sup>2</sup> represented 
- * by <code>short</code> <code>x</code> <code>y</code>
+ * by <code>double</code> <code>x</code> <code>y</code>
  * coordinates.
  * 
  * @author palisades dot lakes at gmail dot com
@@ -13,12 +13,12 @@ import palisades.lakes.java.spaces.linear.Vector;
  * @version 2017-08-22
  */
 
-public final class S2 implements Vector {
+public final class D2 implements Vector {
 
-  private final short _v0;
-  public final short get0 () { return _v0; }
-  private final short _v1;
-  public final short get1 () { return _v1; }
+  private final double _v0;
+  public final double get0 () { return _v0; }
+  private final double _v1;
+  public final double get1 () { return _v1; }
 
   //--------------------------------------------------------------
   // Vector
@@ -37,12 +37,12 @@ public final class S2 implements Vector {
   // construction
   //--------------------------------------------------------------
 
-  private S2 (final short v0, final short v1) {
+  private D2 (final double v0, final double v1) {
     _v0 = v0; _v1 = v1; }
 
-  public static final S2 make (final short v0, final short v1) {
+  public static final D2 make (final double v0, final double v1) {
 
-    return new S2(v0,v1); }
+    return new D2(v0,v1); }
 
   /** <code>g</code> is a 'function' of no arguments, which is 
    * expected to return a different value on each call, typically
@@ -50,18 +50,12 @@ public final class S2 implements Vector {
    * Clojure unfortunately only supports functions returning
    * primitive <code>long</code> and <code>double</code>
    * values.
-   * @throws an exception if the generated value is not within
-   * the valid range.
    */
   
-  public static final S2 generate (final IFn.L g) {
-    final long v0 = g.invokePrim();
-    assert (Short.MIN_VALUE <= v0) && (v0 <= Short.MAX_VALUE);
-
-    final long v1 = g.invokePrim();
-    assert (Short.MIN_VALUE <= v1) && (v1 <= Short.MAX_VALUE);
-
-    return make((short) v0, (short) v1); }
+  public static final D2 generate (final IFn.D g) {
+    final double v0 = g.invokePrim();
+    final double v1 = g.invokePrim();
+    return make(v0,v1); }
 
   //--------------------------------------------------------------
 } // end of class
