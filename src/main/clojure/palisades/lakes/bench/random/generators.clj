@@ -49,6 +49,7 @@
   (fn random-singleton-set ^java.util.Set []
     (Collections/singleton (generator))))
 ;;----------------------------------------------------------------
+<<<<<<< HEAD
 (defn generate-ints 
   (^ints [^clojure.lang.IFn$L generator 
              ^long n]
@@ -56,6 +57,8 @@
       (dotimes [i n] (aset-int a i (generator)))
       a)))
 ;;----------------------------------------------------------------
+=======
+>>>>>>> refs/heads/x1
 (defn generate-objects 
   (^objects [^clojure.lang.IFn generator 
              ^long n
