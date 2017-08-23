@@ -6,7 +6,7 @@ import palisades.lakes.bench.java.spaces.linear.LinearFunction;
 import palisades.lakes.bench.java.spaces.linear.Vector;
 
 //----------------------------------------------------------------
-/** (Immutable) linear transformation  on <b>R</b><sup>2</sup> 
+/** (Immutable) linear transformation on <b>R</b><sup>2</sup> 
  * represented as a 2x2 matrix with <code>byte</code> 
  * coordinates.
  * 
@@ -27,7 +27,7 @@ public final class B22 extends AFn implements LinearFunction {
   public final byte get11 () { return _m11; }
 
   //--------------------------------------------------------------
-  // Methods
+  // 7 invoke methods
   //--------------------------------------------------------------
 
   public final I2 invoke (final B2 v) {
@@ -51,18 +51,320 @@ public final class B22 extends AFn implements LinearFunction {
     final long v1 = v.get1();
     return L2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
-  public final D2 invoke (final F2 v) {
+  public final F2 invoke (final F2 v) {
     final float v0 = v.get0();
     final float v1 = v.get1();
-    return D2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
+    return F2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
   
   public final D2 invoke (final D2 v) {
     final double v0 = v.get0();
     final double v1 = v.get1();
     return D2.make(_m00*v0 + _m01*v1, _m10*v0 + _m11*v1); }
-  
+
   //--------------------------------------------------------------
-  // Vector
+  // 37 axpy methods
+  //--------------------------------------------------------------
+
+  public final I2 axpy (final B2 x, final B2 y) {
+    final byte x0 = x.get0();
+    final byte x1 = x.get1();
+    return 
+      I2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final I2 axpy (final B2 x, final S2 y) {
+    final int x0 = x.get0();
+    final int x1 = x.get1();
+    return 
+      I2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final L2 axpy (final B2 x, final I2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final L2 axpy (final B2 x, final L2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final F2 axpy (final B2 x, final F2 y) {
+    final float x0 = x.get0();
+    final float x1 = x.get1();
+    return 
+      F2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final D2 axpy (final B2 x, final D2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  //--------------------------------------------------------------
+
+  public final I2 axpy (final S2 x, final B2 y) {
+    final short x0 = x.get0();
+    final short x1 = x.get1();
+    return 
+      I2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final I2 axpy (final S2 x, final S2 y) {
+    final int x0 = x.get0();
+    final int x1 = x.get1();
+    return 
+      I2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final L2 axpy (final S2 x, final I2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final L2 axpy (final S2 x, final L2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final F2 axpy (final S2 x, final F2 y) {
+    final float x0 = x.get0();
+    final float x1 = x.get1();
+    return 
+      F2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final D2 axpy (final S2 x, final D2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  //--------------------------------------------------------------
+
+  public final L2 axpy (final I2 x, final B2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final L2 axpy (final I2 x, final S2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final L2 axpy (final I2 x, final I2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final L2 axpy (final I2 x, final L2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final F2 axpy (final I2 x, final F2 y) {
+    final float x0 = x.get0();
+    final float x1 = x.get1();
+    return 
+      F2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final D2 axpy (final I2 x, final D2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  //--------------------------------------------------------------
+
+  public final L2 axpy (final L2 x, final B2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final L2 axpy (final L2 x, final S2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final L2 axpy (final L2 x, final I2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final L2 axpy (final L2 x, final L2 y) {
+    final long x0 = x.get0();
+    final long x1 = x.get1();
+    return 
+      L2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final F2 axpy (final L2 x, final F2 y) {
+    final float x0 = x.get0();
+    final float x1 = x.get1();
+    return 
+      F2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final D2 axpy (final L2 x, final D2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  //--------------------------------------------------------------
+
+  public final F2 axpy (final F2 x, final B2 y) {
+    final float x0 = x.get0();
+    final float x1 = x.get1();
+    return 
+      F2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final F2 axpy (final F2 x, final S2 y) {
+    final float x0 = x.get0();
+    final float x1 = x.get1();
+    return 
+      F2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final F2 axpy (final F2 x, final I2 y) {
+    final float x0 = x.get0();
+    final float x1 = x.get1();
+    return 
+      F2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final F2 axpy (final F2 x, final L2 y) {
+    final float x0 = x.get0();
+    final float x1 = x.get1();
+    return 
+      F2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final F2 axpy (final F2 x, final F2 y) {
+    final float x0 = x.get0();
+    final float x1 = x.get1();
+    return 
+      F2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final D2 axpy (final F2 x, final D2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  //--------------------------------------------------------------
+
+  public final D2 axpy (final D2 x, final B2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final D2 axpy (final D2 x, final S2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final D2 axpy (final D2 x, final I2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final D2 axpy (final D2 x, final L2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final D2 axpy (final D2 x, final F2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  public final D2 axpy (final D2 x, final D2 y) {
+    final double x0 = x.get0();
+    final double x1 = x.get1();
+    return 
+      D2.make(
+        _m00*x0 + _m01*x1 + y.get0(), 
+        _m10*x0 + _m11*x1 + y.get1()); }
+
+  //--------------------------------------------------------------
+  // LinearFunction interface
   //--------------------------------------------------------------
 
   @Override
@@ -75,6 +377,57 @@ public final class B22 extends AFn implements LinearFunction {
     if (v instanceof S2) { return invoke((S2) v); }
     throw new IllegalArgumentException(
       "can't invoke " + this + " on " + v); }
+
+  //--------------------------------------------------------------
+  // order of tests?
+  
+  @Override
+  public final Vector axpy (final Vector x, 
+                            final Vector y) {
+    if (x instanceof B2) {
+      if (y instanceof B2) { return axpy((B2) x, (B2) y); }
+      if (y instanceof D2) { return axpy((B2) x, (D2) y); }
+      if (y instanceof F2) { return axpy((B2) x, (F2) y); }
+      if (y instanceof I2) { return axpy((B2) x, (I2) y); }
+      if (y instanceof L2) { return axpy((B2) x, (L2) y); }
+      if (y instanceof S2) { return axpy((B2) x, (S2) y); } }
+    if (x instanceof D2) { 
+      if (y instanceof B2) { return axpy((D2) x, (B2) y); }
+      if (y instanceof D2) { return axpy((D2) x, (D2) y); }
+      if (y instanceof F2) { return axpy((D2) x, (F2) y); }
+      if (y instanceof I2) { return axpy((D2) x, (I2) y); }
+      if (y instanceof L2) { return axpy((D2) x, (L2) y); }
+      if (y instanceof S2) { return axpy((D2) x, (S2) y); } }
+    if (x instanceof F2) { 
+      if (y instanceof B2) { return axpy((F2) x, (B2) y); }
+      if (y instanceof D2) { return axpy((F2) x, (D2) y); }
+      if (y instanceof F2) { return axpy((F2) x, (F2) y); }
+      if (y instanceof I2) { return axpy((F2) x, (I2) y); }
+      if (y instanceof L2) { return axpy((F2) x, (L2) y); }
+      if (y instanceof S2) { return axpy((F2) x, (S2) y); } }
+    if (x instanceof I2) { 
+      if (y instanceof B2) { return axpy((I2) x, (B2) y); }
+      if (y instanceof D2) { return axpy((I2) x, (D2) y); }
+      if (y instanceof F2) { return axpy((I2) x, (F2) y); }
+      if (y instanceof I2) { return axpy((I2) x, (I2) y); }
+      if (y instanceof L2) { return axpy((I2) x, (L2) y); }
+      if (y instanceof S2) { return axpy((I2) x, (S2) y); } }
+    if (x instanceof L2) { 
+      if (y instanceof B2) { return axpy((L2) x, (B2) y); }
+      if (y instanceof D2) { return axpy((L2) x, (D2) y); }
+      if (y instanceof F2) { return axpy((L2) x, (F2) y); }
+      if (y instanceof I2) { return axpy((L2) x, (I2) y); }
+      if (y instanceof L2) { return axpy((L2) x, (L2) y); }
+      if (y instanceof S2) { return axpy((L2) x, (S2) y); } }
+    if (x instanceof S2) { 
+      if (y instanceof B2) { return axpy((S2) x, (B2) y); }
+      if (y instanceof D2) { return axpy((S2) x, (D2) y); }
+      if (y instanceof F2) { return axpy((S2) x, (F2) y); }
+      if (y instanceof I2) { return axpy((S2) x, (I2) y); }
+      if (y instanceof L2) { return axpy((S2) x, (L2) y); }
+      if (y instanceof S2) { return axpy((S2) x, (S2) y); } }
+    throw new IllegalArgumentException(
+      "can't axpy " + this + " , " + x + " , " + y); }
 
   //--------------------------------------------------------------
   // construction

@@ -21,7 +21,14 @@ import clojure.lang.ISeq;
 
 public interface LinearFunction extends IFn {
 
-  Vector invoke (final Vector v);
+  Vector invoke (Vector v);
+  
+  /** Basic operation for affine functions. */
+  Vector axpy (Vector x, Vector y);
+  
+  //--------------------------------------------------------------
+  // IFn interface
+  //--------------------------------------------------------------
   
   @Override
   default Object invoke (final Object v) { 

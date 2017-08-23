@@ -21,9 +21,13 @@ public final class B2 implements Vector {
   public final byte get1 () { return _v1; }
 
   //--------------------------------------------------------------
-  // Vector
+  // Vector interface
   //--------------------------------------------------------------
-
+  
+  @Override
+  public final double l1Norm () {
+    return Math.abs(_v0) + Math.abs(_v1); }
+  
   @Override
   public final double coordinate (final int i) {
     switch (i) {
