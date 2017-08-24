@@ -66,7 +66,7 @@
   ^clojure.lang.IFn$D [^double umin
                        ^double umax
                        ^UniformRandomProvider urp]
-  (let [umin (max Float/MIN_VALUE umin)
+  (let [umin (max (- Float/MAX_VALUE) umin)
         umax (min Float/MAX_VALUE umax)
         ^ContinuousSampler g (ContinuousUniformSampler. urp umin umax)]
     (fn uniform-float-generator ^double [] (.sample g))))

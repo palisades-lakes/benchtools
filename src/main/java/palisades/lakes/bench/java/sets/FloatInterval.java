@@ -159,12 +159,19 @@ public final class FloatInterval implements Set {
   public static final FloatInterval generate (final IFn.D g) {
 
     final double x0 = g.invokePrim();
-    assert Float.MIN_VALUE <= x0 && x0 <= Float.MAX_VALUE;
+    // TODO: is it necessary to enforce finiteness?
+    assert ! Double.isNaN(x0);
+    assert ((Float.NEGATIVE_INFINITY < x0) 
+      && (x0 < Float.POSITIVE_INFINITY)) :
+      "outside float range: " + x0;
     final double x1 = g.invokePrim();
-    assert Float.MIN_VALUE <= x1 && x1 <= Float.MAX_VALUE;
+    assert ! Double.isNaN(x1);
+    assert ((Float.NEGATIVE_INFINITY < x1) 
+      && (x1 < Float.POSITIVE_INFINITY)) :
+      "outside float range: " + x1;
     
     return make((float) x0, (float) x1); }
 
   //--------------------------------------------------------------
 } // end of class
-//----------------------------------------------------------------
+
