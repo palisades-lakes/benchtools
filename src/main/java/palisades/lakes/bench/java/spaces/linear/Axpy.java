@@ -5,7 +5,7 @@ package palisades.lakes.bench.java.spaces.linear;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-08-22
- * @version 2017-08-22
+ * @version 2017-08-23
  */
 
 @SuppressWarnings("unchecked")
@@ -248,15 +248,18 @@ public final class Axpy extends Object {
   // lookup
   //--------------------------------------------------------------
 
-  public static final boolean manual (final Object s0,
-                                      final Object s1) {
+  public static final boolean manual (final Object a,
+                                      final Object x,
+                                      final Object y) {
 
 
     throw new UnsupportedOperationException(
-      "Can't test for interesection of " +
-        s0.getClass().getSimpleName() +
-        " and " +
-        s1.getClass().getSimpleName()); }
+      "Can't axpy " +
+        a.getClass().getSimpleName() +
+        " * " +
+        x.getClass().getSimpleName() +
+        " * " +
+        y.getClass().getSimpleName()); }
 
   //--------------------------------------------------------------
   // summaries

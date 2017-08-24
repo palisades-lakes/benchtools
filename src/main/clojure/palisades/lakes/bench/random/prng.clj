@@ -6,7 +6,7 @@
   {:doc "pseudo-random number generators."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-04-05"
-   :version "2017-08-21"}
+   :version "2017-08-23"}
   
   (:require [palisades.lakes.bench.random.seed :as seed])
   (:import [clojure.lang IFn IFn$D IFn$L]
@@ -52,16 +52,14 @@
                        ^UniformRandomProvider urp]
   (let [umin (max Byte/MIN_VALUE umin)
         umax (min Byte/MAX_VALUE umax)
-        ^DiscreteSampler g (DiscreteUniformSampler. 
-                             urp umin umax)]
+        ^DiscreteSampler g (DiscreteUniformSampler. urp umin umax)]
     (fn uniform-byte-generator ^long [] (long (.sample g)))))
 ;;----------------------------------------------------------------
 (defn uniform-double-generator 
   ^clojure.lang.IFn$D [^double umin
                        ^double umax
                        ^UniformRandomProvider urp]
-  (let [^ContinuousSampler g (ContinuousUniformSampler. 
-                               urp umin umax)]
+  (let [^ContinuousSampler g (ContinuousUniformSampler. urp umin umax)]
     (fn uniform-double-generator ^double [] (.sample g))))
 ;;----------------------------------------------------------------
 (defn uniform-float-generator 
@@ -70,8 +68,7 @@
                        ^UniformRandomProvider urp]
   (let [umin (max Float/MIN_VALUE umin)
         umax (min Float/MAX_VALUE umax)
-        ^ContinuousSampler g (ContinuousUniformSampler. 
-                               urp umin umax)]
+        ^ContinuousSampler g (ContinuousUniformSampler. urp umin umax)]
     (fn uniform-float-generator ^double [] (.sample g))))
 ;;----------------------------------------------------------------
 (defn uniform-int-generator 
@@ -80,18 +77,16 @@
                        ^UniformRandomProvider urp]
   (let [umin (max Integer/MIN_VALUE umin)
         umax (min Integer/MAX_VALUE umax)
-        ^DiscreteSampler g (DiscreteUniformSampler. 
-                             urp umin umax)]
+        ^DiscreteSampler g (DiscreteUniformSampler. urp umin umax)]
     (fn uniform-int-generator ^long [] (long (.sample g)))))
 ;;----------------------------------------------------------------
-;; DiscreteSampler only covers int range
-#_(defn uniform-long-generator 
-  ^clojure.lang.IFn$L [^long umin
-                       ^long umax
-                       ^UniformRandomProvider urp]
-  (let [^DiscreteSampler g (DiscreteUniformSampler. 
-                             urp umin umax)]
-    (fn uniform-long-generator ^long [] (.sample g))))
+;; FIXME:
+(defn uniform-long-generator 
+ ^clojure.lang.IFn$L [^long umin
+                      ^long umax
+                      ^UniformRandomProvider urp]
+ (let [^DiscreteSampler g (DiscreteUniformSampler. urp umin umax)]
+   (fn uniform-long-generator ^long [] (.sample g))))
 ;;----------------------------------------------------------------
 (defn uniform-short-generator 
   ^clojure.lang.IFn$L [^long umin
@@ -99,8 +94,7 @@
                        ^UniformRandomProvider urp]
   (let [umin (max Short/MIN_VALUE umin)
         umax (min Short/MAX_VALUE umax)
-        ^DiscreteSampler g (DiscreteUniformSampler. 
-                             urp umin umax)]
+        ^DiscreteSampler g (DiscreteUniformSampler. urp umin umax)]
     (fn uniform-short-generator ^long [] (long (.sample g)))))
 ;;----------------------------------------------------------------
 ;; Numbers
@@ -109,55 +103,72 @@
   ^clojure.lang.IFn [^long umin
                      ^long umax
                      ^UniformRandomProvider urp]
-  (let [^IFn$L g (uniform-byte-generator urp umin umax)]
-    (fn uniformByteGenerator ^Byte [] 
+  (let [^IFn$L g (uniform-byte-generator umin umax urp)]
+    (fn UniformByte ^Byte [] 
       (Byte/valueOf (byte (.invokePrim g))))))
 ;;----------------------------------------------------------------
 (defn uniformDoubleGenerator 
   ^clojure.lang.IFn [^double umin
                      ^double umax
                      ^UniformRandomProvider urp]
-  (let [^IFn$D g (uniform-double-generator urp umin umax)]
-    (fn uniformDoubleGenerator ^Double [] 
+  (let [^IFn$D g (uniform-double-generator umin umax urp)]
+    (fn UniformDouble ^Double [] 
       (Double/valueOf (double (.invokePrim g))))))
 ;;----------------------------------------------------------------
 (defn uniformFloatGenerator 
   ^clojure.lang.IFn [^double umin
                      ^double umax
                      ^UniformRandomProvider urp]
-  (let [^IFn$D g (uniform-float-generator urp umin umax)]
-    (fn uniformFloatGenerator ^Float [] 
+  (let [^IFn$D g (uniform-float-generator umin umax urp)]
+    (fn UniformFloat ^Float [] 
       (Float/valueOf (float (.invokePrim g))))))
 ;;----------------------------------------------------------------
 (defn uniformIntegerGenerator 
   ^clojure.lang.IFn [^long umin
                      ^long umax
                      ^UniformRandomProvider urp]
-  (let [^IFn$L g (uniform-int-generator urp umin umax)]
-    (fn uniformIntegerGenerator ^Integer [] 
+  (let [^IFn$L g (uniform-int-generator umin umax urp)]
+    (fn UniformInteger ^Integer [] 
       (Integer/valueOf (int (.invokePrim g))))))
 ;;----------------------------------------------------------------
-;; DiscreteUniformSampler only produces int
-#_(defn uniformLongGenerator 
-  ^clojure.lang.IFn [^long umin
-                     ^long umax
-                     ^UniformRandomProvider urp]
-  (let [^IFn$L g (uniform-long-generator urp umin umax)]
-    (fn uniformLongGenerator ^Long [] 
-       (Long/valueOf (.invokePrim g)))))
+;; FIXME: DiscreteUniformSampler only produces int
+(defn uniformLongGenerator 
+ ^clojure.lang.IFn [^long umin
+                    ^long umax
+                    ^UniformRandomProvider urp]
+ (let [^IFn$L g (uniform-long-generator umin umax urp)]
+   (fn UniformLong ^Long [] 
+      (Long/valueOf (.invokePrim g)))))
 ;;----------------------------------------------------------------
 (defn uniformShortGenerator 
   ^clojure.lang.IFn [^long umin
                      ^long umax
                      ^UniformRandomProvider urp]
-  (let [^IFn$L g (uniform-short-generator urp umin umax)]
-    (fn uniformShortGenerator ^Short [] 
+  (let [^IFn$L g (uniform-short-generator umin umax urp)]
+    (fn UniformShort ^Short [] 
       (Short/valueOf (short (.invokePrim g))))))
 ;;----------------------------------------------------------------
 (defn uniform-element-generator 
   ^clojure.lang.IFn [^Collection c ^UniformRandomProvider urp]
   (let [^CollectionSampler cs (CollectionSampler. urp c)]
     (fn random-set [] ((.sample cs)))))
+;;----------------------------------------------------------------
+(defn uniformNumberGenerator 
+  ^clojure.lang.IFn [^double umin
+                     ^double umax
+                     ^UniformRandomProvider urp]
+  (let [lmin (long umin)
+        lmax (long umax)
+        ^CollectionSampler cs 
+        (CollectionSampler. 
+          urp 
+            [(uniformByteGenerator lmin lmax urp)
+             (uniformDoubleGenerator umin umax urp)
+             (uniformFloatGenerator umin umax urp)
+             (uniformIntegerGenerator lmin lmax urp)
+             (uniformLongGenerator lmin lmax urp)
+             (uniformShortGenerator lmin lmax urp)])]
+    (fn UniformNumber ^Number [] ((.sample cs)))))
 ;;----------------------------------------------------------------
 ;; NOT thread safe!
 (defn cycling-generator ^clojure.lang.IFn [generators]
@@ -176,22 +187,6 @@
   ^clojure.lang.IFn [generators ^UniformRandomProvider urp]
   (let [^CollectionSampler cs (CollectionSampler. urp generators)]
     (fn nested-uniform-generator [] ((.sample cs)))))
-;;----------------------------------------------------------------
-(defn uniform-Number-generator 
-  ^clojure.lang.IFn [^double umin
-                     ^double umax
-                     ^UniformRandomProvider urp]
-  (let [lmin (long umin)
-        lmax (long umax)
-        g (nested-uniform-generator
-            [(uniformByteGenerator lmin lmax urp)
-             (uniformDoubleGenerator umin umax urp)
-             (uniformFloatGenerator umin umax urp)
-             (uniformIntegerGenerator lmin lmax urp)
-             (uniformShortGenerator lmin lmax urp)]
-            urp)]
-         
-    (fn uniform-Number-generator ^Number [] (g))))
 ;;----------------------------------------------------------------
 ;; Java callable static methods
 (gen-class 

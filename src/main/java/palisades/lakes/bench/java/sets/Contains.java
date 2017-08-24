@@ -14,561 +14,569 @@ public final class Contains extends Object {
   // primitives
   // TODO: code generation!
   //--------------------------------------------------------------
-  
-  public final static boolean contains (final ByteInterval s0,
-                                        final byte s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+
+  public final static boolean contains (final ByteInterval s,
+                                        final byte x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ByteInterval s0,
-                                        final double s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final ByteInterval s,
+                                        final double x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ByteInterval s0,
-                                        final float s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final ByteInterval s,
+                                        final float x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ByteInterval s0,
-                                        final int s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final ByteInterval s,
+                                        final int x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ByteInterval s0,
-                                        final long s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final ByteInterval s,
+                                        final long x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ByteInterval s0,
-                                        final short s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  //--------------------------------------------------------------
-  
-  public final static boolean contains (final DoubleInterval s0,
-                                        final byte s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final DoubleInterval s0,
-                                        final double s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final DoubleInterval s0,
-                                        final float s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final DoubleInterval s0,
-                                        final int s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final DoubleInterval s0,
-                                        final long s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final DoubleInterval s0,
-                                        final short s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final ByteInterval s,
+                                        final short x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
   //--------------------------------------------------------------
-  
-  public final static boolean contains (final FloatInterval s0,
-                                        final byte s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+
+  public final static boolean contains (final DoubleInterval s,
+                                        final byte x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final FloatInterval s0,
-                                        final double s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final DoubleInterval s,
+                                        final double x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final FloatInterval s0,
-                                        final float s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final DoubleInterval s,
+                                        final float x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final FloatInterval s0,
-                                        final int s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final DoubleInterval s,
+                                        final int x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final FloatInterval s0,
-                                        final long s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final DoubleInterval s,
+                                        final long x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final FloatInterval s0,
-                                        final short s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  //--------------------------------------------------------------
-  
-  public final static boolean contains (final IntegerInterval s0,
-                                        final byte s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final IntegerInterval s0,
-                                        final double s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final IntegerInterval s0,
-                                        final float s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final IntegerInterval s0,
-                                        final int s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final IntegerInterval s0,
-                                        final long s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final IntegerInterval s0,
-                                        final short s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final DoubleInterval s,
+                                        final short x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
   //--------------------------------------------------------------
-  
-  public final static boolean contains (final LongInterval s0,
-                                        final byte s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+
+  public final static boolean contains (final FloatInterval s,
+                                        final byte x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final LongInterval s0,
-                                        final double s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final FloatInterval s,
+                                        final double x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final LongInterval s0,
-                                        final float s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final FloatInterval s,
+                                        final float x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final LongInterval s0,
-                                        final int s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final FloatInterval s,
+                                        final int x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final LongInterval s0,
-                                        final long s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final FloatInterval s,
+                                        final long x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final LongInterval s0,
-                                        final short s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final FloatInterval s,
+                                        final short x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
   //--------------------------------------------------------------
-  
-  public final static boolean contains (final ShortInterval s0,
-                                        final byte s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+
+  public final static boolean contains (final IntegerInterval s,
+                                        final byte x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ShortInterval s0,
-                                        final double s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final IntegerInterval s,
+                                        final double x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ShortInterval s0,
-                                        final float s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final IntegerInterval s,
+                                        final float x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ShortInterval s0,
-                                        final int s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final IntegerInterval s,
+                                        final int x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ShortInterval s0,
-                                        final long s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final IntegerInterval s,
+                                        final long x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ShortInterval s0,
-                                        final short s1) {
-    if (s0.max <= s1) { return false; }
-    if (s1 <= s0.min) { return false; }
+  public final static boolean contains (final IntegerInterval s,
+                                        final short x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  //--------------------------------------------------------------
+
+  public final static boolean contains (final LongInterval s,
+                                        final byte x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final LongInterval s,
+                                        final double x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final LongInterval s,
+                                        final float x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final LongInterval s,
+                                        final int x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final LongInterval s,
+                                        final long x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final LongInterval s,
+                                        final short x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  //--------------------------------------------------------------
+
+  public final static boolean contains (final ShortInterval s,
+                                        final byte x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final ShortInterval s,
+                                        final double x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final ShortInterval s,
+                                        final float x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final ShortInterval s,
+                                        final int x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final ShortInterval s,
+                                        final long x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final ShortInterval s,
+                                        final short x) {
+    if (s.max <= x) { return false; }
+    if (x <= s.min) { return false; }
     return true; }
 
   //--------------------------------------------------------------
   // Numbers
   //--------------------------------------------------------------
 
-  
-  public final static boolean contains (final ByteInterval s0,
-                                        final Byte s1) {
-    if (s0.max <= s1.byteValue()) { return false; }
-    if (s1.byteValue() <= s0.min) { return false; }
+
+  public final static boolean contains (final ByteInterval s,
+                                        final Byte x) {
+    if (s.max <= x.byteValue()) { return false; }
+    if (x.byteValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ByteInterval s0,
-                                        final Double s1) {
-    if (s0.max <= s1.doubleValue()) { return false; }
-    if (s1.doubleValue() <= s0.min) { return false; }
+  public final static boolean contains (final ByteInterval s,
+                                        final Double x) {
+    if (s.max <= x.doubleValue()) { return false; }
+    if (x.doubleValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ByteInterval s0,
-                                        final Float s1) {
-    if (s0.max <= s1.floatValue()) { return false; }
-    if (s1.floatValue() <= s0.min) { return false; }
+  public final static boolean contains (final ByteInterval s,
+                                        final Float x) {
+    if (s.max <= x.floatValue()) { return false; }
+    if (x.floatValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ByteInterval s0,
-                                        final Integer s1) {
-    if (s0.max <= s1.intValue()) { return false; }
-    if (s1.intValue() <= s0.min) { return false; }
+  public final static boolean contains (final ByteInterval s,
+                                        final Integer x) {
+    if (s.max <= x.intValue()) { return false; }
+    if (x.intValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ByteInterval s0,
-                                        final Long s1) {
-    if (s0.max <= s1.longValue()) { return false; }
-    if (s1.longValue() <= s0.min) { return false; }
+  public final static boolean contains (final ByteInterval s,
+                                        final Long x) {
+    if (s.max <= x.longValue()) { return false; }
+    if (x.longValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final ByteInterval s0,
-                                        final Short s1) {
-    if (s0.max <= s1.shortValue()) { return false; }
-    if (s1.shortValue() <= s0.min) { return false; }
-    return true; }
-
-  //--------------------------------------------------------------
-  
-  public final static boolean contains (final DoubleInterval s0,
-                                        final Byte s1) {
-    if (s0.max <= s1.byteValue()) { return false; }
-    if (s1.byteValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final DoubleInterval s0,
-                                        final Double s1) {
-    if (s0.max <= s1.doubleValue()) { return false; }
-    if (s1.doubleValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final DoubleInterval s0,
-                                        final Float s1) {
-    if (s0.max <= s1.floatValue()) { return false; }
-    if (s1.floatValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final DoubleInterval s0,
-                                        final Integer s1) {
-    if (s0.max <= s1.intValue()) { return false; }
-    if (s1.intValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final DoubleInterval s0,
-                                        final Long s1) {
-    if (s0.max <= s1.longValue()) { return false; }
-    if (s1.longValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final DoubleInterval s0,
-                                        final Short s1) {
-    if (s0.max <= s1.shortValue()) { return false; }
-    if (s1.shortValue() <= s0.min) { return false; }
+  public final static boolean contains (final ByteInterval s,
+                                        final Short x) {
+    if (s.max <= x.shortValue()) { return false; }
+    if (x.shortValue() <= s.min) { return false; }
     return true; }
 
   //--------------------------------------------------------------
-  
-  public final static boolean contains (final FloatInterval s0,
-                                        final Byte s1) {
-    if (s0.max <= s1.byteValue()) { return false; }
-    if (s1.byteValue() <= s0.min) { return false; }
+
+  public final static boolean contains (final DoubleInterval s,
+                                        final Byte x) {
+    if (s.max <= x.byteValue()) { return false; }
+    if (x.byteValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final FloatInterval s0,
-                                        final Double s1) {
-    if (s0.max <= s1.doubleValue()) { return false; }
-    if (s1.doubleValue() <= s0.min) { return false; }
+  public final static boolean contains (final DoubleInterval s,
+                                        final Double x) {
+    if (s.max <= x.doubleValue()) { return false; }
+    if (x.doubleValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final FloatInterval s0,
-                                        final Float s1) {
-    if (s0.max <= s1.floatValue()) { return false; }
-    if (s1.floatValue() <= s0.min) { return false; }
+  public final static boolean contains (final DoubleInterval s,
+                                        final Float x) {
+    if (s.max <= x.floatValue()) { return false; }
+    if (x.floatValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final FloatInterval s0,
-                                        final Integer s1) {
-    if (s0.max <= s1.intValue()) { return false; }
-    if (s1.intValue() <= s0.min) { return false; }
+  public final static boolean contains (final DoubleInterval s,
+                                        final Integer x) {
+    if (s.max <= x.intValue()) { return false; }
+    if (x.intValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final FloatInterval s0,
-                                        final Long s1) {
-    if (s0.max <= s1.longValue()) { return false; }
-    if (s1.longValue() <= s0.min) { return false; }
+  public final static boolean contains (final DoubleInterval s,
+                                        final Long x) {
+    if (s.max <= x.longValue()) { return false; }
+    if (x.longValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final FloatInterval s0,
-                                        final Short s1) {
-    if (s0.max <= s1.shortValue()) { return false; }
-    if (s1.shortValue() <= s0.min) { return false; }
-    return true; }
-
-  //--------------------------------------------------------------
-  
-  public final static boolean contains (final IntegerInterval s0,
-                                        final Byte s1) {
-    if (s0.max <= s1.byteValue()) { return false; }
-    if (s1.byteValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final IntegerInterval s0,
-                                        final Double s1) {
-    if (s0.max <= s1.doubleValue()) { return false; }
-    if (s1.doubleValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final IntegerInterval s0,
-                                        final Float s1) {
-    if (s0.max <= s1.floatValue()) { return false; }
-    if (s1.floatValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final IntegerInterval s0,
-                                        final Integer s1) {
-    if (s0.max <= s1.intValue()) { return false; }
-    if (s1.intValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final IntegerInterval s0,
-                                        final Long s1) {
-    if (s0.max <= s1.longValue()) { return false; }
-    if (s1.longValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final IntegerInterval s0,
-                                        final Short s1) {
-    if (s0.max <= s1.shortValue()) { return false; }
-    if (s1.shortValue() <= s0.min) { return false; }
+  public final static boolean contains (final DoubleInterval s,
+                                        final Short x) {
+    if (s.max <= x.shortValue()) { return false; }
+    if (x.shortValue() <= s.min) { return false; }
     return true; }
 
   //--------------------------------------------------------------
-  
-  public final static boolean contains (final LongInterval s0,
-                                        final Byte s1) {
-    if (s0.max <= s1.byteValue()) { return false; }
-    if (s1.byteValue() <= s0.min) { return false; }
+
+  public final static boolean contains (final FloatInterval s,
+                                        final Byte x) {
+    if (s.max <= x.byteValue()) { return false; }
+    if (x.byteValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final LongInterval s0,
-                                        final Double s1) {
-    if (s0.max <= s1.doubleValue()) { return false; }
-    if (s1.doubleValue() <= s0.min) { return false; }
+  public final static boolean contains (final FloatInterval s,
+                                        final Double x) {
+    if (s.max <= x.doubleValue()) { return false; }
+    if (x.doubleValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final LongInterval s0,
-                                        final Float s1) {
-    if (s0.max <= s1.floatValue()) { return false; }
-    if (s1.floatValue() <= s0.min) { return false; }
+  public final static boolean contains (final FloatInterval s,
+                                        final Float x) {
+    if (s.max <= x.floatValue()) { return false; }
+    if (x.floatValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final LongInterval s0,
-                                        final Integer s1) {
-    if (s0.max <= s1.intValue()) { return false; }
-    if (s1.intValue() <= s0.min) { return false; }
+  public final static boolean contains (final FloatInterval s,
+                                        final Integer x) {
+    if (s.max <= x.intValue()) { return false; }
+    if (x.intValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final LongInterval s0,
-                                        final Long s1) {
-    if (s0.max <= s1.longValue()) { return false; }
-    if (s1.longValue() <= s0.min) { return false; }
+  public final static boolean contains (final FloatInterval s,
+                                        final Long x) {
+    if (s.max <= x.longValue()) { return false; }
+    if (x.longValue() <= s.min) { return false; }
     return true; }
 
-  public final static boolean contains (final LongInterval s0,
-                                        final Short s1) {
-    if (s0.max <= s1.shortValue()) { return false; }
-    if (s1.shortValue() <= s0.min) { return false; }
-    return true; }
-
-  //--------------------------------------------------------------
-  
-  public final static boolean contains (final ShortInterval s0,
-                                        final Byte s1) {
-    if (s0.max <= s1.byteValue()) { return false; }
-    if (s1.byteValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final ShortInterval s0,
-                                        final Double s1) {
-    if (s0.max <= s1.doubleValue()) { return false; }
-    if (s1.doubleValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final ShortInterval s0,
-                                        final Float s1) {
-    if (s0.max <= s1.floatValue()) { return false; }
-    if (s1.floatValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final ShortInterval s0,
-                                        final Integer s1) {
-    if (s0.max <= s1.intValue()) { return false; }
-    if (s1.intValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final ShortInterval s0,
-                                        final Long s1) {
-    if (s0.max <= s1.longValue()) { return false; }
-    if (s1.longValue() <= s0.min) { return false; }
-    return true; }
-
-  public final static boolean contains (final ShortInterval s0,
-                                        final Short s1) {
-    if (s0.max <= s1.shortValue()) { return false; }
-    if (s1.shortValue() <= s0.min) { return false; }
+  public final static boolean contains (final FloatInterval s,
+                                        final Short x) {
+    if (s.max <= x.shortValue()) { return false; }
+    if (x.shortValue() <= s.min) { return false; }
     return true; }
 
   //--------------------------------------------------------------
-  // Default
+
+  public final static boolean contains (final IntegerInterval s,
+                                        final Byte x) {
+    if (s.max <= x.byteValue()) { return false; }
+    if (x.byteValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final IntegerInterval s,
+                                        final Double x) {
+    if (s.max <= x.doubleValue()) { return false; }
+    if (x.doubleValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final IntegerInterval s,
+                                        final Float x) {
+    if (s.max <= x.floatValue()) { return false; }
+    if (x.floatValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final IntegerInterval s,
+                                        final Integer x) {
+    if (s.max <= x.intValue()) { return false; }
+    if (x.intValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final IntegerInterval s,
+                                        final Long x) {
+    if (s.max <= x.longValue()) { return false; }
+    if (x.longValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final IntegerInterval s,
+                                        final Short x) {
+    if (s.max <= x.shortValue()) { return false; }
+    if (x.shortValue() <= s.min) { return false; }
+    return true; }
+
   //--------------------------------------------------------------
-  
-  public final static boolean contains (final Object s0,
-                                        final Object s1) {
-    throw new UnsupportedOperationException(
-      "don't know how to test for intersections of " +
-        s0.getClass().getSimpleName() +
-        " and " +
-        s1.getClass().getSimpleName()); }
+
+  public final static boolean contains (final LongInterval s,
+                                        final Byte x) {
+    if (s.max <= x.byteValue()) { return false; }
+    if (x.byteValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final LongInterval s,
+                                        final Double x) {
+    if (s.max <= x.doubleValue()) { return false; }
+    if (x.doubleValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final LongInterval s,
+                                        final Float x) {
+    if (s.max <= x.floatValue()) { return false; }
+    if (x.floatValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final LongInterval s,
+                                        final Integer x) {
+    if (s.max <= x.intValue()) { return false; }
+    if (x.intValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final LongInterval s,
+                                        final Long x) {
+    if (s.max <= x.longValue()) { return false; }
+    if (x.longValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final LongInterval s,
+                                        final Short x) {
+    if (s.max <= x.shortValue()) { return false; }
+    if (x.shortValue() <= s.min) { return false; }
+    return true; }
+
+  //--------------------------------------------------------------
+
+  public final static boolean contains (final ShortInterval s,
+                                        final Byte x) {
+    if (s.max <= x.byteValue()) { return false; }
+    if (x.byteValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final ShortInterval s,
+                                        final Double x) {
+    if (s.max <= x.doubleValue()) { return false; }
+    if (x.doubleValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final ShortInterval s,
+                                        final Float x) {
+    if (s.max <= x.floatValue()) { return false; }
+    if (x.floatValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final ShortInterval s,
+                                        final Integer x) {
+    if (s.max <= x.intValue()) { return false; }
+    if (x.intValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final ShortInterval s,
+                                        final Long x) {
+    if (s.max <= x.longValue()) { return false; }
+    if (x.longValue() <= s.min) { return false; }
+    return true; }
+
+  public final static boolean contains (final ShortInterval s,
+                                        final Short x) {
+    if (s.max <= x.shortValue()) { return false; }
+    if (x.shortValue() <= s.min) { return false; }
+    return true; }
+
+  //--------------------------------------------------------------
+
+  public final static boolean contains (final java.util.Set s,
+                                        final Object x) {
+    return s.contains(x); }
 
   //--------------------------------------------------------------
   // lookup
   //--------------------------------------------------------------
 
-  public static final boolean manual (final Object s0,
-                                      final Object s1) {
+  public static final boolean contains (final Object s,
+                                        final Object x) {
 
-    if (s0 instanceof ByteInterval) {
-      final ByteInterval i = (ByteInterval) s0;
-      if (s1 instanceof Byte) { return contains(i, (Byte) s1); }
-      if (s1 instanceof Double) { return contains(i, (Double) s1); }
-      if (s1 instanceof Float) { return contains(i, (Float) s1); }
-      if (s1 instanceof Integer) { return contains(i, (Integer) s1); }
-      if (s1 instanceof Long) { return contains(i, (Long) s1); }
-      if (s1 instanceof Short) { return contains(i, (Short) s1); } }
- 
-    if (s0 instanceof DoubleInterval) {
-      final DoubleInterval i = (DoubleInterval) s0;
-      if (s1 instanceof Byte) { return contains(i, (Byte) s1); }
-      if (s1 instanceof Double) { return contains(i, (Double) s1); }
-      if (s1 instanceof Float) { return contains(i, (Float) s1); }
-      if (s1 instanceof Integer) { return contains(i, (Integer) s1); }
-      if (s1 instanceof Long) { return contains(i, (Long) s1); }
-      if (s1 instanceof Short) { return contains(i, (Short) s1); } }
-    
-    if (s0 instanceof FloatInterval) {
-      final FloatInterval i = (FloatInterval) s0;
-      if (s1 instanceof Byte) { return contains(i, (Byte) s1); }
-      if (s1 instanceof Double) { return contains(i, (Double) s1); }
-      if (s1 instanceof Float) { return contains(i, (Float) s1); }
-      if (s1 instanceof Integer) { return contains(i, (Integer) s1); }
-      if (s1 instanceof Long) { return contains(i, (Long) s1); }
-      if (s1 instanceof Short) { return contains(i, (Short) s1); } }
-    
-    if (s0 instanceof IntegerInterval) {
-      final IntegerInterval i = (IntegerInterval) s0;
-      if (s1 instanceof Byte) { return contains(i, (Byte) s1); }
-      if (s1 instanceof Double) { return contains(i, (Double) s1); }
-      if (s1 instanceof Float) { return contains(i, (Float) s1); }
-      if (s1 instanceof Integer) { return contains(i, (Integer) s1); }
-      if (s1 instanceof Long) { return contains(i, (Long) s1); }
-      if (s1 instanceof Short) { return contains(i, (Short) s1); } }
- 
-    if (s0 instanceof LongInterval) {
-      final LongInterval i = (LongInterval) s0;
-      if (s1 instanceof Byte) { return contains(i, (Byte) s1); }
-      if (s1 instanceof Double) { return contains(i, (Double) s1); }
-      if (s1 instanceof Float) { return contains(i, (Float) s1); }
-      if (s1 instanceof Integer) { return contains(i, (Integer) s1); }
-      if (s1 instanceof Long) { return contains(i, (Long) s1); }
-      if (s1 instanceof Short) { return contains(i, (Short) s1); } }
- 
-    if (s0 instanceof ShortInterval) {
-      final ShortInterval i = (ShortInterval) s0;
-      if (s1 instanceof Byte) { return contains(i, (Byte) s1); }
-      if (s1 instanceof Double) { return contains(i, (Double) s1); }
-      if (s1 instanceof Float) { return contains(i, (Float) s1); }
-      if (s1 instanceof Integer) { return contains(i, (Integer) s1); }
-      if (s1 instanceof Long) { return contains(i, (Long) s1); }
-      if (s1 instanceof Short) { return contains(i, (Short) s1); } }
-  
-  return contains(s0,s1); }
+    if (s instanceof ByteInterval) {
+      final ByteInterval i = (ByteInterval) s;
+      if (x instanceof Byte) { return contains(i, (Byte) x); }
+      if (x instanceof Double) { return contains(i, (Double) x); }
+      if (x instanceof Float) { return contains(i, (Float) x); }
+      if (x instanceof Integer) { return contains(i, (Integer) x); }
+      if (x instanceof Long) { return contains(i, (Long) x); }
+      if (x instanceof Short) { return contains(i, (Short) x); } }
 
+    if (s instanceof DoubleInterval) {
+      final DoubleInterval i = (DoubleInterval) s;
+      if (x instanceof Byte) { return contains(i, (Byte) x); }
+      if (x instanceof Double) { return contains(i, (Double) x); }
+      if (x instanceof Float) { return contains(i, (Float) x); }
+      if (x instanceof Integer) { return contains(i, (Integer) x); }
+      if (x instanceof Long) { return contains(i, (Long) x); }
+      if (x instanceof Short) { return contains(i, (Short) x); } }
+
+    if (s instanceof FloatInterval) {
+      final FloatInterval i = (FloatInterval) s;
+      if (x instanceof Byte) { return contains(i, (Byte) x); }
+      if (x instanceof Double) { return contains(i, (Double) x); }
+      if (x instanceof Float) { return contains(i, (Float) x); }
+      if (x instanceof Integer) { return contains(i, (Integer) x); }
+      if (x instanceof Long) { return contains(i, (Long) x); }
+      if (x instanceof Short) { return contains(i, (Short) x); } }
+
+    if (s instanceof IntegerInterval) {
+      final IntegerInterval i = (IntegerInterval) s;
+      if (x instanceof Byte) { return contains(i, (Byte) x); }
+      if (x instanceof Double) { return contains(i, (Double) x); }
+      if (x instanceof Float) { return contains(i, (Float) x); }
+      if (x instanceof Integer) { return contains(i, (Integer) x); }
+      if (x instanceof Long) { return contains(i, (Long) x); }
+      if (x instanceof Short) { return contains(i, (Short) x); } }
+
+    if (s instanceof LongInterval) {
+      final LongInterval i = (LongInterval) s;
+      if (x instanceof Byte) { return contains(i, (Byte) x); }
+      if (x instanceof Double) { return contains(i, (Double) x); }
+      if (x instanceof Float) { return contains(i, (Float) x); }
+      if (x instanceof Integer) { return contains(i, (Integer) x); }
+      if (x instanceof Long) { return contains(i, (Long) x); }
+      if (x instanceof Short) { return contains(i, (Short) x); } }
+
+    if (s instanceof ShortInterval) {
+      final ShortInterval i = (ShortInterval) s;
+      if (x instanceof Byte) { return contains(i, (Byte) x); }
+      if (x instanceof Double) { return contains(i, (Double) x); }
+      if (x instanceof Float) { return contains(i, (Float) x); }
+      if (x instanceof Integer) { return contains(i, (Integer) x); }
+      if (x instanceof Long) { return contains(i, (Long) x); }
+      if (x instanceof Short) { return contains(i, (Short) x); } }
+
+    if (s instanceof java.util.Set) {
+      return contains((java.util.Set) s, x); }
+
+    throw new IllegalArgumentException(
+      "can't tell if " + s.getClass() + 
+      " contains " + x.getClass()); }
   //--------------------------------------------------------------
   // summaries
   //--------------------------------------------------------------
 
   public static final int 
-  countContains (final IntegerInterval[] s0,
-                 final int[] s1) {
+  countContains (final IntegerInterval[] s,
+                 final int[] x) {
     int k = 0;
-    final int n = s0.length;
-    assert n == s1.length;
+    final int n = s.length;
+    assert n == x.length;
     for (int i=0;i<n;i++) { 
-      if (contains(s0[i],s1[i])) { k++; } }
+      if (contains(s[i],x[i])) { k++; } }
     return k; }
 
   public static final int 
-  countContains (final IntegerInterval[] s0,
-                 final Integer[] s1) {
+  countContains (final IntegerInterval[] s,
+                 final Integer[] x) {
     int k = 0;
-    final int n = s0.length;
-    assert n == s1.length;
+    final int n = s.length;
+    assert n == x.length;
     for (int i=0;i<n;i++) { 
-      if (contains(s0[i],s1[i])) { k++; } }
+      if (contains(s[i],x[i])) { k++; } }
+    return k; }
+
+  public static final int 
+  countContains (final Object[] s,
+                 final Object[] x) {
+    int k = 0;
+    final int n = s.length;
+    assert n == x.length;
+    for (int i=0;i<n;i++) { 
+      if (contains(s[i],x[i])) { k++; } }
     return k; }
 
   //--------------------------------------------------------------

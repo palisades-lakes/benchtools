@@ -4,13 +4,13 @@ package palisades.lakes.bench.java.sets;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-22
- * @version 2017-08-10
+ * @version 2017-08-23
  */
 public interface Set {
 
   //--------------------------------------------------------------
   // Doesn't make sense for general sets; here to permit benchmark
-  // of single arg multimethod.
+  // of single argument multimethod.
   
   public double diameter ();
   

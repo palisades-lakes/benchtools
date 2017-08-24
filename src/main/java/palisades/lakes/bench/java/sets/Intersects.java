@@ -65,17 +65,7 @@ public final class Intersects extends Object {
                                           final Set s1) {
     return (! Collections.disjoint(s0,s1)); }
 
-  //--------------------------------------------------------------
-
-  public final static boolean intersects (final Object s0,
-                                          final Object s1) {
-    throw new UnsupportedOperationException(
-      "don't know how to test for intersections of " +
-        s0.getClass().getSimpleName() +
-        " and " +
-        s1.getClass().getSimpleName()); }
-
-  //--------------------------------------------------------------
+   //--------------------------------------------------------------
   // lookup
   //--------------------------------------------------------------
 
