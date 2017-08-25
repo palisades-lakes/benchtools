@@ -6,13 +6,13 @@
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-08-24"}
+   :version "2017-08-25"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
             [clojure.edn :as edn]
             [clojure.pprint :as pp]
-            [palisades.lakes.bench.random.generators :as g])
+            [palisades.lakes.bench.generators :as g])
   
   (:import [clojure.lang IFn]
            [java.util Map]
@@ -49,33 +49,48 @@
   []
   (max 1 (- (.availableProcessors (Runtime/getRuntime)) 2)))
 ;;----------------------------------------------------------------
-;; TODO: include dataset-generator in file name
-(defn generate-datasets 
+;; TODO: use spec to check generators sequence?
+(defn generate-datasets
   
-  ([generators
-    nelements
-    nthreads]
+  "`generators` is a sequence of functions,
+   with an even number of elements, like 
+   `[dataset-generator0 element-generator0 
+     dataset-generator1 element-generator1 ...]`
+   
+   These are called as if
+   `[(dataset-generator0 element-generator0 nelements)
+     (dataset-generator1 element-generator1 nelements) ...]`,
+   returning `[dataset0 dataset1 ...]`, the arguments for a 
+   function `f` to be benchmarked, which is done
+   as if calling `(apply f [dataset0 dataset1 ...])`.
+
+   This is done `nthreads` times, returning a vector of 
+   `nthreads` vectors of data sets `[datasets0 datasets1 ...]`
+   
+   Finally, the benchmarking calls `(apply f datasetsi)`
+   in parallel, in `nthreads` threads. The benchmark time
+   is the time for all threads to complete."
+  
+  ([generators nelements nthreads]
+    (assert (even? (count generators)))
+    (assert (every? ifn? generators))
+    
     {:nelements nelements
      :nthreads nthreads
      
-     (keyword (str "generator" counter)) 
-     (fn-name element-generator) 
+     :generators generators 
      
-     (keyword (str "dataset-generator" counter)) 
-     (fn-name dataset-generator) 
-     
-     (keyword (str "data" counter)) 
+     :data
      (repeatedly 
        nthreads 
-       #(dataset-generator element-generator nelements))})
+       (fn [generators]
+         (mapv 
+           (fn [[^IFn dataset-generator ^IFn element-generator]]
+             (dataset-generator element-generator nelements))
+           (parititon 2 generators))))})
   
-  ([counter
-    ^IFn dataset-generator 
-    ^IFn element-generator 
-    nelements]
-    (generate-datasets 
-      counter dataset-generator element-generator nelements 
-      (default-nthreads))))
+  ([generators nelements]
+    (generate-datasets generators nelements (default-nthreads))))
 ;;----------------------------------------------------------------
 (defn write-tsv [^java.util.List records ^java.io.File f]
   (io/make-parents f)
@@ -100,7 +115,7 @@
       (DateTimeFormatter/ofPattern "yyyyMMdd-HHmm")]
   (defn- now ^String []
     (.format dtf (java.time.LocalDateTime/now))))
-                                  
+
 (defn fname [generators n ext]
   (s/join "."
           [(SystemInfo/manufacturerModel)
@@ -220,7 +235,7 @@
            :now (now))))
 ;;----------------------------------------------------------------
 (defn criterium 
-
+  
   ([^IFn f ^Map data-map options]
     (let [options (merge {:tail-quantile 0.25 :samples 60} options)
           fname (fn-name f)
@@ -243,31 +258,61 @@
   ([^IFn f ^Map data-map] (criterium f data-map {})))
 ;;----------------------------------------------------------------
 #_(defn milliseconds 
-   (^double [^IFn f ^Map data-map ^long nreps]
-     (let [fname (fn-name f)
-           nthreads (long (:nthreads data-map (default-nthreads)))
-           data (:data data-map)
-           ff (fn [s0 s1]
-                (let [calls 
-                      (mapv (fn caller [s0i s1i] #(f s0i s1i)) s0 s1)]
-                  (reduce + (apply pcalls calls))))
-           start (System/nanoTime)
-           warmup (reduce 
-                    + 
-                    (map ff 
-                         (take 32 (cycle [data0 data1 data0 data1]))
-                         (take 32 (cycle [data1 data1 data0 data0]))))
-           wmsec (/ (* (- (System/nanoTime) start) 1.0e-6) 32)
-           start (System/nanoTime)
-           result (reduce 
-                    + 
-                    (map ff 
-                         (take nreps (cycle [data0 data1 data0 data1]))
-                         (take nreps (cycle [data1 data1 data0 data0]))))
-           msec (/ (* (- (System/nanoTime) start) 1.0e-6) nreps)]
-       (println fname 32 wmsec warmup)
-       (println fname  nreps msec result)
-       (println fname (/ wmsec msec))
-       msec))
-   (^double [^IFn f ^Map data-map] (milliseconds f data-map 256)))
+    (^double [^IFn f ^Map data-map ^long nreps]
+      (let [fname (fn-name f)
+            nthreads (long (:nthreads data-map (default-nthreads)))
+            data (:data data-map)
+            ff (fn [s0 s1]
+                 (let [calls 
+                       (mapv (fn caller [s0i s1i] #(f s0i s1i)) s0 s1)]
+                   (reduce + (apply pcalls calls))))
+            start (System/nanoTime)
+            warmup (reduce 
+                     + 
+                     (map ff 
+                          (take 32 (cycle [data0 data1 data0 data1]))
+                          (take 32 (cycle [data1 data1 data0 data0]))))
+            wmsec (/ (* (- (System/nanoTime) start) 1.0e-6) 32)
+            start (System/nanoTime)
+            result (reduce 
+                     + 
+                     (map ff 
+                          (take nreps (cycle [data0 data1 data0 data1]))
+                          (take nreps (cycle [data1 data1 data0 data0]))))
+            msec (/ (* (- (System/nanoTime) start) 1.0e-6) nreps)]
+        (println fname 32 wmsec warmup)
+        (println fname  nreps msec result)
+        (println fname (/ wmsec msec))
+        msec))
+    (^double [^IFn f ^Map data-map] (milliseconds f data-map 256)))
+;;----------------------------------------------------------------
+(defn bench [generators fns n options] 
+  (println (s/join " " (map fn-name generators)))
+  (println n) 
+  (println (.toString (java.time.LocalDateTime/now))) 
+  (time
+    (with-open [w (log-writer *ns* generators n)]
+      (binding [*out* w]
+        (print-system-info w)
+        (let [generators data-map 
+              (generate-datasets generators n)]
+          (reduce
+            (fn [records record]
+              (if record
+                (let [records (conj records record)]
+                  (write-tsv 
+                    records (data-file *ns* generators n))
+                  records)
+                records))
+            []
+            (for [f fns]
+              (do
+                (Thread/sleep (int (* 8 1000))) 
+                (println (.toString (java.time.LocalDateTime/now))) 
+                (time 
+                  (criterium 
+                    f 
+                    data-map 
+                    (merge {:tail-quantile 0.05 :samples 100}
+                           options)))))))))))
 ;;----------------------------------------------------------------

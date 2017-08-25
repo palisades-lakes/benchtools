@@ -4,16 +4,16 @@
 ;; use no arg generator functions as its source of 
 ;; 'random' numbers/objects.
 ;;----------------------------------------------------------------
-(ns palisades.lakes.bench.random.generators
+(ns palisades.lakes.bench.generators
   
   {:doc "Random object generators assuming prngs are represented
          as clojure.lang.Function --- in other words, no direct 
          dependence on any prng library."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-08-24"}
+   :version "2017-08-25"}
   
-  (:require [palisades.lakes.bench.random.prng :as prng])
+  (:require [palisades.lakes.bench.prng :as prng])
   
   (:import [java.util Collections]
            [clojure.lang IFn IFn$D IFn$L]

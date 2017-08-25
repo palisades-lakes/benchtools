@@ -1,12 +1,12 @@
 (set! *warn-on-reflection* true) 
 (set! *unchecked-math* :warn-on-boxed)
 ;;----------------------------------------------------------------
-(ns palisades.lakes.bench.random.seed
+(ns palisades.lakes.bench.seed
   
   {:doc "Independent seed generation and seed resource IO."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-04-05"
-   :version "2017-08-10"}
+   :version "2017-08-25"}
   
   (:refer-clojure :exclude [read write])
   (:require [clojure.edn :as edn]
@@ -45,7 +45,7 @@
 ;;----------------------------------------------------------------
 ;; make it accessibale form Java
 (gen-class 
-  :name "palisades.lakes.bench.random.Seed"
+  :name "palisades.lakes.bench.Seed"
   :prefix ""
   :methods [^:static [seed [Object] int]])
 ;;----------------------------------------------------------------

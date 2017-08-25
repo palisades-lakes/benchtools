@@ -3,17 +3,17 @@
 ;; TODO: Move things that don't depend on Commons RNG to 
 ;; generators namespace.
 ;;----------------------------------------------------------------
-(ns palisades.lakes.bench.random.prng
+(ns palisades.lakes.bench.prng
   
   {:doc "pseudo-random number generators."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-04-05"
-   :version "2017-08-24"}
+   :version "2017-08-25"}
 
   (:refer-clojure 
     :exclude [bytes doubles floats ints longs objects shorts])
   
-  (:require [palisades.lakes.bench.random.seed :as seed])
+  (:require [palisades.lakes.bench.seed :as seed])
 
   (:import [clojure.lang IFn IFn$D IFn$L]
            [java.util Collection]
@@ -261,7 +261,7 @@
 ;;----------------------------------------------------------------
 ;; Java callable static methods
 (gen-class 
-  :name "palisades.lakes.bench.random.PRNG"
+  :name "palisades.lakes.bench.PRNG"
   :methods [^:static [uniformRandomProvider 
                       [Object] 
                       org.apache.commons.rng.UniformRandomProvider]

@@ -9,7 +9,7 @@
    :version "2017-07-25s"}
   
   (:require [clojure.java.io :as io]
-            [palisades.lakes.bench.random.seed :as seed])
+            [palisades.lakes.bench.seed :as seed])
   (:import java.time.LocalDate))
 ;;----------------------------------------------------------------
 ;; for Well44497b
