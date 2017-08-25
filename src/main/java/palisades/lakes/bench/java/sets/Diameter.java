@@ -43,28 +43,40 @@ public final class Diameter extends Object {
   //--------------------------------------------------------------
 
   public static final double 
-  sumDiameters (final DoubleInterval[] s) {
-    // TODO: accurate sum
-    double sum = 0.0;
+  maxStatic (final IntegerInterval[] s) {
+    double dmax = Double.NEGATIVE_INFINITY;
     final int n = s.length;
-    for (int i=0;i<n;i++) { sum += s[i].diameter(); }
-    return sum; }
+    for (int i=0;i<n;i++) { 
+      final double d = diameter(s[i]); 
+      if (dmax < d) { dmax = d; } }
+    return dmax; }
 
   public static final double 
-  sumDiameters (final Set[] s) {
-    // TODO: accurate sum
-    double sum = 0.0;
+  maxVirtual (final IntegerInterval[] s) {
+    double dmax = Double.NEGATIVE_INFINITY;
     final int n = s.length;
-    for (int i=0;i<n;i++) { sum += s[i].diameter(); }
-    return sum; }
+    for (int i=0;i<n;i++) { 
+      final double d = s[i].diameter(); 
+      if (dmax < d) { dmax = d; } }
+    return dmax; }
 
   public static final double 
-  sumDiameters (final Object[] s) {
-    // TODO: accurate sum
-    double sum = 0.0;
+  maxInterface (final Set[] s) {
+    double dmax = Double.NEGATIVE_INFINITY;
     final int n = s.length;
-    for (int i=0;i<n;i++) { sum += diameter(s[i]); }
-    return sum; }
+    for (int i=0;i<n;i++) { 
+      final double d = s[i].diameter(); 
+      if (dmax < d) { dmax = d; } }
+    return dmax; }
+
+  public static final double 
+  maxLookup (final Object[] s) {
+    double dmax = Double.NEGATIVE_INFINITY;
+    final int n = s.length;
+    for (int i=0;i<n;i++) { 
+      final double d = diameter(s[i]); 
+      if (dmax < d) { dmax = d; } }
+    return dmax; }
 
   //--------------------------------------------------------------
   // construction

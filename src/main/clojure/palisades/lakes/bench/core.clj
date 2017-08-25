@@ -52,9 +52,7 @@
 ;; TODO: include dataset-generator in file name
 (defn generate-datasets 
   
-  ([counter
-    ^IFn dataset-generator 
-    ^IFn element-generator
+  ([generators
     nelements
     nthreads]
     {:nelements nelements
@@ -103,15 +101,13 @@
   (defn- now ^String []
     (.format dtf (java.time.LocalDateTime/now))))
                                   
-(defn fname [data0 element0 data1 element1 n ext]
-  (str (SystemInfo/manufacturerModel)
-       "." (fn-name data0) 
-       "." (fn-name element0) 
-       "." (fn-name data1)
-       "." (fn-name element1)
-       "." n
-       "." (now)
-       "." ext))
+(defn fname [generators n ext]
+  (s/join "."
+          [(SystemInfo/manufacturerModel)
+           (s/join "-" (map fn-name generators))
+           n
+           (now)
+           ext]))
 ;;----------------------------------------------------------------
 (defn ^java.io.File ns-folder [prefix for-ns]
   (let [^java.io.File f (apply 
@@ -120,28 +116,29 @@
     (.mkdirs f)
     f))
 ;;----------------------------------------------------------------
-(defn log-folder [for-ns] (ns-folder "logs" for-ns))
-(defn log-file 
-  ^java.io.File [for-ns data0 element0 data1 element1 n]
-  (io/file (log-folder for-ns)
-           (fname data0 element0 data1 element1 n "txt")))
-(defn log-writer 
-  ^java.io.Writer [for-ns data0 element0 data1 element1 n]
+(defn- log-folder [for-ns] (ns-folder "logs" for-ns))
+
+(defn- log-file ^java.io.File [for-ns generators n]
+  (io/file (log-folder for-ns) (fname generators n "txt")))
+
+(defn log-writer ^java.io.Writer [for-ns generators n]
   (java.io.PrintWriter.
-    (io/writer (log-file for-ns data0 element0 data1 element1 n))
+    (io/writer (log-file for-ns generators n))
     true))
 ;;----------------------------------------------------------------
-(defn data-folder [for-ns] (ns-folder "data" for-ns))
+(defn- data-folder [for-ns] (ns-folder "data" for-ns))
+
 (defn data-file 
-  ^java.io.File [for-ns data0 element0 data1 element1 n]
-  (io/file (data-folder for-ns) 
-           (fname data0 element0 data1 element1 n "tsv")))
-(defn data-files [folder ^String glob]
+  ^java.io.File [for-ns generators n]
+  (io/file (data-folder for-ns) (fname generators n "tsv")))
+;;----------------------------------------------------------------
+(defn- data-files [folder ^String glob]
   (let [^PathMatcher pm (.getPathMatcher 
                           (FileSystems/getDefault) 
                           (str "glob:**/" glob ".tsv"))]
     (filter #(.matches pm (.toPath ^java.io.File %))
             (file-seq folder))))
+;;----------------------------------------------------------------
 (defn read-data [for-ns glob]
   (println (data-folder for-ns))
   (println (data-files (data-folder for-ns) glob))
@@ -172,27 +169,11 @@
                                        (Math/round 
                                          (Double/parseDouble 
                                            (:millisec record))))
-                            generator (keyword
-                                        (str 
-                                          (abbreviate 
-                                            (:generator0 
-                                              record))
-                                          (abbreviate 
-                                            (:generator1 
-                                              record))))
-                            dataset-generator 
-                            (keyword
-                              (str 
-                                (abbreviate 
-                                  (:dataset-generator0 
-                                    record))
-                                (abbreviate 
-                                  (:dataset-generator1 
-                                    record))))
+                            generators (s/join "-" (map fn-name (:generators record)))
                             row (assoc 
                                   (get table algorithm 
                                        {:algorithm algorithm})
-                                  generator microsec)]
+                                  generators microsec)]
                         (assoc table algorithm row)))
                     {}
                     data)))]
@@ -228,6 +209,7 @@
                        #_:warmup-executions
                        :variance)]
     (assoc (dissoc record :mean) 
+           :generators (s/join "-" (map fn-name (:generators record)))
            :manufacturerModel (SystemInfo/manufacturerModel)
            :median median
            :millisec (* 1000.0 (double (first (:mean record))))
@@ -240,20 +222,16 @@
 (defn criterium 
 
   ([^IFn f ^Map data-map options]
-    (let [options (merge {:tail-quantile 0.25 :samples 60}
-                         options)
+    (let [options (merge {:tail-quantile 0.25 :samples 60} options)
           fname (fn-name f)
           nthreads (long (:nthreads data-map (default-nthreads)))
-          calls (map (fn caller [s0i s1i] #(f s0i s1i))
-                     (:data0 data-map) (:data1 data-map))
+          calls (map (fn caller [data] #(f data)) (:data data-map))
           _(assert (== nthreads (count calls)))
-          result (criterium/benchmark 
-                   (reduce + (apply pcalls calls)) options)
+          result (criterium/benchmark (reduce + (apply pcalls calls)) options)
           value (double (first (:results result)))
           result (simplify 
                    (assoc 
-                     (merge result 
-                            (dissoc data-map :raw :data0 :data1))
+                     (merge result (dissoc data-map :data))
                      :threads nthreads
                      :value value
                      :algorithm fname))]
@@ -264,33 +242,32 @@
   
   ([^IFn f ^Map data-map] (criterium f data-map {})))
 ;;----------------------------------------------------------------
-(defn milliseconds 
-  (^double [^IFn f ^Map data-map ^long nreps]
-    (let [fname (fn-name f)
-          nthreads (long (:nthreads data-map (default-nthreads)))
-          data0 (:data0 data-map)
-          data1 (:data1 data-map)
-          ff (fn [s0 s1]
-               (let [calls 
-                     (mapv (fn caller [s0i s1i] #(f s0i s1i)) s0 s1)]
-                 (reduce + (apply pcalls calls))))
-          start (System/nanoTime)
-          warmup (reduce 
-                   + 
-                   (map ff 
-                        (take 32 (cycle [data0 data1 data0 data1]))
-                        (take 32 (cycle [data1 data1 data0 data0]))))
-          wmsec (/ (* (- (System/nanoTime) start) 1.0e-6) 32)
-          start (System/nanoTime)
-          result (reduce 
-                   + 
-                   (map ff 
-                        (take nreps (cycle [data0 data1 data0 data1]))
-                        (take nreps (cycle [data1 data1 data0 data0]))))
-          msec (/ (* (- (System/nanoTime) start) 1.0e-6) nreps)]
-      (println fname 32 wmsec warmup)
-      (println fname  nreps msec result)
-      (println fname (/ wmsec msec))
-      msec))
-  (^double [^IFn f ^Map data-map] (milliseconds f data-map 256)))
+#_(defn milliseconds 
+   (^double [^IFn f ^Map data-map ^long nreps]
+     (let [fname (fn-name f)
+           nthreads (long (:nthreads data-map (default-nthreads)))
+           data (:data data-map)
+           ff (fn [s0 s1]
+                (let [calls 
+                      (mapv (fn caller [s0i s1i] #(f s0i s1i)) s0 s1)]
+                  (reduce + (apply pcalls calls))))
+           start (System/nanoTime)
+           warmup (reduce 
+                    + 
+                    (map ff 
+                         (take 32 (cycle [data0 data1 data0 data1]))
+                         (take 32 (cycle [data1 data1 data0 data0]))))
+           wmsec (/ (* (- (System/nanoTime) start) 1.0e-6) 32)
+           start (System/nanoTime)
+           result (reduce 
+                    + 
+                    (map ff 
+                         (take nreps (cycle [data0 data1 data0 data1]))
+                         (take nreps (cycle [data1 data1 data0 data0]))))
+           msec (/ (* (- (System/nanoTime) start) 1.0e-6) nreps)]
+       (println fname 32 wmsec warmup)
+       (println fname  nreps msec result)
+       (println fname (/ wmsec msec))
+       msec))
+   (^double [^IFn f ^Map data-map] (milliseconds f data-map 256)))
 ;;----------------------------------------------------------------
