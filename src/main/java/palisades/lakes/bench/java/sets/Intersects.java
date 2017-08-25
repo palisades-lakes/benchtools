@@ -7,7 +7,7 @@ import java.util.Set;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-29
- * @version 2017-07-23
+ * @version 2017-08-24
  */
 
 @SuppressWarnings("unchecked")
@@ -113,8 +113,8 @@ public final class Intersects extends Object {
   //--------------------------------------------------------------
 
   public static final int 
-  countIntersections (final IntegerInterval[] s0,
-                      final IntegerInterval[] s1) {
+  count (final IntegerInterval[] s0,
+         final IntegerInterval[] s1) {
     int k = 0;
     final int n = s0.length;
     assert n == s1.length;

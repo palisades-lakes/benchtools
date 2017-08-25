@@ -4,7 +4,7 @@ package palisades.lakes.bench.java.sets;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-29
- * @version 2017-08-21
+ * @version 2017-08-24
  */
 
 @SuppressWarnings("unchecked")
@@ -475,12 +475,41 @@ public final class Contains extends Object {
   //--------------------------------------------------------------
 
   public final static boolean contains (final java.util.Set s,
+                                        final int x) {
+    return s.contains(Integer.valueOf(x)); }
+
+  public final static boolean contains (final java.util.Set s,
                                         final Object x) {
     return s.contains(x); }
 
   //--------------------------------------------------------------
   // lookup
   //--------------------------------------------------------------
+
+  public static final boolean contains (final Object s,
+                                        final int x) {
+    if (s instanceof ByteInterval) {
+      final ByteInterval i = (ByteInterval) s;
+      return contains(i,x); }
+    if (s instanceof DoubleInterval) {
+      final DoubleInterval i = (DoubleInterval) s;
+      return contains(i,x); }
+    if (s instanceof FloatInterval) {
+      final FloatInterval i = (FloatInterval) s;
+      return contains(i,x); }
+    if (s instanceof IntegerInterval) {
+      final IntegerInterval i = (IntegerInterval) s;
+      return contains(i,x); }
+    if (s instanceof LongInterval) {
+      final LongInterval i = (LongInterval) s;
+      return contains(i,x); }
+    if (s instanceof ShortInterval) {
+      final ShortInterval i = (ShortInterval) s;
+      return contains(i,x); }
+    if (s instanceof java.util.Set) {
+      return contains((java.util.Set) s, x); }
+    throw new IllegalArgumentException(
+      "can't tell if " + s.getClass() + " contains " + x); }
 
   public static final boolean contains (final Object s,
                                         final Object x) {
@@ -545,13 +574,14 @@ public final class Contains extends Object {
     throw new IllegalArgumentException(
       "can't tell if " + s.getClass() + 
       " contains " + x.getClass()); }
+
   //--------------------------------------------------------------
   // summaries
   //--------------------------------------------------------------
 
   public static final int 
-  countContains (final IntegerInterval[] s,
-                 final int[] x) {
+  countStatic (final IntegerInterval[] s,
+               final int[] x) {
     int k = 0;
     final int n = s.length;
     assert n == x.length;
@@ -560,8 +590,8 @@ public final class Contains extends Object {
     return k; }
 
   public static final int 
-  countContains (final IntegerInterval[] s,
-                 final Integer[] x) {
+  countStatic (final IntegerInterval[] s,
+               final Integer[] x) {
     int k = 0;
     final int n = s.length;
     assert n == x.length;
@@ -570,13 +600,77 @@ public final class Contains extends Object {
     return k; }
 
   public static final int 
-  countContains (final Object[] s,
-                 final Object[] x) {
+  countStatic (final Set[] s,
+               final int[] x) {
     int k = 0;
     final int n = s.length;
     assert n == x.length;
     for (int i=0;i<n;i++) { 
       if (contains(s[i],x[i])) { k++; } }
+    return k; }
+
+  public static final int 
+  countStatic (final Set[] s,
+               final Integer[] x) {
+    int k = 0;
+    final int n = s.length;
+    assert n == x.length;
+    for (int i=0;i<n;i++) { 
+      if (contains(s[i],x[i])) { k++; } }
+    return k; }
+
+  public static final int 
+  countStatic (final Object[] s,
+               final Object[] x) {
+    int k = 0;
+    final int n = s.length;
+    assert n == x.length;
+    for (int i=0;i<n;i++) { 
+      if (contains(s[i],x[i])) { k++; } }
+    return k; }
+
+  //--------------------------------------------------------------
+
+  public static final int 
+  countVirtual (final IntegerInterval[] s,
+                final int[] x) {
+    int k = 0;
+    final int n = s.length;
+    assert n == x.length;
+    for (int i=0;i<n;i++) { 
+      if (s[i].contains(x[i])) { k++; } }
+    return k; }
+
+  public static final int 
+  countVirtual (final IntegerInterval[] s,
+                final Integer[] x) {
+    int k = 0;
+    final int n = s.length;
+    assert n == x.length;
+    for (int i=0;i<n;i++) { 
+      if (s[i].contains(x[i])) { k++; } }
+    return k; }
+
+  //--------------------------------------------------------------
+
+  public static final int 
+  countInterface (final Set[] s,
+                  final int[] x) {
+    int k = 0;
+    final int n = s.length;
+    assert n == x.length;
+    for (int i=0;i<n;i++) { 
+      if (s[i].contains(x[i])) { k++; } }
+    return k; }
+
+  public static final int 
+  countInterface (final Set[] s,
+                  final Integer[] x) {
+    int k = 0;
+    final int n = s.length;
+    assert n == x.length;
+    for (int i=0;i<n;i++) { 
+      if (s[i].contains(x[i])) { k++; } }
     return k; }
 
   //--------------------------------------------------------------

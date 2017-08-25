@@ -6,7 +6,7 @@
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-08-16"}
+   :version "2017-08-24"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
@@ -14,7 +14,9 @@
             [clojure.pprint :as pp]
             [palisades.lakes.bench.random.generators :as g])
   
-  (:import [java.nio.file FileSystems PathMatcher]
+  (:import [clojure.lang IFn]
+           [java.util Map]
+           [java.nio.file FileSystems PathMatcher]
            [java.time.format DateTimeFormatter]
            [palisades.lakes.bench.java SystemInfo]))
 ;;----------------------------------------------------------------
@@ -51,9 +53,8 @@
 (defn generate-datasets 
   
   ([counter
-    ^clojure.lang.IFn dataset-generator 
-    ^clojure.lang.IFn element-generator
-    ^Class element-type 
+    ^IFn dataset-generator 
+    ^IFn element-generator
     nelements
     nthreads]
     {:nelements nelements
@@ -68,25 +69,15 @@
      (keyword (str "data" counter)) 
      (repeatedly 
        nthreads 
-       #(dataset-generator 
-          element-generator nelements element-type))})
+       #(dataset-generator element-generator nelements))})
   
   ([counter
-    ^clojure.lang.IFn dataset-generator 
-    ^clojure.lang.IFn element-generator 
-    ^Class element-type
+    ^IFn dataset-generator 
+    ^IFn element-generator 
     nelements]
     (generate-datasets 
-      counter dataset-generator element-generator element-type 
-      nelements (default-nthreads)))
-  
-  ([counter
-    ^clojure.lang.IFn dataset-generator 
-    ^clojure.lang.IFn element-generator 
-    nelements]
-    (generate-datasets 
-      counter dataset-generator element-generator Object 
-      nelements (default-nthreads))))
+      counter dataset-generator element-generator nelements 
+      (default-nthreads))))
 ;;----------------------------------------------------------------
 (defn write-tsv [^java.util.List records ^java.io.File f]
   (io/make-parents f)
@@ -112,10 +103,12 @@
   (defn- now ^String []
     (.format dtf (java.time.LocalDateTime/now))))
                                   
-(defn fname [data0 data1 n ext]
+(defn fname [data0 element0 data1 element1 n ext]
   (str (SystemInfo/manufacturerModel)
        "." (fn-name data0) 
+       "." (fn-name element0) 
        "." (fn-name data1)
+       "." (fn-name element1)
        "." n
        "." (now)
        "." ext))
@@ -128,16 +121,21 @@
     f))
 ;;----------------------------------------------------------------
 (defn log-folder [for-ns] (ns-folder "logs" for-ns))
-(defn ^java.io.File log-file [for-ns data0 data1 n]
-  (io/file (log-folder for-ns) (fname data0 data1 n "txt")))
-(defn log-writer ^java.io.Writer [for-ns data0 data1 n]
+(defn log-file 
+  ^java.io.File [for-ns data0 element0 data1 element1 n]
+  (io/file (log-folder for-ns)
+           (fname data0 element0 data1 element1 n "txt")))
+(defn log-writer 
+  ^java.io.Writer [for-ns data0 element0 data1 element1 n]
   (java.io.PrintWriter.
-    (io/writer (log-file for-ns data0 data1 n))
+    (io/writer (log-file for-ns data0 element0 data1 element1 n))
     true))
 ;;----------------------------------------------------------------
 (defn data-folder [for-ns] (ns-folder "data" for-ns))
-(defn ^java.io.File data-file [for-ns data0 data1 n]
-  (io/file (data-folder for-ns) (fname data0 data1 n "tsv")))
+(defn data-file 
+  ^java.io.File [for-ns data0 element0 data1 element1 n]
+  (io/file (data-folder for-ns) 
+           (fname data0 element0 data1 element1 n "tsv")))
 (defn data-files [folder ^String glob]
   (let [^PathMatcher pm (.getPathMatcher 
                           (FileSystems/getDefault) 
@@ -241,10 +239,7 @@
 ;;----------------------------------------------------------------
 (defn criterium 
 
-  ([^clojure.lang.IFn f 
-    ^java.util.Map data-map
-    options]
-    
+  ([^IFn f ^Map data-map options]
     (let [options (merge {:tail-quantile 0.25 :samples 60}
                          options)
           fname (fn-name f)
@@ -267,15 +262,10 @@
       (flush)
       result))
   
-  ([^clojure.lang.IFn f 
-    ^java.util.Map data-map]
-    
-    (criterium f data-map {})))
+  ([^IFn f ^Map data-map] (criterium f data-map {})))
 ;;----------------------------------------------------------------
 (defn milliseconds 
-  (^double [^clojure.lang.IFn f 
-            ^java.util.Map data-map
-            ^long nreps]
+  (^double [^IFn f ^Map data-map ^long nreps]
     (let [fname (fn-name f)
           nthreads (long (:nthreads data-map (default-nthreads)))
           data0 (:data0 data-map)
@@ -302,7 +292,5 @@
       (println fname  nreps msec result)
       (println fname (/ wmsec msec))
       msec))
-  (^double [^clojure.lang.IFn f 
-            ^java.util.Map data-map]
-    (milliseconds f data-map 256)))
+  (^double [^IFn f ^Map data-map] (milliseconds f data-map 256)))
 ;;----------------------------------------------------------------
