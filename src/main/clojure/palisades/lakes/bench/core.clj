@@ -83,7 +83,7 @@
      :data
      (repeatedly 
        nthreads 
-       (fn thread-datasets [generators]
+       (fn thread-datasets []
          (mapv 
            (fn dataset [[^IFn dataset-generator ^IFn element-generator]]
              (dataset-generator element-generator nelements))
@@ -241,7 +241,7 @@
     (let [options (merge {:tail-quantile 0.05 :samples 100} options)
           fname (fn-name f)
           nthreads (long (:nthreads data-map (default-nthreads)))
-          calls (map (fn caller [data] #(f data)) (:data data-map))
+          calls (map (fn caller [data] #(apply f data)) (:data data-map))
           _ (assert (== nthreads (count calls)))
           result (criterium/benchmark (reduce + (apply pcalls calls)) options)
           value (double (first (:results result)))
