@@ -75,19 +75,19 @@
     (assert (even? (count generators)))
     (assert (every? ifn? generators))
     
+    (pp/pprint (partition 2 (map fn-name generators)))
+    
     {:nelements nelements
      :nthreads nthreads
-     
      :generators generators 
-     
      :data
      (repeatedly 
        nthreads 
-       (fn [generators]
+       (fn thread-datasets [generators]
          (mapv 
-           (fn [[^IFn dataset-generator ^IFn element-generator]]
+           (fn dataset [[^IFn dataset-generator ^IFn element-generator]]
              (dataset-generator element-generator nelements))
-           (parititon 2 generators))))})
+           (partition 2 generators))))})
   
   ([generators nelements]
     (generate-datasets generators nelements (default-nthreads))))
@@ -175,7 +175,7 @@
                 :algorithm
                 (vals 
                   (reduce 
-                    (fn [table record]
+                    (fn add-record-to-table [table record]
                       (let [algorithm (str (:algorithm record)
                                            "-"
                                            (:threads record))
@@ -192,7 +192,7 @@
                         (assoc table algorithm row)))
                     {}
                     data)))]
-    (mapv (fn [record]
+    (mapv (fn add-average-to-record [record]
             (assoc record :average
                    (int 
                      (Math/round
@@ -236,12 +236,13 @@
 ;;----------------------------------------------------------------
 (defn criterium 
   
-  ([^IFn f ^Map data-map options]
-    (let [options (merge {:tail-quantile 0.25 :samples 60} options)
+  ([^IFn f ^Map data-map ^Map options]
+    (println (keys data-map))
+    (let [options (merge {:tail-quantile 0.05 :samples 100} options)
           fname (fn-name f)
           nthreads (long (:nthreads data-map (default-nthreads)))
           calls (map (fn caller [data] #(f data)) (:data data-map))
-          _(assert (== nthreads (count calls)))
+          _ (assert (== nthreads (count calls)))
           result (criterium/benchmark (reduce + (apply pcalls calls)) options)
           value (double (first (:results result)))
           result (simplify 
@@ -262,7 +263,7 @@
       (let [fname (fn-name f)
             nthreads (long (:nthreads data-map (default-nthreads)))
             data (:data data-map)
-            ff (fn [s0 s1]
+            ff (fn caller [s0 s1]
                  (let [calls 
                        (mapv (fn caller [s0i s1i] #(f s0i s1i)) s0 s1)]
                    (reduce + (apply pcalls calls))))
@@ -286,33 +287,32 @@
         msec))
     (^double [^IFn f ^Map data-map] (milliseconds f data-map 256)))
 ;;----------------------------------------------------------------
-(defn bench [generators fns n options] 
-  (println (s/join " " (map fn-name generators)))
-  (println n) 
-  (println (.toString (java.time.LocalDateTime/now))) 
-  (time
-    (with-open [w (log-writer *ns* generators n)]
-      (binding [*out* w]
-        (print-system-info w)
-        (let [generators data-map 
-              (generate-datasets generators n)]
-          (reduce
-            (fn [records record]
-              (if record
-                (let [records (conj records record)]
-                  (write-tsv 
-                    records (data-file *ns* generators n))
-                  records)
-                records))
-            []
-            (for [f fns]
-              (do
-                (Thread/sleep (int (* 8 1000))) 
-                (println (.toString (java.time.LocalDateTime/now))) 
-                (time 
-                  (criterium 
-                    f 
-                    data-map 
-                    (merge {:tail-quantile 0.05 :samples 100}
-                           options)))))))))))
+(defn bench 
+  ([generators fns ^long n ^Map options] 
+    (assert (every? ifn? generators))
+    (assert (every? ifn? fns))
+    (println (s/join " " (map fn-name generators)))
+    (println n) 
+    (println (.toString (java.time.LocalDateTime/now))) 
+    (time
+      (with-open [w (log-writer *ns* generators n)]
+        (binding [*out* w]
+          (print-system-info w)
+          (println "generate-datasets")
+          (let [data-map (time (generate-datasets generators n))]
+            (reduce
+              (fn add-record [records record]
+                (if record
+                  (let [records (conj records record)]
+                    (write-tsv records (data-file *ns* generators n))
+                    records)
+                  records))
+              []
+              (map
+                (fn benchmark-one-fn [f]
+                  (Thread/sleep (int (* 8 1000))) 
+                  (println (.toString (java.time.LocalDateTime/now))) 
+                  (time (criterium f data-map options)))
+                fns)))))))
+  ([generators fns ^long n] (bench generators fns n {})))
 ;;----------------------------------------------------------------
