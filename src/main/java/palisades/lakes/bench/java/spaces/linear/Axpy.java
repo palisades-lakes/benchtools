@@ -2,10 +2,12 @@ package palisades.lakes.bench.java.spaces.linear;
 
 /** Static axpy, numbers (<b>R</b?<sup>1</sup>) 
  * as well as vectors.
+ * 
+ * TODO: use Math.fma() for float cases once JDK 9 is available.
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-08-22
- * @version 2017-08-23
+ * @version 2017-08-26
  */
 
 @SuppressWarnings("unchecked")
@@ -238,28 +240,30 @@ public final class Axpy extends Object {
   public static double axpy (double a,double x,float y) { return a*x + y; }
   public static double axpy (double a,double x,double y) { return a*x + y; }
   //--------------------------------------------------------------
+  // linear spaces
+  //--------------------------------------------------------------
 
   public final static Vector axpy (final LinearFunction a,
                                    final Vector x,
                                    final Vector y) {
     return a.axpy(x,y); }
 
-  //--------------------------------------------------------------
+ //--------------------------------------------------------------
   // lookup
   //--------------------------------------------------------------
 
-  public static final boolean manual (final Object a,
-                                      final Object x,
-                                      final Object y) {
-
-
-    throw new UnsupportedOperationException(
-      "Can't axpy " +
-        a.getClass().getSimpleName() +
-        " * " +
-        x.getClass().getSimpleName() +
-        " * " +
-        y.getClass().getSimpleName()); }
+//  public static final boolean manual (final Object a,
+//                                      final Object x,
+//                                      final Object y) {
+//
+//
+//    throw new UnsupportedOperationException(
+//      "Can't axpy " +
+//        a.getClass().getSimpleName() +
+//        " * " +
+//        x.getClass().getSimpleName() +
+//        " * " +
+//        y.getClass().getSimpleName()); }
 
   //--------------------------------------------------------------
   // summaries
