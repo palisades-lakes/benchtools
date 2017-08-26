@@ -6,7 +6,7 @@
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-08-25"}
+   :version "2017-08-26"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
@@ -237,7 +237,6 @@
 (defn criterium 
   
   ([^IFn f ^Map data-map ^Map options]
-    (println (keys data-map))
     (let [options (merge {:tail-quantile 0.05 :samples 100} options)
           fname (fn-name f)
           nthreads (long (:nthreads data-map (default-nthreads)))
