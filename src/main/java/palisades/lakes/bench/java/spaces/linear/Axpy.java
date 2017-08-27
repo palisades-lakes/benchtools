@@ -10,7 +10,7 @@ import palisades.lakes.bench.java.spaces.linear.r2.D22;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-08-22
- * @version 2017-08-26
+ * @version 2017-08-27
  */
 
 @SuppressWarnings("unchecked")
@@ -274,9 +274,9 @@ public final class Axpy extends Object {
   //--------------------------------------------------------------
 
   public static final double 
-  sumL1Norms (final D22[] a,
-              final D2[] x,
-              final D2[] y) {
+  sumL1Virtual (final D22[] a,
+                final D2[] x,
+                final D2[] y) {
     // FIXME: this is not an accurate sum!
     final int n = a.length;
     assert n == x.length;
@@ -286,27 +286,15 @@ public final class Axpy extends Object {
     return s; }
 
   public static final double 
-  sumL1Norms (final LinearFunction[] a,
-              final Vector[] x,
-              final Vector[] y) {
+  sumL1Interface (final LinearFunction[] a,
+                  final Vector[] x,
+                  final Vector[] y) {
     // FIXME: this is not an accurate sum!
     final int n = a.length;
     assert n == x.length;
     assert n == y.length;
     double s = 0.0;
     for (int i=0;i<n;i++) { s += a[i].axpy(x[i],y[i]).l1Norm(); }
-    return s; }
-
-  public static final double 
-  sumL1Norms (final Object[] a,
-              final Object[] x,
-              final Object[] y) {
-    // FIXME: this is not an accurate sum!
-    final int n = a.length;
-    assert n == x.length;
-    assert n == y.length;
-    double s = 0.0;
-    for (int i=0;i<n;i++) { s += axpy(a[i],x[i],y[i]).l1Norm(); }
     return s; }
 
   //--------------------------------------------------------------

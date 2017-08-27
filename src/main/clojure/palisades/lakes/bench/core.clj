@@ -6,7 +6,7 @@
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-08-26"}
+   :version "2017-08-27"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
@@ -123,6 +123,9 @@
            n
            (now)
            ext]))
+;;----------------------------------------------------------------
+(defn ^String benchname [for-ns]
+  (first (take-last 2 (s/split (str for-ns) #"\."))))
 ;;----------------------------------------------------------------
 (defn ^java.io.File ns-folder [prefix for-ns]
   (let [^java.io.File f (apply 
@@ -247,6 +250,7 @@
           result (simplify 
                    (assoc 
                      (merge result (dissoc data-map :data))
+                     :benchmark (benchname *ns*)
                      :threads nthreads
                      :value value
                      :algorithm fname))]
@@ -287,31 +291,33 @@
     (^double [^IFn f ^Map data-map] (milliseconds f data-map 256)))
 ;;----------------------------------------------------------------
 (defn bench 
-  ([generators fns ^long n ^Map options] 
-    (assert (every? ifn? generators))
-    (assert (every? ifn? fns))
-    (println (s/join " " (map fn-name generators)))
-    (println n) 
-    (println (.toString (java.time.LocalDateTime/now))) 
-    (time
-      (with-open [w (log-writer *ns* generators n)]
-        (binding [*out* w]
-          (print-system-info w)
-          (println "generate-datasets")
-          (let [data-map (time (generate-datasets generators n))]
-            (reduce
-              (fn add-record [records record]
-                (if record
-                  (let [records (conj records record)]
-                    (write-tsv records (data-file *ns* generators n))
-                    records)
-                  records))
-              []
-              (map
-                (fn benchmark-one-fn [f]
-                  (Thread/sleep (int (* 8 1000))) 
-                  (println (.toString (java.time.LocalDateTime/now))) 
-                  (time (criterium f data-map options)))
-                fns)))))))
-  ([generators fns ^long n] (bench generators fns n {})))
+  ([generators fns ^Map options]
+    (let [options (merge {:n (* 1 #_4 #_1024 1024)} options)
+          n (int (:n options))]
+      (assert (every? ifn? generators))
+      (assert (every? ifn? fns))
+      (println (s/join " " (map fn-name generators)))
+      (println n) 
+      (println (.toString (java.time.LocalDateTime/now))) 
+      (time
+        (with-open [w (log-writer *ns* generators n)]
+          (binding [*out* w]
+            (print-system-info w)
+            (println "generate-datasets")
+            (let [data-map (time (generate-datasets generators n))]
+              (reduce
+                (fn add-record [records record]
+                  (if record
+                    (let [records (conj records record)]
+                      (write-tsv records (data-file *ns* generators n))
+                      records)
+                    records))
+                []
+                (map
+                  (fn benchmark-one-fn [f]
+                    (Thread/sleep (int (* 8 1000))) 
+                    (println (.toString (java.time.LocalDateTime/now))) 
+                    (time (criterium f data-map options)))
+                  fns))))))))
+  ([generators fns] (bench generators fns {})))
 ;;----------------------------------------------------------------

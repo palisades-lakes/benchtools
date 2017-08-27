@@ -4,7 +4,7 @@ package palisades.lakes.bench.java.sets;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-29
- * @version 2017-08-24
+ * @version 2017-08-27
  */
 
 @SuppressWarnings("unchecked")
@@ -244,7 +244,6 @@ public final class Contains extends Object {
   //--------------------------------------------------------------
   // Numbers
   //--------------------------------------------------------------
-
 
   public final static boolean contains (final ByteInterval s,
                                         final Byte x) {

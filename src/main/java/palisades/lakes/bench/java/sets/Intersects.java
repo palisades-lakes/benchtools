@@ -1,13 +1,12 @@
 package palisades.lakes.bench.java.sets;
 
 import java.util.Collections;
-import java.util.Set;
 
 /** Static intersection test.
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-29
- * @version 2017-08-24
+ * @version 2017-08-27
  */
 
 @SuppressWarnings("unchecked")
@@ -30,7 +29,7 @@ public final class Intersects extends Object {
     return true; }
 
   public final static boolean intersects (final IntegerInterval s0,
-                                          final Set s1) {
+                                          final java.util.Set s1) {
     return s0.intersects(s1); }
 
   //--------------------------------------------------------------
@@ -48,59 +47,58 @@ public final class Intersects extends Object {
     return true; }
 
   public final static boolean intersects (final DoubleInterval s0,
-                                          final Set s1) {
+                                          final java.util.Set s1) {
     return s0.intersects(s1); }
 
   //--------------------------------------------------------------
 
-  public final static boolean intersects (final Set s0,
+  public final static boolean intersects (final java.util.Set s0,
                                           final IntegerInterval s1) {
     return s1.intersects(s0); }
 
-  public final static boolean intersects (final Set s0,
+  public final static boolean intersects (final java.util.Set s0,
                                           final DoubleInterval s1) {
     return s1.intersects(s0); }
 
-  public final static boolean intersects (final Set s0,
-                                          final Set s1) {
+  public final static boolean intersects (final java.util.Set s0,
+                                          final java.util.Set s1) {
     return (! Collections.disjoint(s0,s1)); }
 
-   //--------------------------------------------------------------
+  //--------------------------------------------------------------
   // lookup
   //--------------------------------------------------------------
 
-  public static final boolean manual (final Object s0,
-                                      final Object s1) {
+  public static final boolean intersects (final Object s0,
+                                          final Object s1) {
 
     if (s0 instanceof IntegerInterval) {
+      final IntegerInterval ii = (IntegerInterval) s0;
       if (s1 instanceof IntegerInterval) {
-        return intersects(
-          (IntegerInterval) s0, (IntegerInterval) s1); }
+        return ii.intersects((IntegerInterval) s1); }
       if (s1 instanceof DoubleInterval) {
-        return intersects(
-          (IntegerInterval) s0, (DoubleInterval) s1); }
-      if (s1 instanceof Set) {
-        return intersects((IntegerInterval) s0, (Set) s1); }
-      return ((IntegerInterval) s0).intersects(s1); }
+        return ii.intersects((DoubleInterval) s1); }
+      if (s1 instanceof java.util.Set) {
+        return ii.intersects((java.util.Set) s1); }
+      return ii.intersects(s1); }
 
     if (s0 instanceof DoubleInterval) {
+      final DoubleInterval di = (DoubleInterval) s0;
       if (s1 instanceof DoubleInterval) {
-        return intersects(
-          (DoubleInterval) s0, (DoubleInterval) s1); }
+        return di.intersects((DoubleInterval) s1); }
       if (s1 instanceof IntegerInterval) {
-        return intersects(
-          (DoubleInterval) s0, (IntegerInterval) s1); }
-      if (s1 instanceof Set) {
-        return intersects((DoubleInterval) s0, (Set) s1); }
-      return ((DoubleInterval) s0).intersects(s1); }
+        return ((IntegerInterval) s1).intersects(di); }
+      if (s1 instanceof java.util.Set) {
+        return di.intersects((java.util.Set) s1); }
+      return di.intersects(s1); }
 
-    if (s0 instanceof Set) {
+    if (s0 instanceof java.util.Set) {
+      final java.util.Set s = (java.util.Set) s0;
       if (s1 instanceof DoubleInterval) {
-        return intersects((Set) s0, (DoubleInterval) s1); }
+        return ((DoubleInterval) s1).intersects(s); }
       if (s1 instanceof IntegerInterval) {
-        return intersects((Set) s0, (IntegerInterval) s1); }
-      if (s1 instanceof Set) {
-        return intersects((Set) s0, (Set) s1); } }
+        return ((IntegerInterval) s1).intersects(s); }
+      if (s1 instanceof java.util.Set) {
+        return (! Collections.disjoint(s,(java.util.Set) s1)); } }
 
     throw new UnsupportedOperationException(
       "Can't test for interesection of " +
@@ -113,13 +111,33 @@ public final class Intersects extends Object {
   //--------------------------------------------------------------
 
   public static final int 
-  count (final IntegerInterval[] s0,
-         final IntegerInterval[] s1) {
+  countStatic (final IntegerInterval[] s0,
+               final IntegerInterval[] s1) {
     int k = 0;
     final int n = s0.length;
     assert n == s1.length;
     for (int i=0;i<n;i++) { 
       if (intersects(s0[i],s1[i])) { k++; } }
+    return k; }
+
+  public static final int 
+  countVirtual (final IntegerInterval[] s0,
+                final IntegerInterval[] s1) {
+    int k = 0;
+    final int n = s0.length;
+    assert n == s1.length;
+    for (int i=0;i<n;i++) { 
+      if (s0[i].intersects(s1[i])) { k++; } }
+    return k; }
+
+  public static final int 
+  countInterface (final Set[] s0,
+                  final IntegerInterval[] s1) {
+    int k = 0;
+    final int n = s0.length;
+    assert n == s1.length;
+    for (int i=0;i<n;i++) { 
+      if (s0[i].intersects(s1[i])) { k++; } }
     return k; }
 
   //--------------------------------------------------------------
