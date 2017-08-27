@@ -61,11 +61,11 @@ public final class F2 implements Vector {
   public static final F2 generate (final IFn.D g) {
     final double v0 = g.invokePrim();
     assert Double.isNaN(v0) || 
-    ((Float.MIN_VALUE <= v0) && (v0 <= Float.MAX_VALUE));
+    ((Math.nextUp(Float.NEGATIVE_INFINITY) <= v0) && (v0 <= Float.MAX_VALUE));
 
     final double v1 = g.invokePrim();
     assert Double.isNaN(v1) || 
-    ((Float.MIN_VALUE <= v1) && (v1 <= Float.MAX_VALUE));
+    ((Math.nextUp(Float.NEGATIVE_INFINITY) <= v1) && (v1 <= Float.MAX_VALUE));
 
     return make((float) v0, (float) v1); }
 

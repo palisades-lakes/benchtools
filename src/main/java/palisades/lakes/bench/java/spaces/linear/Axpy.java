@@ -1,5 +1,8 @@
 package palisades.lakes.bench.java.spaces.linear;
 
+import palisades.lakes.bench.java.spaces.linear.r2.D2;
+import palisades.lakes.bench.java.spaces.linear.r2.D22;
+
 /** Static axpy, numbers (<b>R</b?<sup>1</sup>) 
  * as well as vectors.
  * 
@@ -248,37 +251,62 @@ public final class Axpy extends Object {
                                    final Vector y) {
     return a.axpy(x,y); }
 
- //--------------------------------------------------------------
-  // lookup
-  //--------------------------------------------------------------
+  public final static Vector axpy (final Object a,
+                                   final Object x,
+                                   final Object y) {
+    if (a instanceof LinearFunction) {
+      final LinearFunction lfa = (LinearFunction) a;
+      if (x instanceof Vector) {
+        final Vector vx = (Vector) x;
+        if (y instanceof Vector) {
+          return lfa.axpy(vx,(Vector) y); } } }
 
-//  public static final boolean manual (final Object a,
-//                                      final Object x,
-//                                      final Object y) {
-//
-//
-//    throw new UnsupportedOperationException(
-//      "Can't axpy " +
-//        a.getClass().getSimpleName() +
-//        " * " +
-//        x.getClass().getSimpleName() +
-//        " * " +
-//        y.getClass().getSimpleName()); }
+    throw new IllegalArgumentException(
+      "no axpy methods for:" 
+        + a.getClass().getSimpleName()
+        + ", " 
+        + x.getClass().getSimpleName() 
+        + ", "
+        + x.getClass().getSimpleName()); }
 
   //--------------------------------------------------------------
   // summaries
   //--------------------------------------------------------------
 
   public static final double 
-  l1Norm (final LinearFunction[] a,
-          final Vector[] x,
-          final Vector[] y) {
+  sumL1Norms (final D22[] a,
+              final D2[] x,
+              final D2[] y) {
     // FIXME: this is not an accurate sum!
     final int n = a.length;
     assert n == x.length;
     assert n == y.length;
     double s = 0.0;
     for (int i=0;i<n;i++) { s += a[i].axpy(x[i],y[i]).l1Norm(); }
+    return s; }
+
+  public static final double 
+  sumL1Norms (final LinearFunction[] a,
+              final Vector[] x,
+              final Vector[] y) {
+    // FIXME: this is not an accurate sum!
+    final int n = a.length;
+    assert n == x.length;
+    assert n == y.length;
+    double s = 0.0;
+    for (int i=0;i<n;i++) { s += a[i].axpy(x[i],y[i]).l1Norm(); }
+    return s; }
+
+  public static final double 
+  sumL1Norms (final Object[] a,
+              final Object[] x,
+              final Object[] y) {
+    // FIXME: this is not an accurate sum!
+    final int n = a.length;
+    assert n == x.length;
+    assert n == y.length;
+    double s = 0.0;
+    for (int i=0;i<n;i++) { s += axpy(a[i],x[i],y[i]).l1Norm(); }
     return s; }
 
   //--------------------------------------------------------------

@@ -229,7 +229,7 @@
            :median median
            :millisec (* 1000.0 (double (first (:mean record))))
            ;;:variance (first (:variance record))
-           :value (int (:value record))
+           :value (:value record)
            :lower-q (* 1000.0 (double (first (:lower-q record))))
            :upper-q (* 1000.0 (double (first (:upper-q record))))
            :now (now))))
@@ -243,7 +243,7 @@
           calls (map (fn caller [data] #(apply f data)) (:data data-map))
           _ (assert (== nthreads (count calls)))
           result (criterium/benchmark (reduce + (apply pcalls calls)) options)
-          value (double (first (:results result)))
+          value (first (:results result))
           result (simplify 
                    (assoc 
                      (merge result (dissoc data-map :data))

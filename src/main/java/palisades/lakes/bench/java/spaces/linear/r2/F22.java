@@ -461,13 +461,13 @@ public final class F22 extends AFn implements LinearFunction {
   
   public static final F22 generate (final IFn.D g) {
     final double m00 = g.invokePrim();
-    assert (Float.MIN_VALUE <= m00) && (m00<= Float.MAX_VALUE);
+    assert (Math.nextUp(Float.NEGATIVE_INFINITY) <= m00) && (m00 <= Float.MAX_VALUE);
     final double m01 = g.invokePrim();
-    assert (Float.MIN_VALUE <= m01) && (m01 <= Float.MAX_VALUE);
+    assert (Math.nextUp(Float.NEGATIVE_INFINITY) <= m01) && (m01 <= Float.MAX_VALUE);
     final double m10 = g.invokePrim();
-    assert (Float.MIN_VALUE <= m10) && (m10<= Float.MAX_VALUE);
+    assert (Math.nextUp(Float.NEGATIVE_INFINITY) <= m10) && (m10<= Float.MAX_VALUE);
     final double m11 = g.invokePrim();
-    assert (Float.MIN_VALUE <= m11) && (m11 <= Float.MAX_VALUE);
+    assert (Math.nextUp(Float.NEGATIVE_INFINITY) <= m11) && (m11 <= Float.MAX_VALUE);
     return make((float) m00, (float) m01, (float) m10, (float) m11); }
 
   //--------------------------------------------------------------
