@@ -292,7 +292,9 @@
 ;;----------------------------------------------------------------
 (defn bench 
   ([generators fns ^Map options]
-    (let [options (merge {:n (* 1 #_4 #_1024 1024)} options)
+    (let [options (merge {:n (* 1 #_4 #_1024 #_1024 16)
+                          :samples 16} 
+                         options)
           n (int (:n options))]
       (assert (every? ifn? generators))
       (assert (every? ifn? fns))
