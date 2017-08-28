@@ -63,7 +63,6 @@ public final class ByteInterval implements Set {
   public final boolean contains (final short x) {
     return (min <= x) && (x < max); }
 
-
   @Override
   public final boolean contains (final Boolean x) { 
     return false; }

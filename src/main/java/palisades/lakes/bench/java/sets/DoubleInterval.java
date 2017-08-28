@@ -33,7 +33,7 @@ public final class DoubleInterval implements Set {
 
   @Override
   public final double diameter () { return max - min; }
-  
+
   //--------------------------------------------------------------
 
   @Override
@@ -129,7 +129,10 @@ public final class DoubleInterval implements Set {
     if (set instanceof java.util.Set) {
       return intersects((java.util.Set) set); }
     throw new UnsupportedOperationException(
-      "intersects" + " unsupported for " + getClass()); }
+      "intersects" + " unsupported for " 
+        + getClass().getSimpleName()
+        + ", " 
+        + set.getClass().getSimpleName()); }
 
   //--------------------------------------------------------------
 

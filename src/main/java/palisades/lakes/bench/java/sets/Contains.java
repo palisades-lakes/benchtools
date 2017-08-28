@@ -672,6 +672,16 @@ public final class Contains extends Object {
       if (s[i].contains(x[i])) { k++; } }
     return k; }
 
+  public static final int 
+  countInterface (final Set[] s,
+                  final Number[] x) {
+    int k = 0;
+    final int n = s.length;
+    assert n == x.length;
+    for (int i=0;i<n;i++) { 
+      if (s[i].contains(x[i])) { k++; } }
+    return k; }
+
   //--------------------------------------------------------------
   // construction
   //--------------------------------------------------------------
