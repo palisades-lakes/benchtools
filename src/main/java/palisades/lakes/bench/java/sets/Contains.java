@@ -4,7 +4,7 @@ package palisades.lakes.bench.java.sets;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-29
- * @version 2017-08-27
+ * @version 2017-08-28
  */
 
 @SuppressWarnings("unchecked")
@@ -510,8 +510,21 @@ public final class Contains extends Object {
     throw new IllegalArgumentException(
       "can't tell if " + s.getClass() + " contains " + x); }
 
+  // ordered to favor IntegerInterval,Integer case,
+  // because that's the exact benchmark case, and I want to see 
+  // how fast it could be when hand-optimized, as a baseline
+  
   public static final boolean contains (final Object s,
                                         final Object x) {
+
+    if (s instanceof IntegerInterval) {
+      final IntegerInterval i = (IntegerInterval) s;
+      if (x instanceof Integer) { return contains(i, (Integer) x); }
+      if (x instanceof Byte) { return contains(i, (Byte) x); }
+      if (x instanceof Double) { return contains(i, (Double) x); }
+      if (x instanceof Float) { return contains(i, (Float) x); }
+      if (x instanceof Long) { return contains(i, (Long) x); }
+      if (x instanceof Short) { return contains(i, (Short) x); } }
 
     if (s instanceof ByteInterval) {
       final ByteInterval i = (ByteInterval) s;
@@ -533,15 +546,6 @@ public final class Contains extends Object {
 
     if (s instanceof FloatInterval) {
       final FloatInterval i = (FloatInterval) s;
-      if (x instanceof Byte) { return contains(i, (Byte) x); }
-      if (x instanceof Double) { return contains(i, (Double) x); }
-      if (x instanceof Float) { return contains(i, (Float) x); }
-      if (x instanceof Integer) { return contains(i, (Integer) x); }
-      if (x instanceof Long) { return contains(i, (Long) x); }
-      if (x instanceof Short) { return contains(i, (Short) x); } }
-
-    if (s instanceof IntegerInterval) {
-      final IntegerInterval i = (IntegerInterval) s;
       if (x instanceof Byte) { return contains(i, (Byte) x); }
       if (x instanceof Double) { return contains(i, (Double) x); }
       if (x instanceof Float) { return contains(i, (Float) x); }
