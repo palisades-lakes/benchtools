@@ -274,28 +274,32 @@ public final class Axpy extends Object {
   //--------------------------------------------------------------
 
   public static final double 
-  sumL1Virtual (final D22[] a,
+  maxL1Virtual (final D22[] a,
                 final D2[] x,
                 final D2[] y) {
     // FIXME: this is not an accurate sum!
     final int n = a.length;
     assert n == x.length;
     assert n == y.length;
-    double s = 0.0;
-    for (int i=0;i<n;i++) { s += a[i].axpy(x[i],y[i]).l1Norm(); }
-    return s; }
+    double m = Double.NEGATIVE_INFINITY;
+    for (int i=0;i<n;i++) { 
+      final double l1 = a[i].axpy(x[i],y[i]).l1Norm(); 
+      if (l1 > m) { m = l1; } }
+    return m; }
 
   public static final double 
-  sumL1Interface (final LinearFunction[] a,
+  maxL1Interface (final LinearFunction[] a,
                   final Vector[] x,
                   final Vector[] y) {
     // FIXME: this is not an accurate sum!
     final int n = a.length;
     assert n == x.length;
     assert n == y.length;
-    double s = 0.0;
-    for (int i=0;i<n;i++) { s += a[i].axpy(x[i],y[i]).l1Norm(); }
-    return s; }
+    double m = Double.NEGATIVE_INFINITY;
+    for (int i=0;i<n;i++) { 
+      final double l1 = a[i].axpy(x[i],y[i]).l1Norm(); 
+      if (l1 > m) { m = l1; } }
+    return m; }
 
   //--------------------------------------------------------------
   // construction
