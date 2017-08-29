@@ -10,7 +10,7 @@ import palisades.lakes.bench.java.spaces.linear.r2.D22;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-08-22
- * @version 2017-08-27
+ * @version 2017-08-28
  */
 
 @SuppressWarnings("unchecked")
