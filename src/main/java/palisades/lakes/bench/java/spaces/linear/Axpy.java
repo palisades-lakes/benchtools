@@ -246,6 +246,14 @@ public final class Axpy extends Object {
   // linear spaces
   //--------------------------------------------------------------
 
+  private static final String errmsg (final Object a,
+                                      final Object x,
+                                      final Object y) {
+    return 
+      "can't " + a.getClass().getSimpleName() + 
+      ".axpy(" + x.getClass().getSimpleName() +
+      "," + y.getClass().getSimpleName() + ")"; }
+
   public final static Vector axpy (final LinearFunction a,
                                    final Vector x,
                                    final Vector y) {
@@ -254,20 +262,42 @@ public final class Axpy extends Object {
   public final static Vector axpy (final Object a,
                                    final Object x,
                                    final Object y) {
-    if (a instanceof LinearFunction) {
-      final LinearFunction lfa = (LinearFunction) a;
-      if (x instanceof Vector) {
-        final Vector vx = (Vector) x;
-        if (y instanceof Vector) {
-          return lfa.axpy(vx,(Vector) y); } } }
 
-    throw new IllegalArgumentException(
-      "no axpy methods for:" 
-        + a.getClass().getSimpleName()
-        + ", " 
-        + x.getClass().getSimpleName() 
-        + ", "
-        + x.getClass().getSimpleName()); }
+    // hand optimize benchmark special case as baseline
+
+    if (a instanceof D22) {
+      final D22 ad22 = (D22) a;
+      if (x instanceof D2) {
+        final D2 xd2 = (D2) x;
+        if (y instanceof D2) {
+          final D2 yd2 = (D2) y;
+          return ad22.axpy(xd2,yd2); }
+        if (y instanceof Vector) {
+          final Vector yv = (Vector) y;
+          return ad22.axpy(xd2,yv); }
+        throw new IllegalArgumentException(errmsg(a,x,y)); }
+      if (x instanceof Vector) {
+        final Vector xv = (Vector) x;
+        if (y instanceof D2) {
+          final D2 yd2 = (D2) y;
+          return ad22.axpy(xv,yd2); }
+        if (y instanceof Vector) {
+          final Vector yv = (Vector) y;
+          return ad22.axpy(xv,yv); }
+        throw new IllegalArgumentException(errmsg(a,x,y)); }
+      throw new IllegalArgumentException(errmsg(a,x,y)); }
+
+    if (a instanceof LinearFunction) {
+      final LinearFunction alf = (LinearFunction) a;
+      if (x instanceof Vector) {
+        final Vector xv = (Vector) x;
+        if (y instanceof Vector) {
+          final Vector yv = (Vector) y;
+          return alf.axpy(xv,yv); } 
+        throw new IllegalArgumentException(errmsg(a,x,y)); }
+      throw new IllegalArgumentException(errmsg(a,x,y)); }
+
+    throw new IllegalArgumentException(errmsg(a,x,y)); }
 
   //--------------------------------------------------------------
   // summaries
