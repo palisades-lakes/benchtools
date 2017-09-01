@@ -6,7 +6,7 @@
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-08-30"}
+   :version "2017-09-01"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
@@ -237,10 +237,15 @@
            :upper-q (* 1000.0 (double (first (:upper-q record))))
            :now (now))))
 ;;----------------------------------------------------------------
+(def defaults {:tail-quantile 0.05 
+               :samples 256
+               :n (* 1024 1024)
+               :pause 16})
+;;----------------------------------------------------------------
 (defn criterium 
   
   ([^IFn f ^Map data-map ^Map options]
-    (let [options (merge {:tail-quantile 0.05 :samples 100} options)
+    (let [options (merge defaults options)
           fname (fn-name f)
           nthreads (long (:nthreads data-map (default-nthreads)))
           calls (map (fn caller [data] #(apply f data)) (:data data-map))
@@ -263,8 +268,9 @@
 ;;----------------------------------------------------------------
 (defn bench 
   ([generators fns ^Map options]
-    (let [options (merge {:n (* 1 4 1024 1024)} options)
-          n (int (:n options))]
+    (let [options (merge defaults options)
+          n (int (:n options))
+          pause (int (:pause options))]
       (assert (every? ifn? generators))
       (assert (every? ifn? fns))
       (println (s/join " " (map fn-name generators)))
@@ -286,7 +292,7 @@
                 []
                 (map
                   (fn benchmark-one-fn [f]
-                    (Thread/sleep (int (* 8 1000))) 
+                    (Thread/sleep (* pause 1000)) 
                     (println (.toString (java.time.LocalDateTime/now))) 
                     (time (criterium f data-map options)))
                   fns))))))))
@@ -294,8 +300,9 @@
 ;;----------------------------------------------------------------
 (defn milliseconds 
   ([^IFn f ^Map data-map ^Map options]
-    (let [options (merge {:samples 1024} options)
-          samples (int (:samples options 1024))
+    (let [options (merge defaults options)
+          samples (int (:samples options))
+          pause (int (:pause options))
           fname (fn-name f)
           nthreads (long (:nthreads data-map (default-nthreads)))
           calls (map (fn caller [data] #(apply f data)) (:data data-map))
@@ -308,6 +315,7 @@
           start (System/nanoTime)
           v0 (runit)  
           msec0 (/ (* (- (System/nanoTime) start) 1.0e-6) samples)
+          _ (Thread/sleep (* pause 1000)) 
           start (System/nanoTime)
           v1 (runit)
           msec1 (/ (* (- (System/nanoTime) start) 1.0e-6) samples)]
@@ -319,7 +327,7 @@
 ;;----------------------------------------------------------------
 (defn profile 
   ([generators fns ^Map options]
-    (let [options (merge {:n (* 1 4 1024 1024)} options)
+    (let [options (merge defaults options)
           n (int (:n options))]
       (assert (every? ifn? generators))
       (assert (every? ifn? fns))
@@ -347,4 +355,78 @@
                     (time (milliseconds f data-map options)))
                   fns))))))))
   ([generators fns] (bench generators fns {})))
+;;----------------------------------------------------------------
+;; Count the truthy values returned by <code>f</code>
+;; applied to the elements of 2 container operands.
+;; A macro since <code>f</code> may be a Java method and not 
+;; Clojure functions.
+
+;; TODO: pass int lexical type hints for containers, elements,
+;; and return values; support collections in addition to arrays.
+
+(defmacro defcounter [benchname f]
+  (let [a (gensym "a") 
+        b (gensym "b")
+        args [(with-meta a {:tag 'objects})
+              (with-meta b {:tag 'objects})]
+        args (with-meta args {:tag 'long})]
+    #_(binding [*print-meta* true] (pp/pprint args))
+    `(defn ~benchname ~args
+       (assert (== (alength ~a) (alength ~b)))
+       (let [n# (int (alength ~a))]
+         (loop [i# (int 0)
+                total# (long 0)]
+           (cond (>= i# n#) (long total#)
+                 (~f (aget ~a i#) (aget ~b i#)) 
+                 (recur (inc i#) (inc total#))
+                 :else (recur (inc i#) total#)))))))
+;;----------------------------------------------------------------
+;; Find the max of a <code>double</code> valued <code>f</code>
+;; applied to the elements of 1 container operand.
+;; A macro since <code>f</code> may be a Java method and not 
+;; Clojure functions.
+
+;; TODO: pass int lexical type hints for containers, elements,
+;; and return values; support collections in addition to arrays.
+
+(defmacro defmax [benchname f]
+  (let [a (gensym "a") 
+        args [(with-meta a {:tag 'objects})]
+        args (with-meta args {:tag 'double})]
+    `(defn ~benchname ~args
+       (let [n# (int (alength ~a))]
+         (loop [i# (int 0)
+                dmax# Double/NEGATIVE_INFINITY]
+           (if (>= i# n#) 
+             dmax#
+             (recur 
+               (inc i#) 
+               (Math/max dmax# (double (~f (aget ~a i#)))))))))))
+;;----------------------------------------------------------------
+;; Find the max L1 norm of a vector valued <code>f</code>
+;; applied to the elements of 3 container operands.
+;; A macro since <code>f</code> may be a Java method and not 
+;; Clojure functions.
+
+;; TODO: pass int lexical type hints for containers, elements,
+;; and return values; support collections in addition to arrays.
+
+(defmacro defmaxl1 [benchname f]
+  (let [a (gensym "a") 
+        x (gensym "x")
+        y (gensym "y")
+        args [(with-meta a {:tag 'objects})
+              (with-meta x {:tag 'objects})
+              (with-meta y {:tag 'objects})]
+        args (with-meta args {:tag 'double})]
+    `(defn ~benchname ~args
+       (assert (== (alength ~a) (alength ~x) (alength ~y)))
+       (let [n# (int (alength ~a))]
+         (loop [i# (int 0)
+                max# Double/NEGATIVE_INFINITY]
+           (if (>= i# n#) 
+             max#
+             (let [^Vector v# (~f (aget ~a i#) (aget ~x i#) (aget ~y i#))
+                   l1# (.l1Norm v#)]
+               (recur (inc i#) (Math/max max# l1#)))))))))
 ;;----------------------------------------------------------------
