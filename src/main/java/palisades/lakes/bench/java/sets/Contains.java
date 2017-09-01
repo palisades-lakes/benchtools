@@ -520,23 +520,26 @@ public final class Contains extends Object {
     if (s instanceof IntegerInterval) {
       final IntegerInterval i = (IntegerInterval) s;
       if (x instanceof Integer) { return contains(i, (Integer) x); }
-      if (x instanceof Byte) { return contains(i, (Byte) x); }
       if (x instanceof Double) { return contains(i, (Double) x); }
-      if (x instanceof Float) { return contains(i, (Float) x); }
-      if (x instanceof Long) { return contains(i, (Long) x); }
-      if (x instanceof Short) { return contains(i, (Short) x); } }
-
-    if (s instanceof ByteInterval) {
-      final ByteInterval i = (ByteInterval) s;
       if (x instanceof Byte) { return contains(i, (Byte) x); }
-      if (x instanceof Double) { return contains(i, (Double) x); }
       if (x instanceof Float) { return contains(i, (Float) x); }
-      if (x instanceof Integer) { return contains(i, (Integer) x); }
       if (x instanceof Long) { return contains(i, (Long) x); }
       if (x instanceof Short) { return contains(i, (Short) x); } }
 
     if (s instanceof DoubleInterval) {
       final DoubleInterval i = (DoubleInterval) s;
+      if (x instanceof Integer) { return contains(i, (Integer) x); }
+      if (x instanceof Double) { return contains(i, (Double) x); }
+      if (x instanceof Byte) { return contains(i, (Byte) x); }
+      if (x instanceof Float) { return contains(i, (Float) x); }
+      if (x instanceof Long) { return contains(i, (Long) x); }
+      if (x instanceof Short) { return contains(i, (Short) x); } }
+
+    if (s instanceof java.util.Set) {
+      return contains((java.util.Set) s, x); }
+
+    if (s instanceof ByteInterval) {
+      final ByteInterval i = (ByteInterval) s;
       if (x instanceof Byte) { return contains(i, (Byte) x); }
       if (x instanceof Double) { return contains(i, (Double) x); }
       if (x instanceof Float) { return contains(i, (Float) x); }
@@ -570,9 +573,6 @@ public final class Contains extends Object {
       if (x instanceof Integer) { return contains(i, (Integer) x); }
       if (x instanceof Long) { return contains(i, (Long) x); }
       if (x instanceof Short) { return contains(i, (Short) x); } }
-
-    if (s instanceof java.util.Set) {
-      return contains((java.util.Set) s, x); }
 
     throw new IllegalArgumentException(
       "can't tell if " + s.getClass() + 
