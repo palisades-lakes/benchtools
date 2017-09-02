@@ -6,7 +6,7 @@
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-09-01"}
+   :version "2017-09-02"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
@@ -18,7 +18,9 @@
            [java.util Map]
            [java.nio.file FileSystems PathMatcher]
            [java.time.format DateTimeFormatter]
-           [palisades.lakes.bench.java SystemInfo]))
+           [palisades.lakes.bench.java SystemInfo]
+           [palisades.lakes.bench.java.spaces.linear 
+            Axpy LinearFunction Vector]))
 ;;----------------------------------------------------------------
 (set! *warn-on-reflection* false)
 (set! *unchecked-math* false)
