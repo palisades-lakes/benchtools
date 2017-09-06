@@ -6,7 +6,7 @@
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-09-02"}
+   :version "2017-09-06"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
@@ -278,6 +278,7 @@
       (println (s/join " " (map fn-name generators)))
       (println n) 
       (println (.toString (java.time.LocalDateTime/now))) 
+      (Thread/sleep (* pause 1000)) 
       (time
         (with-open [w (log-writer *ns* generators n)]
           (binding [*out* w]
