@@ -56,12 +56,12 @@
   
   "`generators` is a sequence of functions,
    with an even number of elements, like 
-   `[dataset-generator0 element-generator0 
-     dataset-generator1 element-generator1 ...]`
+   `[container-generator0 element-generator0 
+     container-generator1 element-generator1 ...]`
    
    These are called as if
-   `[(dataset-generator0 element-generator0 nelements)
-     (dataset-generator1 element-generator1 nelements) ...]`,
+   `[(container-generator0 element-generator0 nelements)
+     (container-generator1 element-generator1 nelements) ...]`,
    returning `[dataset0 dataset1 ...]`, the arguments for a 
    function `f` to be benchmarked, which is done
    as if calling `(apply f [dataset0 dataset1 ...])`.
@@ -87,8 +87,8 @@
        nthreads 
        (fn thread-datasets []
          (mapv 
-           (fn dataset [[^IFn dataset-generator ^IFn element-generator]]
-             (dataset-generator element-generator nelements))
+           (fn dataset [[^IFn container-generator ^IFn element-generator]]
+             (container-generator element-generator nelements))
            (partition 2 generators))))})
   
   ([generators nelements]
