@@ -43,7 +43,7 @@
 (let [c (class (int-array 0))]
   (defn- int-array? [x] (instance? c x)))
 ;;----------------------------------------------------------------
-;; make it accessibale form Java
+;; make it accessible from Java
 (gen-class 
   :name "palisades.lakes.bench.Seed"
   :prefix ""
