@@ -6,7 +6,7 @@ import clojure.lang.IFn;
  * 
  * @author palisades dot lakes at gmail dot com
  * @since 2017-09-16
- * @version 2017-09-16
+ * @version 2017-09-17
  */
 
 @SuppressWarnings("unchecked")
@@ -31,8 +31,8 @@ public final class L2Norm extends Object {
     return s; }
 
   /** Inaccurate naive sum for benchmarking. */
-  public static final double primitive(final IFn.DD f,
-                                       final double[] x) {
+  public static final double primitive (final IFn.DD f,
+                                        final double[] x) {
     double s = 0.0;
     for (int i=0;i<x.length;i++) {
       final double fxi = f.invokePrim(x[i]);
@@ -40,8 +40,8 @@ public final class L2Norm extends Object {
     return s; }
 
   /** Inaccurate naive sum for benchmarking. */
-  public static final double boxing(final IFn f,
-                                    final double[] x) {
+  public static final double boxing (final IFn f,
+                                     final double[] x) {
     double s = 0.0;
     for (int i=0;i<x.length;i++) {
       @SuppressWarnings("boxing")

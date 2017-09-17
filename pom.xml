@@ -20,6 +20,9 @@
   <maven-site-version>3.6</maven-site-version>
   <github-url>scm:git:https://github.com/palisades-lakes/benchtools.git</github-url>
   <!-- github-url>scm:git:file://.</github-url -->
+  <timestamp>${maven.build.timestamp}</timestamp>
+  <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
+  
  </properties>
  <scm>
   <connection>${github-url}</connection>
@@ -95,6 +98,15 @@
    </plugins>
   </pluginManagement>
   <plugins>
+   <plugin>
+    <groupId>org.kuali.maven.plugins</groupId>
+    <artifactId>graph-maven-plugin</artifactId>
+    <version>1.2.3</version>
+    <configuration>
+     <generateDefaultGraphs>true</generateDefaultGraphs>
+     <direction>LR</direction>
+    </configuration>
+   </plugin>
    <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-release-plugin</artifactId>
@@ -205,13 +217,27 @@
     <version>${maven-jar-version}</version>
     <configuration>
      <outputDirectory>lib</outputDirectory>
+     <archive>
+      <manifest>
+       <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+       <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+      </manifest>
+     </archive>
     </configuration>
+    <executions>
+     <execution>
+      <goals>
+       <goal>test-jar</goal>
+      </goals>
+     </execution>
+    </executions>
    </plugin>
    <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-javadoc-plugin</artifactId>
     <version>${maven-javadoc-version}</version>
     <configuration>
+     <additionalparam>-Xdoclint:none</additionalparam>
      <outputDirectory>${project.build.directory}/javadoc</outputDirectory>
      <reportOutputDirectory>${project.reporting.outputDirectory}/javadoc</reportOutputDirectory>
      <destDir>docs/api</destDir>
@@ -228,6 +254,9 @@
       <goals>
        <goal>javadoc</goal>
       </goals>
+      <configuration>
+       <additionalparam>-Xdoclint:none</additionalparam>
+      </configuration>
      </execution>
     </executions>
    </plugin>
@@ -250,11 +279,11 @@
     <configuration>
      <descriptors>
       <descriptor>src/assembly/src.xml</descriptor>
+      <descriptor>src/assembly/data.xml</descriptor>
       <descriptor>src/assembly/docs.xml</descriptor>
       <descriptor>src/assembly/libs.xml</descriptor>
      </descriptors>
     </configuration>
-   <!-- 
     <executions>
      <execution>
       <id>make-assembly</id> 
@@ -264,15 +293,16 @@
       </goals>
      </execution>
     </executions>
-    -->
    </plugin>
   </plugins>
+
   <resources>
    <resource>
     <directory>src/main/clojure</directory>
    </resource>
    <resource>
     <directory>src/main/resources</directory>
+    <filtering>true</filtering>
    </resource>
   </resources>
   <testResources>
@@ -284,6 +314,7 @@
    </testResource>
   </testResources>
  </build>
+
  <reporting>
   <plugins>
    <plugin>
@@ -309,12 +340,12 @@
     </reportSets>
     <configuration>
      <!-- <destDir>target/site/docs/</destDir> -->
+     <additionalparam>-Xdoclint:none</additionalparam>
      <overview>src/main/java/overview.html</overview>
      <showPackage>true</showPackage>
      <showProtected>true</showProtected>
      <showPrivate>true</showPrivate>
      <quiet>true</quiet>
-     <additionalparam>-Xdoclint:none</additionalparam>
     </configuration>
    </plugin>
   </plugins>
@@ -323,6 +354,10 @@
   <repository>
    <id>maven2</id>
    <url>http://repo.maven.apache.org/maven2/</url>
+   <releases>
+    <enabled>true</enabled>
+    <updatePolicy>never</updatePolicy>
+   </releases>
    <snapshots>
     <enabled>false</enabled>
     <updatePolicy>never</updatePolicy>
@@ -332,6 +367,10 @@
   <repository>
    <id>clojars</id>
    <url>http://clojars.org/repo</url>
+   <releases>
+    <enabled>true</enabled>
+    <updatePolicy>never</updatePolicy>
+   </releases>
    <snapshots>
     <enabled>false</enabled>
     <updatePolicy>never</updatePolicy>
@@ -418,11 +457,6 @@
    <version>4.12</version>
   </dependency>
   <dependency>
-   <groupId>org.slf4j</groupId>
-   <artifactId>slf4j-nop</artifactId>
-   <version>1.7.25</version>
-  </dependency>
-  <dependency>
    <groupId>com.github.oshi</groupId>
    <artifactId>oshi-core</artifactId>
    <version>3.4.3</version>
@@ -437,6 +471,11 @@
      <artifactId>clojure</artifactId>
     </exclusion>
    </exclusions>
+  </dependency>
+  <dependency>
+   <groupId>org.slf4j</groupId>
+   <artifactId>slf4j-nop</artifactId>
+   <version>1.7.25</version>
   </dependency>
   <dependency>
    <groupId>codox</groupId>
