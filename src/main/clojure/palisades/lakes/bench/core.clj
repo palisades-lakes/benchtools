@@ -6,7 +6,7 @@
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-09-18"}
+   :version "2017-09-19"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
@@ -246,69 +246,6 @@
                :n (* 1024 1024)
                :pause 16})
 ;;----------------------------------------------------------------
-(defn criterium 
-  
-  ([^ExecutorService pool ^IFn f ^Map data-map ^Map options]
-    (let [options (merge defaults options)
-          fname (fn-name f)
-          af (fn ^double [datasets] (double (apply f datasets)))
-          result (criterium/benchmark 
-                   (Sum/naive 
-                     (para/pool-map-doubles 
-                       pool af (:data data-map)))
-                   options)
-          value (first (:results result))
-          result (simplify 
-                   (assoc 
-                     (merge result (dissoc data-map :data))
-                     :benchmark (benchname *ns*)
-                     :threads (:nthreads data-map (default-nthreads))
-                     :value value
-                     :algorithm fname))]
-      (pp/pprint result)
-      (println)
-      (flush)
-      result))
-  
-  ([^ExecutorService pool ^IFn f ^Map data-map] (criterium f data-map {})))
-;;----------------------------------------------------------------
-(defn bench 
-  ([generators fns ^Map options]
-    (let [options (merge defaults options)
-          n (int (:n options))
-          pause (int (:pause options))]
-      (assert (every? ifn? generators))
-      (assert (every? ifn? fns))
-      (println (s/join " " (map fn-name generators)))
-      (println n) 
-      (println (.toString (java.time.LocalDateTime/now))) 
-      (Thread/sleep (* pause 1000)) 
-      (time
-        (with-open [w (log-writer *ns* generators n)]
-          (binding [*out* w]
-            (print-system-info w)
-            (println "generate-datasets")
-            (let [data-map (time (generate-datasets generators n))
-                  nthreads (int (:nthreads data-map (default-nthreads)))
-                  pool (Executors/newFixedThreadPool nthreads)]
-              (try
-                (reduce
-                  (fn add-record [records record]
-                    (if record
-                      (let [records (conj records record)]
-                        (write-tsv records (data-file *ns* generators n))
-                        records)
-                      records))
-                  []
-                  (map
-                    (fn benchmark-one-fn [f]
-                      (Thread/sleep (* pause 1000)) 
-                      (println (.toString (java.time.LocalDateTime/now))) 
-                      (time (criterium pool f data-map options)))
-                    fns))
-                (finally (.shutdown pool)))))))))
-  ([generators fns] (bench generators fns {})))
-;;----------------------------------------------------------------
 (defn milliseconds 
   ([^ExecutorService pool ^IFn f ^Map data-map ^Map options]
     (let [options (merge defaults options)
@@ -382,6 +319,74 @@
                       (Thread/sleep (int (* pause 1000))) 
                       (println (.toString (java.time.LocalDateTime/now))) 
                       (time (milliseconds pool f data-map options)))
+                    fns))
+                (finally (.shutdown pool)))))))))
+  ([generators fns] (profile generators fns {})))
+;;----------------------------------------------------------------
+(defn criterium 
+  
+  ([^ExecutorService pool ^IFn f ^Map data-map ^Map options]
+    (let [options (merge defaults options)
+          warmup (milliseconds 
+                   pool f data-map 
+                   (assoc 
+                     options 
+                     :samples (max (* 4 1024) (int (:samples options 0)))))
+          fname (fn-name f)
+          af (fn ^double [datasets] (double (apply f datasets)))
+          result (criterium/benchmark 
+                   (Sum/naive 
+                     (para/pool-map-doubles 
+                       pool af (:data data-map)))
+                   options)
+          value (first (:results result))
+          result (simplify 
+                   (assoc 
+                     (merge warmup result (dissoc data-map :data))
+                     :benchmark (benchname *ns*)
+                     :threads (:nthreads data-map (default-nthreads))
+                     :value value
+                     :algorithm fname))]
+      (pp/pprint result)
+      (println)
+      (flush)
+      result))
+  
+  ([^ExecutorService pool ^IFn f ^Map data-map] (criterium f data-map {})))
+;;----------------------------------------------------------------
+(defn bench 
+  ([generators fns ^Map options]
+    (let [options (merge defaults options)
+          n (int (:n options))
+          pause (int (:pause options))]
+      (assert (every? ifn? generators))
+      (assert (every? ifn? fns))
+      (println (s/join " " (map fn-name generators)))
+      (println n) 
+      (println (.toString (java.time.LocalDateTime/now))) 
+      (Thread/sleep (* pause 1000)) 
+      (time
+        (with-open [w (log-writer *ns* generators n)]
+          (binding [*out* w]
+            (print-system-info w)
+            (println "generate-datasets")
+            (let [data-map (time (generate-datasets generators n))
+                  nthreads (int (:nthreads data-map (default-nthreads)))
+                  pool (Executors/newFixedThreadPool nthreads)]
+              (try
+                (reduce
+                  (fn add-record [records record]
+                    (if record
+                      (let [records (conj records record)]
+                        (write-tsv records (data-file *ns* generators n))
+                        records)
+                      records))
+                  []
+                  (map
+                    (fn benchmark-one-fn [f]
+                      (Thread/sleep (* pause 1000)) 
+                      (println (.toString (java.time.LocalDateTime/now))) 
+                      (time (criterium pool f data-map options)))
                     fns))
                 (finally (.shutdown pool)))))))))
   ([generators fns] (bench generators fns {})))
