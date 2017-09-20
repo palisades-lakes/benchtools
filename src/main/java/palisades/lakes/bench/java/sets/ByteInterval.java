@@ -14,7 +14,7 @@ import clojure.lang.IFn;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-05-29
- * @version 2017-07-24
+ * @version 2017-09-18
  */
 
 public final class ByteInterval implements Set {
@@ -116,6 +116,26 @@ public final class ByteInterval implements Set {
     if (that.max <= min) { return false; }
     return true; }
 
+  public final boolean intersects (final FloatInterval that) {
+    if (max <= that.min) { return false; }
+    if (that.max <= min) { return false; }
+    return true; }
+
+  public final boolean intersects (final IntegerInterval that) {
+    if (max <= that.min) { return false; }
+    if (that.max <= min) { return false; }
+    return true; }
+
+  public final boolean intersects (final LongInterval that) {
+    if (max <= that.min) { return false; }
+    if (that.max <= min) { return false; }
+    return true; }
+
+  public final boolean intersects (final ShortInterval that) {
+    if (max <= that.min) { return false; }
+    if (that.max <= min) { return false; }
+    return true; }
+
   public final boolean intersects (final java.util.Set that) {
     for (final Object x : that) {
       if (contains(x)) { return true; } }
@@ -123,8 +143,18 @@ public final class ByteInterval implements Set {
 
   @Override
   public final boolean intersects (final Object set) {
+    if (set instanceof IntegerInterval) {
+      return intersects((IntegerInterval) set); }
     if (set instanceof ByteInterval) {
       return intersects((ByteInterval) set); }
+    if (set instanceof DoubleInterval) {
+      return intersects((DoubleInterval) set); }
+    if (set instanceof FloatInterval) {
+      return intersects((FloatInterval) set); }
+    if (set instanceof LongInterval) {
+      return intersects((LongInterval) set); }
+    if (set instanceof ShortInterval) {
+      return intersects((ShortInterval) set); }
     if (set instanceof java.util.Set) {
       return intersects((java.util.Set) set); }
     throw new UnsupportedOperationException(
