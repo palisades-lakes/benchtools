@@ -244,7 +244,9 @@
 (def defaults {:tail-quantile 0.05 
                :samples 256
                :n (* 1024 1024)
-               :pause 16})
+               :pause 16
+               ;; about 2 minutes warmup -- default is 10s
+               :warmup-jit-period (* 128 1024 1024 1024)})
 ;;----------------------------------------------------------------
 (defn milliseconds 
   ([^ExecutorService pool ^IFn f ^Map data-map ^Map options]
@@ -327,11 +329,6 @@
   
   ([^ExecutorService pool ^IFn f ^Map data-map ^Map options]
     (let [options (merge defaults options)
-          warmup (milliseconds 
-                   pool f data-map 
-                   (assoc 
-                     options 
-                     :samples (max (* 4 1024) (int (:samples options 0)))))
           fname (fn-name f)
           af (fn ^double [datasets] (double (apply f datasets)))
           result (criterium/benchmark 
@@ -342,7 +339,7 @@
           value (first (:results result))
           result (simplify 
                    (assoc 
-                     (merge warmup result (dissoc data-map :data))
+                     (merge result (dissoc data-map :data))
                      :benchmark (benchname *ns*)
                      :threads (:nthreads data-map (default-nthreads))
                      :value value
