@@ -52,3 +52,9 @@ dependencies.
 6. ```mvn release:prepare```
 
 7. ```mvn release:perform```
+
+1. Revert to SNAPSHOT versions of dependencies where appropriate. 
+
+    **TODO:** shouldn't the release or versions plugins take care 
+    of this?
+    
