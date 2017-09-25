@@ -3,14 +3,14 @@
   {:doc "Generate codox for palisades.lakes.bench."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-08-05"
-   :version "2017-08-05"}
+   :version "2017-09-24"}
   
   (:require [clojure.java.io :as io]
             [codox.main :as codox]))
 ;;----------------------------------------------------------------
 (let [options  {:project 
                 {:name "benchtools"
-                 :version "0.0.0" 
+                 :version "0.0.7-SNAPSHOT" 
                  :description 
                  "Currently unstable utilities for benchmarking clojure and java."}
                 :language :clojure

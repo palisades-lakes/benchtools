@@ -1,5 +1,6 @@
-# benchtools [![Clojars Project](https://img.shields.io/clojars/v/palisades-lakes/bench-tools.svg)](https://clojars.org/palisades-lakes/benchtools)
+# benchtools 
 
+[![Clojars Project](https://img.shields.io/clojars/v/palisades-lakes/bench-tools.svg)](https://clojars.org/palisades-lakes/benchtools)
 
 Shared utilities used by other projects that benchmark
 [Clojure](https://clojure.org/) and Java code.
@@ -16,8 +17,21 @@ specifically the
 [clojure-maven-plugin](https://github.com/talios/clojure-maven-plugin),
 eg:
 
-```Maven
+```
 mvn clean install
+```
+Javadoc:
+```
+mvn javadoc:javadoc
+```
+Codox:
+
+```
+clj.sh src/scripts/clojure/palisades/lakes/bench/doc/codox.clj
+```
+
+```
+clj.bat src\scripts\clojure\palisades\lakes\bench\doc\codox.clj
 ```
 
 ## Acknowledgments
