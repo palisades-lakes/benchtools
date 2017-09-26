@@ -1,6 +1,6 @@
 # Release checklist
 
-When any step fails, and there are code changes, go bakc to the 
+When any step fails, and there are code changes, go back to the 
 beginning and start again.
 
 **TODO:** automation for the whole process.
@@ -15,9 +15,14 @@ dependencies.
     **TODO:** shouldn't the release or versions plugins take care 
     of this?
     
+1. Replace tag references in README.md, other docs. 
+
+    **TODO:** how can this step be eliminated? 
+    Need some way to have image links relative to tag url.
+    
 2. (Maven)```mvn clean install```
 
-    complete without errors; passes all 'unit' (actutests.
+    complete without errors; passes all 'unit' (actually 'quick') tests.
     
 3. (clj) Significant scripts, if any, run successfully by hand.
 
@@ -45,6 +50,7 @@ dependencies.
 ....
     **TODO:** FIgure out how to do this from maven, integrating
     with ```mvn release:prepare```.
+    
     
     
 5. (Git) commit and push.
