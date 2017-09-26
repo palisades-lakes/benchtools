@@ -242,7 +242,7 @@
            :now (now))))
 ;;----------------------------------------------------------------
 (def defaults {:tail-quantile 0.05 
-               :samples 256
+               :samples 100
                :n (* 1024 1024)
                :pause 16
                ;; about 2 minutes warmup -- default is 10s
