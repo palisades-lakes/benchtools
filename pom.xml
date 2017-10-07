@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
- xmlns="http://maven.apache.org/POM/4.0.0"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
  <modelVersion>4.0.0</modelVersion>
  <properties>
   <github-url>scm:git:https://github.com/palisades-lakes/benchtools.git</github-url>
@@ -19,7 +15,7 @@
   <connection>${github-url}</connection>
   <developerConnection>${github-url}</developerConnection>
   <url>${github-url}</url>
-  <tag>HEAD</tag>
+  <tag>benchtools-0.0.8</tag>
  </scm>
  <build>
   <plugins>
@@ -186,6 +182,6 @@
  </dependencies>
  <groupId>palisades-lakes</groupId>
  <artifactId>benchtools</artifactId>
- <version>0.0.8-SNAPSHOT</version>
+ <version>0.0.8</version>
  <description>Unstable utilities for Clojure and Java benchmarks.</description>
 </project>
