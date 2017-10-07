@@ -242,11 +242,11 @@
            :now (now))))
 ;;----------------------------------------------------------------
 (def defaults {:tail-quantile 0.05 
-               :samples 100
+               :samples 50
                :n (* 1024 1024)
                :pause 16
                ;; about 2 minutes warmup -- default is 10s
-               :warmup-jit-period (* 256 1024 1024 1024)})
+               :warmup-jit-period (* 128 1024 1024 1024)})
 ;;----------------------------------------------------------------
 (defn milliseconds 
   ([^ExecutorService pool ^IFn f ^Map data-map ^Map options]
