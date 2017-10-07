@@ -15,7 +15,7 @@
   <connection>${github-url}</connection>
   <developerConnection>${github-url}</developerConnection>
   <url>${github-url}</url>
-  <tag>benchtools-0.0.8</tag>
+  <tag>HEAD</tag>
  </scm>
  <build>
   <plugins>
@@ -182,6 +182,6 @@
  </dependencies>
  <groupId>palisades-lakes</groupId>
  <artifactId>benchtools</artifactId>
- <version>0.0.8</version>
+ <version>0.0.9-SNAPSHOT</version>
  <description>Unstable utilities for Clojure and Java benchmarks.</description>
 </project>
