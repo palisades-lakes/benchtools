@@ -75,8 +75,7 @@
    </exclusions>
   </dependency>
   <!-- <dependency> <groupId>potemkin</groupId> <artifactId>potemkin</artifactId> 
-   <version>0.4.3</version> </dependency> <dependency> <groupId>org.ow2.asm</groupId> 
-   <artifactId>asm-all</artifactId> <version>5.2</version> </dependency> -->
+   <version>0.4.3</version> </dependency>  -->
   <dependency>
    <groupId>org.apache.commons</groupId>
    <artifactId>commons-lang3</artifactId>
@@ -155,29 +154,6 @@
    <groupId>org.slf4j</groupId>
    <artifactId>slf4j-nop</artifactId>
    <version>1.7.25</version>
-  </dependency>
-  <dependency>
-   <groupId>codox</groupId>
-   <artifactId>codox</artifactId>
-   <version>0.10.3</version>
-   <exclusions>
-    <exclusion>
-     <groupId>org.ow2.asm</groupId>
-     <artifactId>asm</artifactId>
-    </exclusion>
-    <exclusion>
-     <groupId>org.ow2.asm</groupId>
-     <artifactId>asm-analysis</artifactId>
-    </exclusion>
-    <exclusion>
-     <groupId>org.ow2.asm</groupId>
-     <artifactId>asm-tree</artifactId>
-    </exclusion>
-    <exclusion>
-     <groupId>org.ow2.asm</groupId>
-     <artifactId>asm-util</artifactId>
-    </exclusion>
-   </exclusions>
   </dependency>
  </dependencies>
  <groupId>palisades-lakes</groupId>
