@@ -6,7 +6,7 @@
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-05-29"
-   :version "2017-09-19"}
+   :version "2017-10-19"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
@@ -20,6 +20,7 @@
            [java.util.concurrent Executors ExecutorService]
            [java.nio.file FileSystems PathMatcher]
            [java.time.format DateTimeFormatter]
+           [java.lang.management ManagementFactory]
            [palisades.lakes.bench.java SystemInfo]
            [palisades.lakes.bench.java.spaces.linear 
             Axpy LinearFunction Sum Vector]))
@@ -138,7 +139,15 @@
     (.mkdirs f)
     f))
 ;;----------------------------------------------------------------
-(defn- log-folder [for-ns] (ns-folder "logs" for-ns))
+(defn- versions-suffix ^String []
+  (str (get (.getSystemProperties 
+              (ManagementFactory/getRuntimeMXBean)) 
+            "java.version")
+       "--"
+       (clojure-version)))
+;;----------------------------------------------------------------
+(defn- log-folder [for-ns] 
+  (ns-folder (str "logs-" (versions-suffix)) for-ns))
 
 (defn- log-file ^java.io.File [for-ns generators n]
   (io/file (log-folder for-ns) (fname generators n "txt")))
@@ -148,7 +157,8 @@
     (io/writer (log-file for-ns generators n))
     true))
 ;;----------------------------------------------------------------
-(defn- data-folder [for-ns] (ns-folder "data" for-ns))
+(defn- data-folder [for-ns] 
+  (ns-folder (str "data-" (versions-suffix)) for-ns))
 
 (defn data-file 
   ^java.io.File [for-ns generators n]
