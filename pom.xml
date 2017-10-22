@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+ xmlns="http://maven.apache.org/POM/4.0.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
  <modelVersion>4.0.0</modelVersion>
- <properties>
-  <github-url>scm:git:https://github.com/palisades-lakes/benchtools.git</github-url>
-  <timestamp>${maven.build.timestamp}</timestamp>
-  <maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
- </properties>
+ <groupId>palisades-lakes</groupId>
+ <artifactId>benchtools</artifactId>
+ <description>Unstable utilities for Clojure and Java benchmarks.</description>
+ <version>0.0.10-SNAPSHOT</version>
  <parent>
   <groupId>palisades-lakes</groupId>
   <artifactId>palisades-lakes-parent</artifactId>
   <version>0.0.10-SNAPSHOT</version>
  </parent>
- <scm>
-  <connection>${github-url}</connection>
-  <developerConnection>${github-url}</developerConnection>
-  <url>${github-url}</url>
-  <tag>HEAD</tag>
- </scm>
  <build>
   <plugins>
    <plugin>
@@ -75,7 +72,7 @@
    </exclusions>
   </dependency>
   <!-- <dependency> <groupId>potemkin</groupId> <artifactId>potemkin</artifactId> 
-   <version>0.4.3</version> </dependency>  -->
+   <version>0.4.3</version> </dependency> -->
   <dependency>
    <groupId>org.apache.commons</groupId>
    <artifactId>commons-lang3</artifactId>
@@ -156,8 +153,4 @@
    <version>1.7.25</version>
   </dependency>
  </dependencies>
- <groupId>palisades-lakes</groupId>
- <artifactId>benchtools</artifactId>
- <version>0.0.10-SNAPSHOT</version>
- <description>Unstable utilities for Clojure and Java benchmarks.</description>
 </project>
