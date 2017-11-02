@@ -6,7 +6,7 @@
   {:doc "Generate independent seeds for palisades.lakes.bench.prng."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-04-05"
-   :version "2017-07-25s"}
+   :version "2017-07-25"}
   
   (:require [clojure.java.io :as io]
             [palisades.lakes.bench.seed :as seed])
