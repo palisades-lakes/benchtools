@@ -63,7 +63,7 @@
   <dependency>
    <groupId>criterium</groupId>
    <artifactId>criterium</artifactId>
-   <version>0.4.4</version>
+   <version>${criterium-version}</version>
    <exclusions>
     <exclusion>
      <groupId>org.clojure</groupId>
@@ -71,32 +71,30 @@
     </exclusion>
    </exclusions>
   </dependency>
-  <!-- <dependency> <groupId>potemkin</groupId> <artifactId>potemkin</artifactId> 
-   <version>0.4.3</version> </dependency> -->
   <dependency>
    <groupId>org.apache.commons</groupId>
    <artifactId>commons-lang3</artifactId>
-   <version>3.6</version>
+   <version>${commons-lang3-version}</version>
   </dependency>
   <dependency>
    <groupId>org.apache.commons</groupId>
    <artifactId>commons-math3</artifactId>
-   <version>3.6.1</version>
+   <version>${commons-math3-version}</version>
   </dependency>
   <dependency>
    <groupId>org.apache.commons</groupId>
    <artifactId>commons-rng-sampling</artifactId>
-   <version>1.0</version>
+   <version>${commons-rng-version}</version>
   </dependency>
   <dependency>
    <groupId>org.apache.commons</groupId>
    <artifactId>commons-rng-examples</artifactId>
-   <version>1.0</version>
+   <version>${commons-rng-version}</version>
   </dependency>
   <dependency>
    <groupId>io.gatling.uncommons.maths</groupId>
    <artifactId>uncommons-maths</artifactId>
-   <version>1.2.3</version>
+   <version>${uncommons-maths-version}</version>
    <exclusions>
     <exclusion>
      <groupId>org.jfree</groupId>
@@ -119,27 +117,27 @@
   <dependency>
    <groupId>com.google.guava</groupId>
    <artifactId>guava</artifactId>
-   <version>22.0</version>
+   <version>${guava-version}</version>
   </dependency>
   <dependency>
    <groupId>com.carrotsearch</groupId>
    <artifactId>java-sizeof</artifactId>
-   <version>0.0.5</version>
+   <version>${java-sizeof-version}</version>
   </dependency>
   <dependency>
    <groupId>junit</groupId>
    <artifactId>junit</artifactId>
-   <version>4.12</version>
+   <version>${junit-version}</version>
   </dependency>
   <dependency>
    <groupId>com.github.oshi</groupId>
    <artifactId>oshi-core</artifactId>
-   <version>3.4.3</version>
+   <version>${oshi-version}</version>
   </dependency>
   <dependency>
    <groupId>clj-tuple</groupId>
    <artifactId>clj-tuple</artifactId>
-   <version>0.2.2</version>
+   <version>${clj-tuple-version}</version>
    <exclusions>
     <exclusion>
      <groupId>org.clojure</groupId>
@@ -150,7 +148,7 @@
   <dependency>
    <groupId>org.slf4j</groupId>
    <artifactId>slf4j-nop</artifactId>
-   <version>1.7.25</version>
+   <version>${slf4j-version}</version>
   </dependency>
  </dependencies>
 </project>
