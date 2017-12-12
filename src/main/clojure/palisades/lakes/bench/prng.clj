@@ -87,7 +87,7 @@
         ^DiscreteSampler g (DiscreteUniformSampler. urp umin umax)]
     (fn uniform-int ^long [] (long (.sample g)))))
 ;;----------------------------------------------------------------
-;; FIXME:
+;; FIXME: only handles int ranges
 (defn uniform-long 
  ^clojure.lang.IFn$L [^long umin
                       ^long umax
