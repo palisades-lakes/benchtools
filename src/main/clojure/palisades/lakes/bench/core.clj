@@ -76,7 +76,7 @@
    in parallel, in `nthreads` threads. The benchmark time
    is the time for all threads to complete."
   
-  ([generators nelements nthreads]
+  ([generators ^long nelements ^long nthreads]
     (assert (even? (count generators)))
     (assert (every? ifn? generators))
     
@@ -94,7 +94,7 @@
              (container-generator element-generator nelements))
            (partition 2 generators))))})
   
-  ([generators nelements]
+  ([generators ^long nelements]
     (generate-datasets generators nelements (default-nthreads))))
 ;;----------------------------------------------------------------
 (defn write-tsv [^java.util.List records ^java.io.File f]
@@ -290,7 +290,7 @@
       #_(println fname (/ msec0 msec1))
       (pp/pprint
         {:algorithm fname 
-         :benchmark (benchname *ns*)
+         :benchmark (:benchmark options)
          :threads (:nthreads data-map (default-nthreads))
          :warmup msec0
          :value v1
@@ -301,7 +301,9 @@
 ;;----------------------------------------------------------------
 (defn profile 
   ([generators fns ^Map options]
-    (let [options (merge defaults options)
+    (let [options (merge 
+                    (assoc defaults :benchmark (benchname *ns*))
+                    options)
           pause (int (:pause options))
           n (int (:n options))]
       (assert (every? ifn? generators))
@@ -350,7 +352,7 @@
           result (simplify 
                    (assoc 
                      (merge result (dissoc data-map :data))
-                     :benchmark (benchname *ns*)
+                     :benchmark (:benchmark options)
                      :threads (:nthreads data-map (default-nthreads))
                      :value value
                      :algorithm fname))]
@@ -363,7 +365,9 @@
 ;;----------------------------------------------------------------
 (defn bench 
   ([generators fns ^Map options]
-    (let [options (merge defaults options)
+    (let [options (merge 
+                    (assoc defaults :benchmark (benchname *ns*))
+                    options)
           n (int (:n options))
           pause (int (:pause options))]
       (assert (every? ifn? generators))
