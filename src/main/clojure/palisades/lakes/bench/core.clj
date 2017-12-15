@@ -5,8 +5,7 @@
   
   {:doc "Benchmark utilities."
    :author "palisades dot lakes at gmail dot com"
-   :since "2017-05-29"
-   :version "2017-10-19"}
+   :version "2017-12-14"}
   
   (:require [clojure.string :as s]
             [clojure.java.io :as io]
@@ -140,10 +139,12 @@
     f))
 ;;----------------------------------------------------------------
 (defn- versions-suffix ^String []
-  (str (get (.getSystemProperties 
+  (str "jdk"
+       (get (.getSystemProperties 
               (ManagementFactory/getRuntimeMXBean)) 
             "java.version")
-       "--"
+       "-"
+       "clj"
        (clojure-version)))
 ;;----------------------------------------------------------------
 (defn- log-folder [for-ns] 
@@ -224,6 +225,15 @@
 ;;----------------------------------------------------------------
 ;; criterium output
 ;;----------------------------------------------------------------
+(defn- containers ^String [generators]
+  (s/join "-" 
+          (map #(fn-name (first %))
+               (partition 2 (map fn-name generators)))))
+(defn- elements ^String [generators]
+  (s/join "-" 
+          (map #(fn-name (second %))
+               (partition 2 (map fn-name generators)))))
+;;----------------------------------------------------------------
 (defn simplify [record]
   (let [median (double (first (criterium.stats/median 
                                 (map double (:samples record)))))
@@ -239,9 +249,12 @@
                        :warmup-time :outlier-variance :outliers
                        :options :sample-mean :sample-variance
                        #_:warmup-executions
-                       :variance)]
+                       :variance)
+        generators (:generators record)]
     (assoc (dissoc record :mean) 
-           :generators (s/join "-" (map fn-name (:generators record)))
+           :generators (s/join "-" (map fn-name generators))
+           :containers (containers generators)
+           :elements (elements generators)
            :manufacturerModel (SystemInfo/manufacturerModel)
            :median median
            :millisec (* 1000.0 (double (first (:mean record))))
