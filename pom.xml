@@ -125,11 +125,6 @@
    <version>${guava-version}</version>
   </dependency>
   <dependency>
-   <groupId>com.carrotsearch</groupId>
-   <artifactId>java-sizeof</artifactId>
-   <version>${java-sizeof-version}</version>
-  </dependency>
-  <dependency>
    <groupId>junit</groupId>
    <artifactId>junit</artifactId>
    <version>${junit-version}</version>
