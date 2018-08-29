@@ -6,7 +6,7 @@
   {:doc "Independent seed generation and seed resource IO."
    :author "palisades dot lakes at gmail dot com"
    :since "2017-04-05"
-   :version "2017-08-25"}
+   :version "2018-08-29"}
   
   (:refer-clojure :exclude [read write])
   (:require [clojure.edn :as edn]

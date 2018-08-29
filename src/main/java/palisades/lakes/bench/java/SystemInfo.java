@@ -35,7 +35,7 @@ import oshi.util.Util;
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-07-12
- * @version 2017-07-29
+ * @version 2018-08-29
  */
 public final class SystemInfo {
 
@@ -91,7 +91,7 @@ public final class SystemInfo {
       "  release date: " + (firmware.getReleaseDate() == null
       ? "unknown"
         : firmware.getReleaseDate() == null ? "unknown"
-          : FormatUtil.formatDate(firmware.getReleaseDate())));
+          : firmware.getReleaseDate()));
     final Baseboard baseboard = computerSystem.getBaseboard();
     pw.println("baseboard:");
     pw.println("  manufacturer: " + baseboard.getManufacturer());
