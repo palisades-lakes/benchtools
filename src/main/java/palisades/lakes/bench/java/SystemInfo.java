@@ -18,6 +18,7 @@ import oshi.hardware.NetworkIF;
 import oshi.hardware.PowerSource;
 import oshi.hardware.Sensors;
 import oshi.hardware.UsbDevice;
+import oshi.hardware.VirtualMemory;
 import oshi.software.os.FileSystem;
 import oshi.software.os.NetworkParams;
 import oshi.software.os.OSFileStore;
@@ -117,18 +118,16 @@ public final class SystemInfo {
     pw.println(
       "Memory: " + FormatUtil.formatBytes(memory.getAvailable())
       + "/" + FormatUtil.formatBytes(memory.getTotal()));
+    final VirtualMemory vm = memory.getVirtualMemory();
     pw.println("Swap used: "
-      + FormatUtil.formatBytes(memory.getSwapUsed())
+      + FormatUtil.formatBytes(vm.getSwapUsed())
       + "/"
-      + FormatUtil.formatBytes(memory.getSwapTotal()));
+      + FormatUtil.formatBytes(vm.getSwapTotal()));
   }
 
   @SuppressWarnings("boxing")
   public static void printCpu (final CentralProcessor processor,
                                final PrintWriter pw) {
-    pw.println("Uptime: " + FormatUtil
-      .formatElapsedSecs(processor.getSystemUptime()));
-
     final long[] prevTicks = processor.getSystemCpuLoadTicks();
     pw.println("CPU, IOWait, and IRQ ticks @ 0 sec:"
       + Arrays.toString(prevTicks));
@@ -171,9 +170,8 @@ public final class SystemInfo {
       (100d * iowait) / totalCpu, (100d * irq) / totalCpu,
       (100d * softirq) / totalCpu, (100d * steal) / totalCpu);
     pw.format("CPU load: %.1f%% (counting ticks)%n",
-      processor.getSystemCpuLoadBetweenTicks() * 100);
-    pw.format("CPU load: %.1f%% (OS MXBean)%n",
-      processor.getSystemCpuLoad() * 100);
+      processor.getSystemCpuLoadBetweenTicks(
+        processor.getSystemCpuLoadTicks()) * 100);
     final double[] loadAverage = processor.getSystemLoadAverage(3);
     pw.println("CPU load averages:"
       + (loadAverage[0] < 0 ? " N/A"
@@ -185,7 +183,9 @@ public final class SystemInfo {
     // per core CPU
     final StringBuilder procCpu =
       new StringBuilder("CPU load per processor:");
-    final double[] load = processor.getProcessorCpuLoadBetweenTicks();
+    final double[] load = 
+      processor.getProcessorCpuLoadBetweenTicks(
+        processor.getProcessorCpuLoadTicks());
     for (final double avg : load) {
       procCpu.append(String.format(" %.1f%%",avg * 100));
     }
@@ -196,7 +196,10 @@ public final class SystemInfo {
   public static void printProcesses (final OperatingSystem os,
                                      final GlobalMemory memory,
                                      final PrintWriter pw) {
-    pw.println("Processes: " + os.getProcessCount()
+    pw.println("Uptime: " + FormatUtil
+      .formatElapsedSecs(os.getSystemUptime()));
+
+   pw.println("Processes: " + os.getProcessCount()
     + ", Threads: " + os.getThreadCount());
     // Sort by highest CPU
     final List<OSProcess> procs =
