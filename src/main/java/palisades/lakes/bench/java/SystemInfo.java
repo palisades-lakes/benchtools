@@ -6,6 +6,7 @@ import java.util.List;
 
 import oshi.hardware.Baseboard;
 import oshi.hardware.CentralProcessor;
+import oshi.hardware.CentralProcessor.ProcessorIdentifier;
 import oshi.hardware.CentralProcessor.TickType;
 import oshi.hardware.ComputerSystem;
 import oshi.hardware.Display;
@@ -108,8 +109,8 @@ public final class SystemInfo {
     + " physical CPU(s)");
     pw.println(" " + processor.getLogicalProcessorCount()
     + " logical CPU(s)");
-
-    pw.println("Identifier: " + processor.getIdentifier());
+    final ProcessorIdentifier pi = processor.getProcessorIdentifier();
+    pw.println("Identifier: " + pi.getIdentifier());
     //pw.println("ProcessorID: " + processor.getProcessorID());
   }
 
@@ -202,8 +203,8 @@ public final class SystemInfo {
    pw.println("Processes: " + os.getProcessCount()
     + ", Threads: " + os.getThreadCount());
     // Sort by highest CPU
-    final List<OSProcess> procs =
-      Arrays.asList(os.getProcesses(5,ProcessSort.CPU));
+    final List<OSProcess> procs = 
+      os.getProcesses(5,ProcessSort.CPU);
 
     pw.println("   PID  %CPU %MEM       VSZ       RSS Name");
     for (int i = 0; (i < procs.size()) && (i < 5); i++) {
@@ -239,7 +240,8 @@ public final class SystemInfo {
       sb.append("Unknown");
     }
     else {
-      final double timeRemaining = powerSources[0].getTimeRemaining();
+      final double timeRemaining = 
+        powerSources[0].getTimeRemainingEstimated();
       if (timeRemaining < -1d) {
         sb.append("Charging");
       }
@@ -254,7 +256,7 @@ public final class SystemInfo {
     }
     for (final PowerSource pSource : powerSources) {
       sb.append(String.format("%n %s @ %.1f%%",pSource.getName(),
-        pSource.getRemainingCapacity() * 100d));
+        pSource.getRemainingCapacityPercent() * 100d));
     }
     pw.println(sb.toString());
   }
@@ -277,7 +279,7 @@ public final class SystemInfo {
               readwrite ? disk.getWrites() : "?",readwrite
                 ? FormatUtil.formatBytes(disk.getWriteBytes()) : "?",
                   readwrite ? disk.getTransferTime() : "?");
-      final HWPartition[] partitions = disk.getPartitions();
+      final List<HWPartition> partitions = disk.getPartitions();
       if (partitions == null) {
         // TODO Remove when all OS's implemented
         continue;
@@ -303,7 +305,7 @@ public final class SystemInfo {
       fileSystem.getOpenFileDescriptors(),
       fileSystem.getMaxFileDescriptors());
 
-    final OSFileStore[] fsArray = fileSystem.getFileStores();
+    final List<OSFileStore> fsArray = fileSystem.getFileStores();
     for (final OSFileStore fs : fsArray) {
       final long usable = fs.getUsableSpace();
       final long total = fs.getTotalSpace();
