@@ -29,15 +29,14 @@ import oshi.software.os.OperatingSystem.ProcessSort;
 import oshi.util.FormatUtil;
 import oshi.util.Util;
 
-/**
- * Derived from oshi.SystemInfoTest example code.
- * 
- * TODO: functions that return a hashmap, 
+/** Derived from oshi.SystemInfoTest example code.
+ *
+ * TODO: functions that return a hashmap,
  * rather than printing.
  *
  * @author palisades dot lakes at gmail dot com
  * @since 2017-07-12
- * @version 2018-08-29
+ * @version 2021-01-27
  */
 public final class SystemInfo {
 
@@ -66,15 +65,20 @@ public final class SystemInfo {
     //printUsbDevices(hal.getUsbDevices(true),pw);
   }
 
+  public static final String model () {
+    final oshi.SystemInfo si = new oshi.SystemInfo();
+    final HardwareAbstractionLayer hal = si.getHardware();
+    final ComputerSystem computerSystem = hal.getComputerSystem();
+    return computerSystem.getModel(); }
+
   public static final String manufacturerModel () {
     final oshi.SystemInfo si = new oshi.SystemInfo();
     final HardwareAbstractionLayer hal = si.getHardware();
     final ComputerSystem computerSystem = hal.getComputerSystem();
-    return 
-      computerSystem.getManufacturer() + 
+    return
+      computerSystem.getManufacturer() +
       "." +
-      computerSystem.getModel();
-  }
+      computerSystem.getModel(); }
 
   public static void printComputerSystem (final ComputerSystem computerSystem,
                                           final PrintWriter pw) {
