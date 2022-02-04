@@ -97,12 +97,14 @@
    <artifactId>commons-rng-simple</artifactId>
    <version>${commons-rng-version}</version>
   </dependency>
+  <!-- 
   <dependency>
    <groupId>org.apache.commons</groupId>
    <artifactId>commons-rng-examples</artifactId>
    <version>${commons-rng-version}</version>
    <type>pom</type>
   </dependency>
+   -->
   <!-- dependency> <groupId>org.apache.commons</groupId> <artifactId>commons-statistics</artifactId> 
    <version>${commons-statistics-version}</version> </dependency -->
   <dependency>
